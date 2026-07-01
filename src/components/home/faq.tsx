@@ -48,7 +48,7 @@ export function Faq() {
       className="flex w-full flex-col items-center gap-10 px-5 pt-[100px] min-[810px]:gap-16 min-[810px]:px-10 min-[810px]:pt-[140px] min-[1200px]:pt-[180px]"
     >
       <div className="flex w-full max-w-[600px] flex-col items-center gap-5 text-center">
-        <span className="font-display text-sm font-semibold tracking-[-0.02em] text-[#006fff]">
+        <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
           FAQ
         </span>
         <h2 className="font-display text-[38px] font-bold leading-none tracking-[-0.05em] min-[810px]:text-5xl min-[1200px]:text-[60px]">

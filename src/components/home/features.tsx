@@ -182,7 +182,7 @@ export function Features() {
       <div className="relative z-[3] flex w-full max-w-[430px] flex-col items-center justify-center gap-16 overflow-clip px-5 min-[810px]:max-w-none min-[810px]:px-10 min-[810px]:gap-20 min-[1200px]:max-w-[1200px]">
         {/* Section titre */}
         <div className="flex w-full max-w-[390px] flex-col items-center gap-5 text-center min-[810px]:max-w-[600px] min-[1200px]:max-w-[800px]">
-          <span className="font-display text-sm font-semibold tracking-[-0.02em] text-[#006fff]">
+          <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
             Ce que nous offrons
           </span>
           <h2 className="font-display text-[38px] font-bold leading-[38px] tracking-[-1.9px] text-black min-[810px]:text-5xl min-[810px]:leading-[48px] min-[1200px]:text-[60px] min-[1200px]:leading-[60px]">
@@ -226,7 +226,7 @@ export function Features() {
         {/* Section Tracking */}
         <div className="flex w-full max-w-[390px] flex-col items-center gap-10 overflow-clip rounded-[30px] bg-[#f7f7f7] p-[30px] min-[810px]:max-w-none min-[810px]:flex-row min-[810px]:p-10 min-[1200px]:p-16">
           <div className="flex w-full flex-col gap-6 min-[810px]:w-1/2">
-            <span className="font-display text-sm font-semibold tracking-[-0.02em] text-[#006fff]">
+            <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
               Visibilité en temps réel
             </span>
             <h3 className="font-display text-[28px] font-bold leading-[30px] tracking-[-1.4px] text-black min-[810px]:text-[32px]">
@@ -286,7 +286,7 @@ export function Features() {
         {/* Témoignages */}
         <div className="flex w-full max-w-[390px] flex-col items-center gap-10 min-[810px]:max-w-none">
           <div className="flex flex-col items-center gap-3 text-center">
-            <span className="font-display text-sm font-semibold tracking-[-0.02em] text-[#006fff]">
+            <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
               Témoignages
             </span>
             <h3 className="font-display text-[28px] font-bold leading-[30px] tracking-[-1.4px] text-black min-[810px]:text-[32px]">
@@ -306,7 +306,7 @@ export function Features() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="size-4 fill-[#006fff] text-[#006fff]"
+                      className="size-4 fill-amber-500 text-amber-500"
                       strokeWidth={0}
                     />
                   ))}

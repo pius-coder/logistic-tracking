@@ -4,8 +4,7 @@ import { Features } from "./features";
 import { Benefits } from "./benefits";
 import { Pricing } from "./pricing";
 import { Faq } from "./faq";
-
-export function LandingPage() {
+export function LandingPage({ blogSection }: { blogSection?: React.ReactNode }) {
   return (
     <>
       <SiteHeader />
@@ -15,6 +14,7 @@ export function LandingPage() {
         <Benefits />
         <Pricing />
         <Faq />
+        {blogSection}
       </main>
     </>
   );
