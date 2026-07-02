@@ -47,12 +47,12 @@ async function seedCountries() {
 
 async function seedAdminUser() {
   const coteIvoire = await prisma.country.findUnique({ where: { slug: "cote-divoire" } });
-  const adminPhone = "225000000000";
-  const adminEmail = `${adminPhone}@jc-import-express.internal`;
+  const adminUsername = "admin";
+  const adminEmail = "admin@jc-import-express.internal";
   const adminPassword = process.env.JC_IMPORT_EXPRESS_ADMIN_PASSWORD || "Admin@12345";
 
-  const existing = await prisma.auraUser.findFirst({
-    where: { phoneIdentities: { some: { phoneE164: adminPhone } } },
+  const existing = await prisma.auraUser.findUnique({
+    where: { username: adminUsername },
   });
 
   if (existing) {
@@ -69,55 +69,14 @@ async function seedAdminUser() {
 
   const user = await prisma.auraUser.create({
     data: {
-      email: adminEmail, displayName: "Admin JC Import Express", businessName: "JC Import Express",
-      isAdmin: true, countryId: coteIvoire?.id, currencyCode: "XOF",
-      phoneIdentities: {
-        create: { countryCode: "CI", nationalNumber: "000000000", phoneE164: adminPhone, verifiedAt: new Date() },
-      },
+      username: adminUsername, email: adminEmail, displayName: "Admin JC Import Express",
+      businessName: "JC Import Express", isAdmin: true, countryId: coteIvoire?.id, currencyCode: "XOF",
       passwordCredential: {
         create: { passwordHash: hashSync(adminPassword, 12) },
       },
     },
   });
   console.log(`[seed] Admin user created: ${user.id}`);
-}
-
-async function seedClientUser() {
-  const senegal = await prisma.country.findUnique({ where: { slug: "senegal" } });
-  const clientPhone = "221770000001";
-  const clientEmail = `${clientPhone}@jc-import-express.internal`;
-  const clientPassword = "Client@123";
-
-  const existing = await prisma.auraUser.findFirst({
-    where: { phoneIdentities: { some: { phoneE164: clientPhone } } },
-  });
-
-  if (existing) {
-    await prisma.auraUser.update({
-      where: { id: existing.id },
-      data: {
-        isAdmin: false, displayName: "Amadou Diallo", businessName: "Diallo Commerce",
-        countryId: senegal?.id, currencyCode: "XOF", email: clientEmail,
-      },
-    });
-    console.log("[seed] Client user updated");
-    return existing.id;
-  }
-
-  const user = await prisma.auraUser.create({
-    data: {
-      email: clientEmail, displayName: "Amadou Diallo", businessName: "Diallo Commerce",
-      isAdmin: false, countryId: senegal?.id, currencyCode: "XOF",
-      phoneIdentities: {
-        create: { countryCode: "SN", nationalNumber: "770000001", phoneE164: clientPhone, verifiedAt: new Date() },
-      },
-      passwordCredential: {
-        create: { passwordHash: hashSync(clientPassword, 12) },
-      },
-    },
-  });
-  console.log(`[seed] Client user created: ${user.id}`);
-  return user.id;
 }
 
 async function seedRequests(clientId: string) {
@@ -506,8 +465,6 @@ async function main() {
   console.log("[seed] Starting...");
   await seedCountries();
   await seedAdminUser();
-  const clientId = await seedClientUser();
-  await seedRequests(clientId);
   await seedAdminAccessKey();
   await seedAppSettings();
   await seedBlogPosts();

@@ -21,7 +21,7 @@ const protectedPrefixes = [
   "/compte",
   "/notifications",
 ];
-const authPages = ["/login", "/register", "/verify-phone", "/reset-password"];
+const authPages = ["/login", "/logout"];
 
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 

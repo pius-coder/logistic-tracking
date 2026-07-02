@@ -1,13 +1,6 @@
 import Link from "next/link";
-import { CurrentUserCard, LogoutButton } from "@/aura/auth/components/forms";
+import { LogoutButton } from "@/aura/auth/components/forms";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function AccountSecurityPage() {
   return (
@@ -27,20 +20,6 @@ export default function AccountSecurityPage() {
           <LogoutButton />
         </div>
       </header>
-      <CurrentUserCard />
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Contrôles v1</CardTitle>
-          <CardDescription>
-            Aura v1 fournit les sessions opaques, OTP, reset password, CSRF et
-            audit logs.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Les changements sensibles futurs peuvent être ajoutés comme opérations
-          `.auth().use(...)` avec `AuraOtpPurpose.SENSITIVE_ACTION`.
-        </CardContent>
-      </Card> */}
     </main>
   );
 }

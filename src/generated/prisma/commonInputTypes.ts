@@ -82,11 +82,6 @@ export type BoolFilter<$PrismaModel = never> = {
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
 }
 
-export type BoolNullableFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedBoolNullableFilter<$PrismaModel> | boolean | null
-}
-
 export type SortOrderInput = {
   sort: Prisma.SortOrder
   nulls?: Prisma.NullsOrder
@@ -180,21 +175,6 @@ export type BoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
-export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
-}
-
-export type EnumAuraOtpPurposeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuraOtpPurpose | Prisma.EnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel> | $Enums.AuraOtpPurpose
-}
-
 export type JsonNullableFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -217,16 +197,6 @@ export type JsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
-}
-
-export type EnumAuraOtpPurposeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuraOtpPurpose | Prisma.EnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuraOtpPurposeWithAggregatesFilter<$PrismaModel> | $Enums.AuraOtpPurpose
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel>
 }
 
 export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -524,21 +494,89 @@ export type EnumJcNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumJcNotificationTypeFilter<$PrismaModel>
 }
 
-export type EnumAuthSessionPurposeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuthSessionPurpose | Prisma.EnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel> | $Enums.AuthSessionPurpose
+export type EnumJourneyTransportTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyTransportType | Prisma.EnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel> | $Enums.JourneyTransportType
 }
 
-export type EnumAuthSessionPurposeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuthSessionPurpose | Prisma.EnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuthSessionPurposeWithAggregatesFilter<$PrismaModel> | $Enums.AuthSessionPurpose
+export type EnumJourneyStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStatus | Prisma.EnumJourneyStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel> | $Enums.JourneyStatus
+}
+
+export type EnumJourneySpeedUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneySpeedUnit | Prisma.EnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel> | $Enums.JourneySpeedUnit | null
+}
+
+export type EnumJourneyTransportTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyTransportType | Prisma.EnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyTransportTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyTransportType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel>
+}
+
+export type EnumJourneyStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStatus | Prisma.EnumJourneyStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStatusWithAggregatesFilter<$PrismaModel> | $Enums.JourneyStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel>
+}
+
+export type EnumJourneySpeedUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneySpeedUnit | Prisma.EnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumJourneySpeedUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.JourneySpeedUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel>
+}
+
+export type EnumJourneyStopTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStopType | Prisma.EnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel> | $Enums.JourneyStopType
+}
+
+export type EnumJourneyStopTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStopType | Prisma.EnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStopTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyStopType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel>
+}
+
+export type EnumJourneyEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyEventType | Prisma.EnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel> | $Enums.JourneyEventType
+}
+
+export type EnumJourneyEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyEventType | Prisma.EnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel>
 }
 
 export type EnumBlogPostTypeFilter<$PrismaModel = never> = {
@@ -622,11 +660,6 @@ export type NestedStringNullableFilter<$PrismaModel = never> = {
 export type NestedBoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
-}
-
-export type NestedBoolNullableFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedBoolNullableFilter<$PrismaModel> | boolean | null
 }
 
 export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -735,31 +768,6 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedBoolFilter<$PrismaModel>
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
-}
-
-export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
-}
-
-export type NestedEnumAuraOtpPurposeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuraOtpPurpose | Prisma.EnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel> | $Enums.AuraOtpPurpose
-}
-
-export type NestedEnumAuraOtpPurposeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuraOtpPurpose | Prisma.EnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuraOtpPurpose[] | Prisma.ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuraOtpPurposeWithAggregatesFilter<$PrismaModel> | $Enums.AuraOtpPurpose
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuraOtpPurposeFilter<$PrismaModel>
 }
 
 export type NestedJsonNullableFilter<$PrismaModel = never> =
@@ -1005,21 +1013,89 @@ export type NestedEnumJcNotificationTypeWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumJcNotificationTypeFilter<$PrismaModel>
 }
 
-export type NestedEnumAuthSessionPurposeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuthSessionPurpose | Prisma.EnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel> | $Enums.AuthSessionPurpose
+export type NestedEnumJourneyTransportTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyTransportType | Prisma.EnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel> | $Enums.JourneyTransportType
 }
 
-export type NestedEnumAuthSessionPurposeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuthSessionPurpose | Prisma.EnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuthSessionPurpose[] | Prisma.ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuthSessionPurposeWithAggregatesFilter<$PrismaModel> | $Enums.AuthSessionPurpose
+export type NestedEnumJourneyStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStatus | Prisma.EnumJourneyStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel> | $Enums.JourneyStatus
+}
+
+export type NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneySpeedUnit | Prisma.EnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel> | $Enums.JourneySpeedUnit | null
+}
+
+export type NestedEnumJourneyTransportTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyTransportType | Prisma.EnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyTransportType[] | Prisma.ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyTransportTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyTransportType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuthSessionPurposeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyTransportTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumJourneyStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStatus | Prisma.EnumJourneyStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStatus[] | Prisma.ListEnumJourneyStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStatusWithAggregatesFilter<$PrismaModel> | $Enums.JourneyStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumJourneySpeedUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneySpeedUnit | Prisma.EnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.JourneySpeedUnit[] | Prisma.ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumJourneySpeedUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.JourneySpeedUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneySpeedUnitNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumJourneyStopTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStopType | Prisma.EnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel> | $Enums.JourneyStopType
+}
+
+export type NestedEnumJourneyStopTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyStopType | Prisma.EnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyStopType[] | Prisma.ListEnumJourneyStopTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyStopTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyStopType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyStopTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumJourneyEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyEventType | Prisma.EnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel> | $Enums.JourneyEventType
+}
+
+export type NestedEnumJourneyEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JourneyEventType | Prisma.EnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JourneyEventType[] | Prisma.ListEnumJourneyEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJourneyEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.JourneyEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJourneyEventTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumBlogPostTypeFilter<$PrismaModel = never> = {

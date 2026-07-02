@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Users, Package,
-  Globe, FileText, Settings, ChevronLeft, Newspaper,
+  FileText, Settings, ChevronLeft, Newspaper,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -15,8 +15,7 @@ const COLLAPSED_KEY = "admin-sidebar-collapsed";
 const ADMIN_NAV_ITEMS = [
   { href: "/dashboard/admin", label: "Tableau de bord", icon: LayoutDashboard },
   { href: "/dashboard/admin/clients", label: "Clients", icon: Users },
-  { href: "/dashboard/admin/requests", label: "Expéditions", icon: Package },
-  { href: "/dashboard/admin/pays", label: "Pays", icon: Globe },
+  { href: "/dashboard/admin/requests", label: "Suivis", icon: Package },
   { href: "/dashboard/admin/blog", label: "Blog", icon: Newspaper },
   { href: "/dashboard/admin/cms", label: "CMS", icon: FileText },
   { href: "/dashboard/admin/parametres", label: "Paramètres", icon: Settings },

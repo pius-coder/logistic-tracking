@@ -1,7 +1,6 @@
 import "server-only";
 
 import { AuraError } from "@/aura/core/errors";
-import type { AuraDb } from "./db";
 
 export interface RateLimitOptions {
   key: string;
@@ -9,39 +8,22 @@ export interface RateLimitOptions {
   windowSeconds: number;
 }
 
-export async function enforceRateLimit(db: AuraDb, options: RateLimitOptions): Promise<void> {
-  const now = new Date();
-  const resetAt = new Date(now.getTime() + options.windowSeconds * 1000);
-  const existing = await db.auraRateLimitBucket.findUnique({
-    where: { key: options.key },
-  });
+const buckets = new Map<string, { count: number; resetAt: number }>();
 
-  if (!existing || existing.resetAt <= now) {
-    await db.auraRateLimitBucket.upsert({
-      where: { key: options.key },
-      create: {
-        key: options.key,
-        count: 1,
-        resetAt,
-      },
-      update: {
-        count: 1,
-        resetAt,
-      },
-    });
+export async function enforceRateLimit(_db: unknown, options: RateLimitOptions): Promise<void> {
+  const now = Date.now();
+  const bucket = buckets.get(options.key);
+
+  if (!bucket || now >= bucket.resetAt) {
+    buckets.set(options.key, { count: 1, resetAt: now + options.windowSeconds * 1000 });
     return;
   }
 
-  if (existing.count >= options.limit) {
+  if (bucket.count >= options.limit) {
     throw new AuraError("RATE_LIMITED", "Trop de tentatives. Réessayez plus tard.", {
       status: 429,
     });
   }
 
-  await db.auraRateLimitBucket.update({
-    where: { key: options.key },
-    data: {
-      count: { increment: 1 },
-    },
-  });
+  bucket.count++;
 }

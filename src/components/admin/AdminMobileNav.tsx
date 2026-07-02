@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Users, Package,
-  Globe, FileText, Settings, MoreHorizontal,
+  FileText, Settings, MoreHorizontal,
 } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -15,11 +15,10 @@ const ADMIN_MOBILE_ITEMS = [
   { href: "/dashboard/admin/clients", label: "Clients", icon: Users },
   { href: "/dashboard/admin/requests", label: "Expéditions", icon: Package },
   { href: "/dashboard/admin/blog", label: "Blog", icon: FileText },
-  { href: "/dashboard/admin/pays", label: "Pays", icon: Globe },
+  { href: "/dashboard/admin/cms", label: "CMS", icon: FileText },
 ];
 
 const ADMIN_MORE_ITEMS = [
-  { href: "/dashboard/admin/cms", label: "CMS", icon: FileText },
   { href: "/dashboard/admin/parametres", label: "Paramètres", icon: Settings },
 ];
 

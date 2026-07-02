@@ -23,30 +23,15 @@ export * from './enums';
  */
 export type AuraUser = Prisma.AuraUserModel
 /**
- * Model AuraPhoneIdentity
- * 
- */
-export type AuraPhoneIdentity = Prisma.AuraPhoneIdentityModel
-/**
  * Model AuraPasswordCredential
  * 
  */
 export type AuraPasswordCredential = Prisma.AuraPasswordCredentialModel
 /**
- * Model AuraOtpChallenge
- * 
- */
-export type AuraOtpChallenge = Prisma.AuraOtpChallengeModel
-/**
  * Model AuraSession
  * 
  */
 export type AuraSession = Prisma.AuraSessionModel
-/**
- * Model AuraRateLimitBucket
- * 
- */
-export type AuraRateLimitBucket = Prisma.AuraRateLimitBucketModel
 /**
  * Model AuraNotification
  * 
@@ -98,6 +83,21 @@ export type RequestStatusEvent = Prisma.RequestStatusEventModel
  */
 export type JcNotification = Prisma.JcNotificationModel
 /**
+ * Model Journey
+ * 
+ */
+export type Journey = Prisma.JourneyModel
+/**
+ * Model JourneyStop
+ * 
+ */
+export type JourneyStop = Prisma.JourneyStopModel
+/**
+ * Model JourneyEvent
+ * 
+ */
+export type JourneyEvent = Prisma.JourneyEventModel
+/**
  * Model AppSettings
  * 
  */
@@ -107,11 +107,6 @@ export type AppSettings = Prisma.AppSettingsModel
  * 
  */
 export type SiteContent = Prisma.SiteContentModel
-/**
- * Model WhatsAppAuthSession
- * 
- */
-export type WhatsAppAuthSession = Prisma.WhatsAppAuthSessionModel
 /**
  * Model BlogPost
  * 

@@ -448,280 +448,553 @@ function MobileBottomNav({
   );
 }
 
-function Footer() {
+import {
+  ArrowUpRight,
+  Mail,
+  MapPin,
+  PackageSearch,
+  Phone,
+} from "lucide-react";
+
+const FOOTER_MENU = [
+  { href: "/", label: "Accueil" },
+  { href: "/tracking", label: "Suivi de colis" },
+  { href: "/catalogue", label: "Nos services" },
+  { href: "/blog", label: "Actualités" },
+] as const;
+
+const FOOTER_LEGAL = [
+  { href: "/confidentialite", label: "Politique de confidentialité" },
+  { href: "/mentions-legales", label: "Mentions légales" },
+  { href: "/conditions-general", label: "Conditions générales" },
+] as const;
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
-    <footer className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-black">
-      <div className="relative flex w-full max-w-[1200px] flex-row flex-nowrap gap-10 px-10 pt-[100px] pb-10">
+    <Link
+      href={href}
+      className="
+        group inline-flex w-fit items-center gap-1.5
+        font-display text-[14px] font-medium
+        leading-[1.5] tracking-[-0.012em]
+        text-white/54
+        outline-none
+        transition-colors duration-200
+        hover:text-white
+        focus-visible:rounded-md
+        focus-visible:ring-2
+        focus-visible:ring-white/30
+        focus-visible:ring-offset-4
+        focus-visible:ring-offset-[#07111f]
+      "
+    >
+      <span>{children}</span>
+
+      <ArrowUpRight
+        className="
+          size-3.5 translate-y-px opacity-0
+          transition-[transform,opacity] duration-200
+          group-hover:translate-x-0.5
+          group-hover:-translate-y-0.5
+          group-hover:opacity-70
+        "
+        strokeWidth={1.8}
+        aria-hidden="true"
+      />
+    </Link>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: readonly {
+    href: string;
+    label: string;
+  }[];
+}) {
+  return (
+    <nav aria-label={title} className="flex flex-col">
+      <h3
+        className="
+          font-display text-[11px] font-bold
+          uppercase tracking-[0.16em]
+          text-white/32
+        "
+      >
+        {title}
+      </h3>
+
+      <ul className="mt-5 flex flex-col gap-3.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <FooterLink href={link.href}>{link.label}</FooterLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer
+      className="
+        relative isolate w-full overflow-hidden
+        bg-[#07111f] text-white
+      "
+    >
+      {/* Matière de fond */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0
+          bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.085),transparent_31%),radial-gradient(circle_at_92%_20%,rgba(184,139,44,0.08),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.018)_0%,transparent_38%,rgba(0,0,0,0.16)_100%)]
+        "
+      />
+
+      {/* Hairline supérieure */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-x-0 top-0 h-px
+          bg-white/[0.09]
+        "
+      />
+
+      <div
+        className="
+          relative z-10 mx-auto w-full max-w-[1200px]
+          px-5 pt-6
+          min-[810px]:px-10
+        "
+      >
+        {/* CTA supérieur */}
         <div
-          className="absolute top-0 z-[1] h-10 rounded-b-[18px] bg-black"
-          style={{ left: "40px", right: "40px" }}
+          className="
+            relative isolate overflow-hidden
+            rounded-[30px]
+            border border-white/[0.09]
+            bg-white/[0.045]
+            p-6
+            ring-1 ring-black/20
+            shadow-[0_1px_2px_rgba(0,0,0,0.2),0_24px_65px_-42px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.07)]
+            backdrop-blur-xl
+            min-[810px]:flex
+            min-[810px]:items-center
+            min-[810px]:justify-between
+            min-[810px]:gap-10
+            min-[810px]:p-8
+          "
         >
-          <CornerDecorationFooter side="right" />
-          <CornerDecorationFooter side="left" />
-        </div>
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none absolute inset-px
+              rounded-[29px]
+              shadow-[inset_1px_0_0_rgba(255,255,255,0.025),inset_-1px_0_0_rgba(0,0,0,0.13),inset_0_1px_0_rgba(255,255,255,0.05)]
+            "
+          />
 
-        <div className="flex flex-col gap-5" style={{ flex: "2 0 0px" }}>
-          <div className="flex flex-row items-center gap-[10px] overflow-clip">
-            <div className="size-[30px] shrink-0 rounded-[8px] bg-primary" />
-            <div className="flex flex-col" style={{ whiteSpace: "pre" }}>
-              <p
-                className="font-display font-semibold text-white"
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "19.2px",
-                  letterSpacing: "-0.32px",
-                }}
-              >
-                JC Import Express
-              </p>
-            </div>
-            <div className="flex flex-col" style={{ whiteSpace: "pre", opacity: 0.4 }}>
-              <p
-                className="font-display text-white"
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "19.2px",
-                  letterSpacing: "-0.32px",
-                }}
-              >
-                Transport international
-              </p>
-            </div>
-          </div>
+          <div className="relative z-10 max-w-[650px]">
+            <span
+              className="
+                inline-flex items-center gap-2
+                font-display text-[10px] font-bold
+                uppercase tracking-[0.18em]
+                text-white/42
+              "
+            >
+              <span
+                className="
+                  size-1.5 rounded-full bg-[#c49a4a]
+                  shadow-[0_0_0_4px_rgba(196,154,74,0.09)]
+                "
+              />
+              Logistique internationale
+            </span>
 
-          <div className="flex flex-col" style={{ whiteSpace: "pre-wrap" }}>
-            <p
-              className="font-display text-white"
-              style={{
-                fontSize: "30px",
-                fontWeight: 700,
-                lineHeight: "30px",
-                letterSpacing: "-1.5px",
-              }}
+            <h2
+              className="
+                mt-4 max-w-[600px]
+                font-display text-[28px] font-bold
+                leading-[1.04] tracking-[-0.048em]
+                text-white
+                min-[810px]:text-[36px]
+              "
             >
-              Traçabilité totale.
-            </p>
+              Une visibilité complète sur chaque expédition.
+            </h2>
+
             <p
-              className="font-instrument italic text-white"
-              style={{
-                fontSize: "30px",
-                lineHeight: "30px",
-                letterSpacing: "-1.5px",
-              }}
+              className="
+                mt-3 max-w-[580px]
+                font-display text-[14px] leading-[1.65]
+                tracking-[-0.01em] text-white/48
+              "
             >
-              Livraison garantie.
+              Suivez vos colis depuis la Chine, l&apos;Europe et les
+              États-Unis avec des mises à jour fiables à chaque étape.
             </p>
           </div>
 
           <div
-            className="flex flex-col"
-            style={{
-              whiteSpace: "pre-wrap",
-              opacity: 0.6,
-            }}
+            className="
+              relative z-10 mt-6 flex shrink-0
+              flex-col gap-3
+              min-[520px]:flex-row
+              min-[810px]:mt-0
+            "
           >
-            <p
-              className="font-display text-white"
-              style={{
-                fontSize: "14px",
-                lineHeight: "19.6px",
-                letterSpacing: "-0.14px",
-              }}
+            <Link
+              href="/tracking"
+              className="
+                group inline-flex min-h-[52px]
+                items-center justify-center gap-2.5
+                rounded-[16px]
+                border border-white/90
+                bg-[#f7f5ef] px-6
+                font-display text-[13px] font-bold
+                tracking-[-0.012em] text-[#07111f]
+                ring-1 ring-black/20
+                shadow-[0_1px_2px_rgba(0,0,0,0.24),0_14px_28px_-18px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(7,17,31,0.08)]
+                transition-[transform,background-color,box-shadow]
+                duration-200
+                hover:-translate-y-0.5
+                hover:bg-white
+                hover:shadow-[0_2px_4px_rgba(0,0,0,0.25),0_20px_36px_-19px_rgba(0,0,0,0.88),inset_0_1px_0_rgba(255,255,255,1)]
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-white/60
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-[#07111f]
+              "
             >
-              Solution de suivi logistique international.
-              Tracking en temps réel pour vos expéditions
-              depuis la Chine, l&apos;Europe et les USA.
+              <PackageSearch
+                className="size-[17px]"
+                strokeWidth={1.9}
+                aria-hidden="true"
+              />
+              Suivre un colis
+            </Link>
+
+            <Link
+              href="/#contact"
+              className="
+                group inline-flex min-h-[52px]
+                items-center justify-center gap-2
+                rounded-[16px]
+                border border-white/[0.11]
+                bg-white/[0.055] px-6
+                font-display text-[13px] font-semibold
+                tracking-[-0.012em] text-white/78
+                shadow-[0_1px_2px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.07)]
+                transition-[background-color,border-color,color]
+                duration-200
+                hover:border-white/[0.18]
+                hover:bg-white/[0.08]
+                hover:text-white
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-white/30
+              "
+            >
+              Obtenir un devis
+
+              <ArrowUpRight
+                className="
+                  size-4 transition-transform duration-200
+                  group-hover:translate-x-0.5
+                  group-hover:-translate-y-0.5
+                "
+                strokeWidth={1.9}
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
+        </div>
+
+        {/* Corps du footer */}
+        <div
+          className="
+            grid grid-cols-1 gap-12
+            border-b border-white/[0.075]
+            py-16
+            min-[640px]:grid-cols-2
+            min-[810px]:grid-cols-[1.65fr_0.75fr_1fr_1.15fr]
+            min-[810px]:gap-10
+            min-[810px]:py-20
+          "
+        >
+          {/* Identité */}
+          <div className="flex max-w-[420px] flex-col">
+            <Link
+              href="/"
+              aria-label="JC Import Express — Accueil"
+              className="
+                group inline-flex w-fit items-center gap-3
+                rounded-lg outline-none
+                focus-visible:ring-2
+                focus-visible:ring-white/30
+                focus-visible:ring-offset-4
+                focus-visible:ring-offset-[#07111f]
+              "
+            >
+              <div
+                className="
+                  relative flex size-10 items-center justify-center
+                  overflow-hidden rounded-[13px]
+                  border border-white/[0.11]
+                  bg-white/[0.06]
+                  shadow-[0_1px_2px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.08)]
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  className="
+                    font-display text-[12px] font-bold
+                    tracking-[-0.04em] text-[#d3ac63]
+                  "
+                >
+                  JC
+                </span>
+              </div>
+
+              <div className="flex flex-col">
+                <span
+                  className="
+                    font-display text-[15px] font-bold
+                    leading-[1.2] tracking-[-0.025em]
+                    text-white
+                  "
+                >
+                  JC Import Express
+                </span>
+
+                <span
+                  className="
+                    mt-1 font-display text-[10px]
+                    font-semibold uppercase
+                    tracking-[0.14em]
+                    text-white/30
+                  "
+                >
+                  Transport international
+                </span>
+              </div>
+            </Link>
+
+            <div className="mt-8">
+              <p
+                className="
+                  font-display text-[28px] font-bold
+                  leading-[1.02] tracking-[-0.052em]
+                  text-white
+                  min-[810px]:text-[32px]
+                "
+              >
+                Traçabilité totale.
+              </p>
+
+              <p
+                className="
+                  mt-1 font-instrument text-[28px]
+                  italic leading-[1.02]
+                  tracking-[-0.045em]
+                  text-white/48
+                  min-[810px]:text-[32px]
+                "
+              >
+                Livraison maîtrisée.
+              </p>
+            </div>
+
+            <p
+              className="
+                mt-6 max-w-[380px]
+                font-display text-[13px] leading-[1.7]
+                tracking-[-0.008em] text-white/40
+              "
+            >
+              Une infrastructure logistique pensée pour les entreprises qui
+              exigent visibilité, fiabilité et maîtrise des délais.
             </p>
           </div>
 
-          <Link
-            href="/tracking"
-            className="flex flex-row items-center justify-center gap-[6px] rounded-[8px] bg-white"
-            style={{ padding: "8px 16px" }}
-          >
-            <div className="z-[2] flex size-3 flex-col items-center justify-center gap-[10px]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-3">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-            </div>
-            <div className="z-[2] flex flex-col" style={{ whiteSpace: "pre" }}>
-              <p
-                className="font-display text-black"
-                style={{ fontSize: "12px", fontWeight: 600, lineHeight: "16.8px" }}
-              >
-                Suivre un colis
-              </p>
-            </div>
-          </Link>
+          <FooterColumn title="Menu" links={FOOTER_MENU} />
 
-          <div className="flex flex-row items-center gap-5">
-            <div className="flex flex-1 flex-col" style={{ whiteSpace: "pre-wrap", opacity: 0.4 }}>
-              <p
-                style={{ fontSize: "12px", lineHeight: "19.2px", color: "rgb(255,255,255)" }}
-              >
-                &copy; {new Date().getFullYear()} JC Import Express.
-                Tous droits réservés.
-              </p>
-            </div>
-          </div>
+          <FooterColumn title="Informations" links={FOOTER_LEGAL} />
 
-          <div className="flex flex-row items-center justify-center gap-[10px] overflow-hidden">
-            <div className="flex flex-col" style={{ whiteSpace: "pre" }}>
-              <p
-                className="font-display text-center text-white"
-                style={{ fontSize: "12px", fontWeight: 500, lineHeight: "19.2px" }}
-              >
-                Propuls&eacute; par
-              </p>
-            </div>
-            <div className="flex flex-col" style={{ whiteSpace: "pre" }}>
-              <p
-                className="font-display text-center text-white"
-                style={{ fontSize: "12px", fontWeight: 500, lineHeight: "19.2px" }}
-              >
-                JC Import Express
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-start gap-5" style={{ flex: "1 0 0px" }}>
-          <div className="flex flex-col" style={{ whiteSpace: "pre", opacity: 0.4 }}>
-            <h6
-              className="font-display text-white"
-              style={{ fontSize: "16px", fontWeight: 600, lineHeight: "19.2px" }}
-            >
-              Menu
-            </h6>
-          </div>
-          <div className="flex flex-col items-start gap-[15px] overflow-hidden">
-            {[
-              { href: "/", label: "Accueil" },
-              { href: "/tracking", label: "Suivi" },
-              { href: "/catalogue", label: "Services" },
-              { href: "/blog", label: "Blog" },
-            ].map(({ href, label }) => (
-              <div key={label} className="flex flex-col shrink-0" style={{ whiteSpace: "pre" }}>
-                <p
-                  className="font-display text-white"
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    lineHeight: "16.8px",
-                    letterSpacing: "-0.28px",
-                  }}
-                >
-                  <Link
-                    href={href}
-                    className="font-display text-white"
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      lineHeight: "16.8px",
-                      letterSpacing: "-0.28px",
-                    }}
-                  >
-                    {label}
-                  </Link>
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col items-start gap-5" style={{ flex: "1 0 0px" }}>
-          <div className="flex flex-col" style={{ whiteSpace: "pre", opacity: 0.4 }}>
-            <h6
-              className="font-display text-white"
-              style={{ fontSize: "16px", fontWeight: 600, lineHeight: "19.2px" }}
-            >
-              Navigation
-            </h6>
-          </div>
-          <div className="flex flex-col items-start gap-[15px] overflow-hidden">
-            {[
-              { href: "/confidentialite", label: "Confidentialité" },
-              { href: "/mentions-legales", label: "Mentions légales" },
-              { href: "/conditions-general", label: "Conditions générales" },
-            ].map(({ href, label }) => (
-              <div key={label} className="flex flex-col w-full" style={{ whiteSpace: "pre-wrap" }}>
-                <p style={{ fontSize: "14px", lineHeight: "22.4px", color: "rgb(123, 130, 142)" }}>
-                  <Link
-                    href={href}
-                    className="text-white"
-                    style={{ fontSize: "14px", lineHeight: "22.4px" }}
-                  >
-                    {label}
-                  </Link>
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col items-start gap-5" style={{ flex: "1 0 0px" }}>
-          <div className="flex flex-col" style={{ whiteSpace: "pre", opacity: 0.4 }}>
-            <h6
-              className="font-display text-white"
-              style={{ fontSize: "16px", fontWeight: 600, lineHeight: "19.2px" }}
+          {/* Contact */}
+          <div className="flex flex-col">
+            <h3
+              className="
+                font-display text-[11px] font-bold
+                uppercase tracking-[0.16em]
+                text-white/32
+              "
             >
               Contact
-            </h6>
-          </div>
-          <div className="flex flex-col items-start gap-[15px] overflow-hidden">
-            {[
-              { href: "#", label: "Wyoming, États-Unis" },
-              { href: "tel:+14122273484", label: "+1 (412) 227-3484" },
-              { href: "mailto:support@jcimportexpress.com", label: "support@jcimportexpress.com" },
-            ].map(({ href, label }) => (
-              <div key={label} className="flex flex-col w-full" style={{ whiteSpace: "pre-wrap" }}>
-                <p style={{ fontSize: "14px", lineHeight: "22.4px", color: "rgb(123, 130, 142)" }}>
-                  <Link
-                    href={href}
-                    className="text-white"
-                    style={{ fontSize: "14px", lineHeight: "22.4px" }}
-                  >
-                    {label}
-                  </Link>
-                </p>
+            </h3>
+
+            <div className="mt-5 flex flex-col gap-5">
+              <div className="flex items-start gap-3">
+                <MapPin
+                  className="mt-0.5 size-4 shrink-0 text-[#c49a4a]"
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+
+                <div className="flex flex-col gap-1">
+                  <span className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-white/25">
+                    Siège social
+                  </span>
+
+                  <span className="font-display text-[14px] leading-[1.5] text-white/56">
+                    Wyoming, États-Unis
+                  </span>
+                </div>
               </div>
-            ))}
+
+              <a
+                href="tel:+14122273484"
+                className="
+                  group flex items-start gap-3
+                  rounded-lg outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white/30
+                "
+              >
+                <Phone
+                  className="
+                    mt-0.5 size-4 shrink-0
+                    text-[#c49a4a]
+                  "
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+
+                <div className="flex flex-col gap-1">
+                  <span className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-white/25">
+                    Téléphone
+                  </span>
+
+                  <span className="font-display text-[14px] leading-[1.5] text-white/56 transition-colors group-hover:text-white">
+                    +1 (412) 227-3484
+                  </span>
+                </div>
+              </a>
+
+              <a
+                href="mailto:support@jcimportexpress.com"
+                className="
+                  group flex min-w-0 items-start gap-3
+                  rounded-lg outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white/30
+                "
+              >
+                <Mail
+                  className="
+                    mt-0.5 size-4 shrink-0
+                    text-[#c49a4a]
+                  "
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+
+                <div className="flex min-w-0 flex-col gap-1">
+                  <span className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-white/25">
+                    Email
+                  </span>
+
+                  <span className="break-all font-display text-[14px] leading-[1.5] text-white/56 transition-colors group-hover:text-white">
+                    support@jcimportexpress.com
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Barre légale */}
+        <div
+          className="
+            flex flex-col gap-5 py-7
+            min-[810px]:flex-row
+            min-[810px]:items-center
+            min-[810px]:justify-between
+          "
+        >
+          <p
+            className="
+              font-display text-[11px] leading-[1.6]
+              tracking-[-0.005em] text-white/28
+            "
+          >
+            © {currentYear} JC Import Express. Tous droits réservés.
+          </p>
+
+          <div
+            className="
+              flex flex-wrap items-center gap-x-5 gap-y-2
+              font-display text-[11px] text-white/28
+            "
+          >
+            <span>Transport mondial</span>
+
+            <span
+              aria-hidden="true"
+              className="size-1 rounded-full bg-white/15"
+            />
+
+            <span>Suivi 24h/24</span>
+
+            <span
+              aria-hidden="true"
+              className="size-1 rounded-full bg-white/15"
+            />
+
+            <span>Support professionnel</span>
           </div>
         </div>
       </div>
 
-      <div className="flex w-full max-w-[1200px] flex-col items-center justify-start gap-[10px]">
-        <svg
-          viewBox="0 0 1171 320"
-          className="block shrink-0"
-          style={{ width: "1200px", height: "327.922px", overflow: "hidden" }}
+      {/* Mot-symbole inférieur */}
+      <div
+        aria-hidden="true"
+        className="
+          relative z-10 mx-auto flex w-full
+          max-w-[1500px] justify-center
+          overflow-hidden px-3
+          select-none
+        "
+      >
+        <p
+          className="
+            translate-y-[17%] whitespace-nowrap
+            font-display text-[clamp(72px,14vw,210px)]
+            font-bold leading-[0.78]
+            tracking-[-0.075em]
+            text-white/[0.035]
+          "
         >
-          <foreignObject
-            width="1171"
-            height="320"
-            style={{ overflow: "visible", transformOrigin: "center center" }}
-          >
-            <p
-              className="font-display font-bold whitespace-pre"
-              style={{
-                fontSize: "319.909px",
-                lineHeight: "319.909px",
-                letterSpacing: "-10px",
-                color: "rgb(18, 18, 18)",
-                width: "1171px",
-                height: "319.906px",
-              }}
-            >
-              JC Import Express
-            </p>
-          </foreignObject>
-        </svg>
+          JC Import Express
+        </p>
       </div>
     </footer>
   );
 }
-
 function CornerDecorationFooter({ side }: { side: "left" | "right" }) {
   return (
     <span

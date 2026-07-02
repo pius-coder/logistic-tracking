@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuraQuery } from "@/aura/client";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Shield, Key, LogOut, ArrowUpRight, User, Mail, Phone, CheckCircle2, Building2 } from "lucide-react";
+import { Shield, Key, LogOut, ArrowUpRight, User, Mail, AtSign, CheckCircle2, Building2 } from "lucide-react";
 import type { CompteData } from "./CompteTypes";
 
 export function CompteContent({ initialData }: { initialData: CompteData }) {
@@ -40,7 +40,7 @@ export function CompteContent({ initialData }: { initialData: CompteData }) {
         <div className="divide-y divide-border/50">
           {[
             { icon: User, label: "Nom", value: user.displayName || "—" },
-            { icon: Phone, label: "Téléphone", value: user.phoneE164 || "—" },
+            { icon: AtSign, label: "Identifiant", value: user.username || "—" },
             { icon: Mail, label: "Email", value: user.email || "—" },
             { icon: CheckCircle2, label: "Statut", value: user.onboardingCompleted ? "Actif" : "Onboarding en cours" },
           ].map(({ icon: Icon, label, value }) => (

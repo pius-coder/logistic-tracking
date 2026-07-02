@@ -390,6 +390,7 @@ export type RequestWhereInput = {
   trajectorySteps?: Prisma.TrajectoryStepListRelationFilter
   statusEvents?: Prisma.RequestStatusEventListRelationFilter
   jcNotifications?: Prisma.JcNotificationListRelationFilter
+  journey?: Prisma.XOR<Prisma.JourneyNullableScalarRelationFilter, Prisma.JourneyWhereInput> | null
 }
 
 export type RequestOrderByWithRelationInput = {
@@ -424,6 +425,7 @@ export type RequestOrderByWithRelationInput = {
   trajectorySteps?: Prisma.TrajectoryStepOrderByRelationAggregateInput
   statusEvents?: Prisma.RequestStatusEventOrderByRelationAggregateInput
   jcNotifications?: Prisma.JcNotificationOrderByRelationAggregateInput
+  journey?: Prisma.JourneyOrderByWithRelationInput
 }
 
 export type RequestWhereUniqueInput = Prisma.AtLeast<{
@@ -461,6 +463,7 @@ export type RequestWhereUniqueInput = Prisma.AtLeast<{
   trajectorySteps?: Prisma.TrajectoryStepListRelationFilter
   statusEvents?: Prisma.RequestStatusEventListRelationFilter
   jcNotifications?: Prisma.JcNotificationListRelationFilter
+  journey?: Prisma.XOR<Prisma.JourneyNullableScalarRelationFilter, Prisma.JourneyWhereInput> | null
 }, "id" | "requestNumber">
 
 export type RequestOrderByWithAggregationInput = {
@@ -556,6 +559,7 @@ export type RequestCreateInput = {
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateInput = {
@@ -587,6 +591,7 @@ export type RequestUncheckedCreateInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUpdateInput = {
@@ -618,6 +623,7 @@ export type RequestUpdateInput = {
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateInput = {
@@ -649,6 +655,7 @@ export type RequestUncheckedUpdateInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestCreateManyInput = {
@@ -1038,6 +1045,20 @@ export type RequestUpdateOneWithoutJcNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RequestUpdateToOneWithWhereWithoutJcNotificationsInput, Prisma.RequestUpdateWithoutJcNotificationsInput>, Prisma.RequestUncheckedUpdateWithoutJcNotificationsInput>
 }
 
+export type RequestCreateNestedOneWithoutJourneyInput = {
+  create?: Prisma.XOR<Prisma.RequestCreateWithoutJourneyInput, Prisma.RequestUncheckedCreateWithoutJourneyInput>
+  connectOrCreate?: Prisma.RequestCreateOrConnectWithoutJourneyInput
+  connect?: Prisma.RequestWhereUniqueInput
+}
+
+export type RequestUpdateOneRequiredWithoutJourneyNestedInput = {
+  create?: Prisma.XOR<Prisma.RequestCreateWithoutJourneyInput, Prisma.RequestUncheckedCreateWithoutJourneyInput>
+  connectOrCreate?: Prisma.RequestCreateOrConnectWithoutJourneyInput
+  upsert?: Prisma.RequestUpsertWithoutJourneyInput
+  connect?: Prisma.RequestWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RequestUpdateToOneWithWhereWithoutJourneyInput, Prisma.RequestUpdateWithoutJourneyInput>, Prisma.RequestUncheckedUpdateWithoutJourneyInput>
+}
+
 export type RequestCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
@@ -1066,6 +1087,7 @@ export type RequestCreateWithoutUserInput = {
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutUserInput = {
@@ -1096,6 +1118,7 @@ export type RequestUncheckedCreateWithoutUserInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutUserInput = {
@@ -1183,6 +1206,7 @@ export type RequestCreateWithoutDestinationCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutDestinationCountryInput = {
@@ -1213,6 +1237,7 @@ export type RequestUncheckedCreateWithoutDestinationCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutDestinationCountryInput = {
@@ -1253,6 +1278,7 @@ export type RequestCreateWithoutOriginCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutOriginCountryInput = {
@@ -1283,6 +1309,7 @@ export type RequestUncheckedCreateWithoutOriginCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutOriginCountryInput = {
@@ -1355,6 +1382,7 @@ export type RequestCreateWithoutTrajectoryStepsInput = {
   destinationCountry: Prisma.CountryCreateNestedOneWithoutDestinationRequestsInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutTrajectoryStepsInput = {
@@ -1385,6 +1413,7 @@ export type RequestUncheckedCreateWithoutTrajectoryStepsInput = {
   needsRectification?: boolean
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutTrajectoryStepsInput = {
@@ -1431,6 +1460,7 @@ export type RequestUpdateWithoutTrajectoryStepsInput = {
   destinationCountry?: Prisma.CountryUpdateOneRequiredWithoutDestinationRequestsNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutTrajectoryStepsInput = {
@@ -1461,6 +1491,7 @@ export type RequestUncheckedUpdateWithoutTrajectoryStepsInput = {
   needsRectification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestCreateWithoutStatusEventsInput = {
@@ -1491,6 +1522,7 @@ export type RequestCreateWithoutStatusEventsInput = {
   destinationCountry: Prisma.CountryCreateNestedOneWithoutDestinationRequestsInput
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutStatusEventsInput = {
@@ -1521,6 +1553,7 @@ export type RequestUncheckedCreateWithoutStatusEventsInput = {
   needsRectification?: boolean
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutStatusEventsInput = {
@@ -1567,6 +1600,7 @@ export type RequestUpdateWithoutStatusEventsInput = {
   destinationCountry?: Prisma.CountryUpdateOneRequiredWithoutDestinationRequestsNestedInput
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutStatusEventsInput = {
@@ -1597,6 +1631,7 @@ export type RequestUncheckedUpdateWithoutStatusEventsInput = {
   needsRectification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestCreateWithoutJcNotificationsInput = {
@@ -1627,6 +1662,7 @@ export type RequestCreateWithoutJcNotificationsInput = {
   destinationCountry: Prisma.CountryCreateNestedOneWithoutDestinationRequestsInput
   trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyCreateNestedOneWithoutRequestInput
 }
 
 export type RequestUncheckedCreateWithoutJcNotificationsInput = {
@@ -1657,6 +1693,7 @@ export type RequestUncheckedCreateWithoutJcNotificationsInput = {
   needsRectification?: boolean
   trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
   statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
+  journey?: Prisma.JourneyUncheckedCreateNestedOneWithoutRequestInput
 }
 
 export type RequestCreateOrConnectWithoutJcNotificationsInput = {
@@ -1703,6 +1740,7 @@ export type RequestUpdateWithoutJcNotificationsInput = {
   destinationCountry?: Prisma.CountryUpdateOneRequiredWithoutDestinationRequestsNestedInput
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutJcNotificationsInput = {
@@ -1733,6 +1771,147 @@ export type RequestUncheckedUpdateWithoutJcNotificationsInput = {
   needsRectification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
+}
+
+export type RequestCreateWithoutJourneyInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requestNumber: string
+  type?: string
+  recipientName: string
+  recipientPhone: string
+  deliveryAddress: string
+  city?: string | null
+  region?: string | null
+  packageWeightKg?: number | null
+  packageVolumeM3?: number | null
+  packageCount?: number
+  productDescription?: string
+  transportMode: $Enums.TransportMode
+  customerNotes?: string | null
+  adminNotes?: string | null
+  status?: $Enums.RequestStatus
+  problemType?: $Enums.RequestProblemType | null
+  whatsappDiscussionLink?: string | null
+  latestStatusMessage?: string | null
+  needsRectification?: boolean
+  user: Prisma.AuraUserCreateNestedOneWithoutRequestsInput
+  originCountry?: Prisma.CountryCreateNestedOneWithoutOriginRequestsInput
+  destinationCountry: Prisma.CountryCreateNestedOneWithoutDestinationRequestsInput
+  trajectorySteps?: Prisma.TrajectoryStepCreateNestedManyWithoutRequestInput
+  statusEvents?: Prisma.RequestStatusEventCreateNestedManyWithoutRequestInput
+  jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutRequestInput
+}
+
+export type RequestUncheckedCreateWithoutJourneyInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requestNumber: string
+  type?: string
+  userId: string
+  originCountryId?: string | null
+  destinationCountryId: string
+  recipientName: string
+  recipientPhone: string
+  deliveryAddress: string
+  city?: string | null
+  region?: string | null
+  packageWeightKg?: number | null
+  packageVolumeM3?: number | null
+  packageCount?: number
+  productDescription?: string
+  transportMode: $Enums.TransportMode
+  customerNotes?: string | null
+  adminNotes?: string | null
+  status?: $Enums.RequestStatus
+  problemType?: $Enums.RequestProblemType | null
+  whatsappDiscussionLink?: string | null
+  latestStatusMessage?: string | null
+  needsRectification?: boolean
+  trajectorySteps?: Prisma.TrajectoryStepUncheckedCreateNestedManyWithoutRequestInput
+  statusEvents?: Prisma.RequestStatusEventUncheckedCreateNestedManyWithoutRequestInput
+  jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutRequestInput
+}
+
+export type RequestCreateOrConnectWithoutJourneyInput = {
+  where: Prisma.RequestWhereUniqueInput
+  create: Prisma.XOR<Prisma.RequestCreateWithoutJourneyInput, Prisma.RequestUncheckedCreateWithoutJourneyInput>
+}
+
+export type RequestUpsertWithoutJourneyInput = {
+  update: Prisma.XOR<Prisma.RequestUpdateWithoutJourneyInput, Prisma.RequestUncheckedUpdateWithoutJourneyInput>
+  create: Prisma.XOR<Prisma.RequestCreateWithoutJourneyInput, Prisma.RequestUncheckedCreateWithoutJourneyInput>
+  where?: Prisma.RequestWhereInput
+}
+
+export type RequestUpdateToOneWithWhereWithoutJourneyInput = {
+  where?: Prisma.RequestWhereInput
+  data: Prisma.XOR<Prisma.RequestUpdateWithoutJourneyInput, Prisma.RequestUncheckedUpdateWithoutJourneyInput>
+}
+
+export type RequestUpdateWithoutJourneyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientName?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
+  problemType?: Prisma.NullableEnumRequestProblemTypeFieldUpdateOperationsInput | $Enums.RequestProblemType | null
+  whatsappDiscussionLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latestStatusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsRectification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.AuraUserUpdateOneRequiredWithoutRequestsNestedInput
+  originCountry?: Prisma.CountryUpdateOneWithoutOriginRequestsNestedInput
+  destinationCountry?: Prisma.CountryUpdateOneRequiredWithoutDestinationRequestsNestedInput
+  trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
+  statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
+  jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+}
+
+export type RequestUncheckedUpdateWithoutJourneyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  originCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationCountryId?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientName?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
+  problemType?: Prisma.NullableEnumRequestProblemTypeFieldUpdateOperationsInput | $Enums.RequestProblemType | null
+  whatsappDiscussionLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latestStatusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsRectification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
+  statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
+  jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type RequestCreateManyUserInput = {
@@ -1790,6 +1969,7 @@ export type RequestUpdateWithoutUserInput = {
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutUserInput = {
@@ -1820,6 +2000,7 @@ export type RequestUncheckedUpdateWithoutUserInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateManyWithoutUserInput = {
@@ -1931,6 +2112,7 @@ export type RequestUpdateWithoutDestinationCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutDestinationCountryInput = {
@@ -1961,6 +2143,7 @@ export type RequestUncheckedUpdateWithoutDestinationCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateManyWithoutDestinationCountryInput = {
@@ -2018,6 +2201,7 @@ export type RequestUpdateWithoutOriginCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateWithoutOriginCountryInput = {
@@ -2048,6 +2232,7 @@ export type RequestUncheckedUpdateWithoutOriginCountryInput = {
   trajectorySteps?: Prisma.TrajectoryStepUncheckedUpdateManyWithoutRequestNestedInput
   statusEvents?: Prisma.RequestStatusEventUncheckedUpdateManyWithoutRequestNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutRequestNestedInput
+  journey?: Prisma.JourneyUncheckedUpdateOneWithoutRequestNestedInput
 }
 
 export type RequestUncheckedUpdateManyWithoutOriginCountryInput = {
@@ -2158,6 +2343,7 @@ export type RequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   trajectorySteps?: boolean | Prisma.Request$trajectoryStepsArgs<ExtArgs>
   statusEvents?: boolean | Prisma.Request$statusEventsArgs<ExtArgs>
   jcNotifications?: boolean | Prisma.Request$jcNotificationsArgs<ExtArgs>
+  journey?: boolean | Prisma.Request$journeyArgs<ExtArgs>
   _count?: boolean | Prisma.RequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["request"]>
 
@@ -2259,6 +2445,7 @@ export type RequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   trajectorySteps?: boolean | Prisma.Request$trajectoryStepsArgs<ExtArgs>
   statusEvents?: boolean | Prisma.Request$statusEventsArgs<ExtArgs>
   jcNotifications?: boolean | Prisma.Request$jcNotificationsArgs<ExtArgs>
+  journey?: boolean | Prisma.Request$journeyArgs<ExtArgs>
   _count?: boolean | Prisma.RequestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2281,6 +2468,7 @@ export type $RequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     trajectorySteps: Prisma.$TrajectoryStepPayload<ExtArgs>[]
     statusEvents: Prisma.$RequestStatusEventPayload<ExtArgs>[]
     jcNotifications: Prisma.$JcNotificationPayload<ExtArgs>[]
+    journey: Prisma.$JourneyPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2708,6 +2896,7 @@ export interface Prisma__RequestClient<T, Null = never, ExtArgs extends runtime.
   trajectorySteps<T extends Prisma.Request$trajectoryStepsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Request$trajectoryStepsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrajectoryStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   statusEvents<T extends Prisma.Request$statusEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Request$statusEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestStatusEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jcNotifications<T extends Prisma.Request$jcNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Request$jcNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JcNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journey<T extends Prisma.Request$journeyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Request$journeyArgs<ExtArgs>>): Prisma.Prisma__JourneyClient<runtime.Types.Result.GetResult<Prisma.$JourneyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3251,6 +3440,25 @@ export type Request$jcNotificationsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.JcNotificationScalarFieldEnum | Prisma.JcNotificationScalarFieldEnum[]
+}
+
+/**
+ * Request.journey
+ */
+export type Request$journeyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Journey
+   */
+  select?: Prisma.JourneySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Journey
+   */
+  omit?: Prisma.JourneyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JourneyInclude<ExtArgs> | null
+  where?: Prisma.JourneyWhereInput
 }
 
 /**

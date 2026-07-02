@@ -385,11 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   AuraUser: 'AuraUser',
-  AuraPhoneIdentity: 'AuraPhoneIdentity',
   AuraPasswordCredential: 'AuraPasswordCredential',
-  AuraOtpChallenge: 'AuraOtpChallenge',
   AuraSession: 'AuraSession',
-  AuraRateLimitBucket: 'AuraRateLimitBucket',
   AuraNotification: 'AuraNotification',
   AuraOutboxEvent: 'AuraOutboxEvent',
   AuraJobRun: 'AuraJobRun',
@@ -400,9 +397,11 @@ export const ModelName = {
   TrajectoryStep: 'TrajectoryStep',
   RequestStatusEvent: 'RequestStatusEvent',
   JcNotification: 'JcNotification',
+  Journey: 'Journey',
+  JourneyStop: 'JourneyStop',
+  JourneyEvent: 'JourneyEvent',
   AppSettings: 'AppSettings',
   SiteContent: 'SiteContent',
-  WhatsAppAuthSession: 'WhatsAppAuthSession',
   BlogPost: 'BlogPost',
   AdminAccessKey: 'AdminAccessKey'
 } as const
@@ -420,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "auraUser" | "auraPhoneIdentity" | "auraPasswordCredential" | "auraOtpChallenge" | "auraSession" | "auraRateLimitBucket" | "auraNotification" | "auraOutboxEvent" | "auraJobRun" | "auraAuditLog" | "auraFile" | "country" | "request" | "trajectoryStep" | "requestStatusEvent" | "jcNotification" | "appSettings" | "siteContent" | "whatsAppAuthSession" | "blogPost" | "adminAccessKey"
+    modelProps: "auraUser" | "auraPasswordCredential" | "auraSession" | "auraNotification" | "auraOutboxEvent" | "auraJobRun" | "auraAuditLog" | "auraFile" | "country" | "request" | "trajectoryStep" | "requestStatusEvent" | "jcNotification" | "journey" | "journeyStop" | "journeyEvent" | "appSettings" | "siteContent" | "blogPost" | "adminAccessKey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -498,80 +497,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AuraPhoneIdentity: {
-      payload: Prisma.$AuraPhoneIdentityPayload<ExtArgs>
-      fields: Prisma.AuraPhoneIdentityFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AuraPhoneIdentityFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AuraPhoneIdentityFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        findFirst: {
-          args: Prisma.AuraPhoneIdentityFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AuraPhoneIdentityFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        findMany: {
-          args: Prisma.AuraPhoneIdentityFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>[]
-        }
-        create: {
-          args: Prisma.AuraPhoneIdentityCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        createMany: {
-          args: Prisma.AuraPhoneIdentityCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AuraPhoneIdentityCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>[]
-        }
-        delete: {
-          args: Prisma.AuraPhoneIdentityDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        update: {
-          args: Prisma.AuraPhoneIdentityUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        deleteMany: {
-          args: Prisma.AuraPhoneIdentityDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AuraPhoneIdentityUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AuraPhoneIdentityUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>[]
-        }
-        upsert: {
-          args: Prisma.AuraPhoneIdentityUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraPhoneIdentityPayload>
-        }
-        aggregate: {
-          args: Prisma.AuraPhoneIdentityAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAuraPhoneIdentity>
-        }
-        groupBy: {
-          args: Prisma.AuraPhoneIdentityGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraPhoneIdentityGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AuraPhoneIdentityCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraPhoneIdentityCountAggregateOutputType> | number
-        }
-      }
-    }
     AuraPasswordCredential: {
       payload: Prisma.$AuraPasswordCredentialPayload<ExtArgs>
       fields: Prisma.AuraPasswordCredentialFieldRefs
@@ -646,80 +571,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AuraOtpChallenge: {
-      payload: Prisma.$AuraOtpChallengePayload<ExtArgs>
-      fields: Prisma.AuraOtpChallengeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AuraOtpChallengeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AuraOtpChallengeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        findFirst: {
-          args: Prisma.AuraOtpChallengeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AuraOtpChallengeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        findMany: {
-          args: Prisma.AuraOtpChallengeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>[]
-        }
-        create: {
-          args: Prisma.AuraOtpChallengeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        createMany: {
-          args: Prisma.AuraOtpChallengeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AuraOtpChallengeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>[]
-        }
-        delete: {
-          args: Prisma.AuraOtpChallengeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        update: {
-          args: Prisma.AuraOtpChallengeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        deleteMany: {
-          args: Prisma.AuraOtpChallengeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AuraOtpChallengeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AuraOtpChallengeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>[]
-        }
-        upsert: {
-          args: Prisma.AuraOtpChallengeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraOtpChallengePayload>
-        }
-        aggregate: {
-          args: Prisma.AuraOtpChallengeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAuraOtpChallenge>
-        }
-        groupBy: {
-          args: Prisma.AuraOtpChallengeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraOtpChallengeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AuraOtpChallengeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraOtpChallengeCountAggregateOutputType> | number
-        }
-      }
-    }
     AuraSession: {
       payload: Prisma.$AuraSessionPayload<ExtArgs>
       fields: Prisma.AuraSessionFieldRefs
@@ -791,80 +642,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuraSessionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuraSessionCountAggregateOutputType> | number
-        }
-      }
-    }
-    AuraRateLimitBucket: {
-      payload: Prisma.$AuraRateLimitBucketPayload<ExtArgs>
-      fields: Prisma.AuraRateLimitBucketFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AuraRateLimitBucketFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AuraRateLimitBucketFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        findFirst: {
-          args: Prisma.AuraRateLimitBucketFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AuraRateLimitBucketFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        findMany: {
-          args: Prisma.AuraRateLimitBucketFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>[]
-        }
-        create: {
-          args: Prisma.AuraRateLimitBucketCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        createMany: {
-          args: Prisma.AuraRateLimitBucketCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AuraRateLimitBucketCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>[]
-        }
-        delete: {
-          args: Prisma.AuraRateLimitBucketDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        update: {
-          args: Prisma.AuraRateLimitBucketUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        deleteMany: {
-          args: Prisma.AuraRateLimitBucketDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AuraRateLimitBucketUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AuraRateLimitBucketUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>[]
-        }
-        upsert: {
-          args: Prisma.AuraRateLimitBucketUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuraRateLimitBucketPayload>
-        }
-        aggregate: {
-          args: Prisma.AuraRateLimitBucketAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAuraRateLimitBucket>
-        }
-        groupBy: {
-          args: Prisma.AuraRateLimitBucketGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraRateLimitBucketGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AuraRateLimitBucketCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AuraRateLimitBucketCountAggregateOutputType> | number
         }
       }
     }
@@ -1608,6 +1385,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Journey: {
+      payload: Prisma.$JourneyPayload<ExtArgs>
+      fields: Prisma.JourneyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JourneyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JourneyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        findFirst: {
+          args: Prisma.JourneyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JourneyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        findMany: {
+          args: Prisma.JourneyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>[]
+        }
+        create: {
+          args: Prisma.JourneyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        createMany: {
+          args: Prisma.JourneyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JourneyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>[]
+        }
+        delete: {
+          args: Prisma.JourneyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        update: {
+          args: Prisma.JourneyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        deleteMany: {
+          args: Prisma.JourneyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JourneyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JourneyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>[]
+        }
+        upsert: {
+          args: Prisma.JourneyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyPayload>
+        }
+        aggregate: {
+          args: Prisma.JourneyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJourney>
+        }
+        groupBy: {
+          args: Prisma.JourneyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JourneyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyCountAggregateOutputType> | number
+        }
+      }
+    }
+    JourneyStop: {
+      payload: Prisma.$JourneyStopPayload<ExtArgs>
+      fields: Prisma.JourneyStopFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JourneyStopFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JourneyStopFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        findFirst: {
+          args: Prisma.JourneyStopFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JourneyStopFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        findMany: {
+          args: Prisma.JourneyStopFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>[]
+        }
+        create: {
+          args: Prisma.JourneyStopCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        createMany: {
+          args: Prisma.JourneyStopCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JourneyStopCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>[]
+        }
+        delete: {
+          args: Prisma.JourneyStopDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        update: {
+          args: Prisma.JourneyStopUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        deleteMany: {
+          args: Prisma.JourneyStopDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JourneyStopUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JourneyStopUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>[]
+        }
+        upsert: {
+          args: Prisma.JourneyStopUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyStopPayload>
+        }
+        aggregate: {
+          args: Prisma.JourneyStopAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJourneyStop>
+        }
+        groupBy: {
+          args: Prisma.JourneyStopGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyStopGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JourneyStopCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyStopCountAggregateOutputType> | number
+        }
+      }
+    }
+    JourneyEvent: {
+      payload: Prisma.$JourneyEventPayload<ExtArgs>
+      fields: Prisma.JourneyEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JourneyEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JourneyEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        findFirst: {
+          args: Prisma.JourneyEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JourneyEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        findMany: {
+          args: Prisma.JourneyEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>[]
+        }
+        create: {
+          args: Prisma.JourneyEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        createMany: {
+          args: Prisma.JourneyEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JourneyEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>[]
+        }
+        delete: {
+          args: Prisma.JourneyEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        update: {
+          args: Prisma.JourneyEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.JourneyEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JourneyEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JourneyEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.JourneyEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JourneyEventPayload>
+        }
+        aggregate: {
+          args: Prisma.JourneyEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJourneyEvent>
+        }
+        groupBy: {
+          args: Prisma.JourneyEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JourneyEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JourneyEventCountAggregateOutputType> | number
+        }
+      }
+    }
     AppSettings: {
       payload: Prisma.$AppSettingsPayload<ExtArgs>
       fields: Prisma.AppSettingsFieldRefs
@@ -1753,80 +1752,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SiteContentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SiteContentCountAggregateOutputType> | number
-        }
-      }
-    }
-    WhatsAppAuthSession: {
-      payload: Prisma.$WhatsAppAuthSessionPayload<ExtArgs>
-      fields: Prisma.WhatsAppAuthSessionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.WhatsAppAuthSessionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.WhatsAppAuthSessionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        findFirst: {
-          args: Prisma.WhatsAppAuthSessionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.WhatsAppAuthSessionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        findMany: {
-          args: Prisma.WhatsAppAuthSessionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>[]
-        }
-        create: {
-          args: Prisma.WhatsAppAuthSessionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        createMany: {
-          args: Prisma.WhatsAppAuthSessionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.WhatsAppAuthSessionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>[]
-        }
-        delete: {
-          args: Prisma.WhatsAppAuthSessionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        update: {
-          args: Prisma.WhatsAppAuthSessionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        deleteMany: {
-          args: Prisma.WhatsAppAuthSessionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.WhatsAppAuthSessionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.WhatsAppAuthSessionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>[]
-        }
-        upsert: {
-          args: Prisma.WhatsAppAuthSessionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppAuthSessionPayload>
-        }
-        aggregate: {
-          args: Prisma.WhatsAppAuthSessionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppAuthSession>
-        }
-        groupBy: {
-          args: Prisma.WhatsAppAuthSessionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.WhatsAppAuthSessionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.WhatsAppAuthSessionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.WhatsAppAuthSessionCountAggregateOutputType> | number
         }
       }
     }
@@ -2024,6 +1949,7 @@ export const AuraUserScalarFieldEnum = {
   disabledAt: 'disabledAt',
   deletedAt: 'deletedAt',
   sessionVersion: 'sessionVersion',
+  username: 'username',
   email: 'email',
   displayName: 'displayName',
   businessName: 'businessName',
@@ -2031,29 +1957,10 @@ export const AuraUserScalarFieldEnum = {
   isBlocked: 'isBlocked',
   countryId: 'countryId',
   currencyCode: 'currencyCode',
-  onboardingCompleted: 'onboardingCompleted',
-  whatsappOptIn: 'whatsappOptIn',
-  referralCode: 'referralCode',
-  whatsappChallenge: 'whatsappChallenge',
-  hadWhatsapp: 'hadWhatsapp'
+  onboardingCompleted: 'onboardingCompleted'
 } as const
 
 export type AuraUserScalarFieldEnum = (typeof AuraUserScalarFieldEnum)[keyof typeof AuraUserScalarFieldEnum]
-
-
-export const AuraPhoneIdentityScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  countryCode: 'countryCode',
-  nationalNumber: 'nationalNumber',
-  phoneE164: 'phoneE164',
-  verifiedAt: 'verifiedAt',
-  whatsappVerifiedAt: 'whatsappVerifiedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuraPhoneIdentityScalarFieldEnum = (typeof AuraPhoneIdentityScalarFieldEnum)[keyof typeof AuraPhoneIdentityScalarFieldEnum]
 
 
 export const AuraPasswordCredentialScalarFieldEnum = {
@@ -2065,24 +1972,6 @@ export const AuraPasswordCredentialScalarFieldEnum = {
 } as const
 
 export type AuraPasswordCredentialScalarFieldEnum = (typeof AuraPasswordCredentialScalarFieldEnum)[keyof typeof AuraPasswordCredentialScalarFieldEnum]
-
-
-export const AuraOtpChallengeScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  phoneE164: 'phoneE164',
-  purpose: 'purpose',
-  codeHash: 'codeHash',
-  expiresAt: 'expiresAt',
-  consumedAt: 'consumedAt',
-  attempts: 'attempts',
-  maxAttempts: 'maxAttempts',
-  metadata: 'metadata',
-  sentAt: 'sentAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AuraOtpChallengeScalarFieldEnum = (typeof AuraOtpChallengeScalarFieldEnum)[keyof typeof AuraOtpChallengeScalarFieldEnum]
 
 
 export const AuraSessionScalarFieldEnum = {
@@ -2101,16 +1990,6 @@ export const AuraSessionScalarFieldEnum = {
 } as const
 
 export type AuraSessionScalarFieldEnum = (typeof AuraSessionScalarFieldEnum)[keyof typeof AuraSessionScalarFieldEnum]
-
-
-export const AuraRateLimitBucketScalarFieldEnum = {
-  key: 'key',
-  count: 'count',
-  resetAt: 'resetAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuraRateLimitBucketScalarFieldEnum = (typeof AuraRateLimitBucketScalarFieldEnum)[keyof typeof AuraRateLimitBucketScalarFieldEnum]
 
 
 export const AuraNotificationScalarFieldEnum = {
@@ -2299,6 +2178,62 @@ export const JcNotificationScalarFieldEnum = {
 export type JcNotificationScalarFieldEnum = (typeof JcNotificationScalarFieldEnum)[keyof typeof JcNotificationScalarFieldEnum]
 
 
+export const JourneyScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  requestId: 'requestId',
+  publicToken: 'publicToken',
+  vehicleName: 'vehicleName',
+  transportType: 'transportType',
+  status: 'status',
+  averageSpeed: 'averageSpeed',
+  speedUnit: 'speedUnit',
+  publishedAt: 'publishedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  latestMessage: 'latestMessage',
+  problemMessage: 'problemMessage'
+} as const
+
+export type JourneyScalarFieldEnum = (typeof JourneyScalarFieldEnum)[keyof typeof JourneyScalarFieldEnum]
+
+
+export const JourneyStopScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  journeyId: 'journeyId',
+  placeName: 'placeName',
+  placeLabel: 'placeLabel',
+  mapboxPlaceId: 'mapboxPlaceId',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  stopType: 'stopType',
+  sequence: 'sequence',
+  estimatedArrivalAt: 'estimatedArrivalAt',
+  reachedAt: 'reachedAt',
+  note: 'note'
+} as const
+
+export type JourneyStopScalarFieldEnum = (typeof JourneyStopScalarFieldEnum)[keyof typeof JourneyStopScalarFieldEnum]
+
+
+export const JourneyEventScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  journeyId: 'journeyId',
+  stopId: 'stopId',
+  eventType: 'eventType',
+  title: 'title',
+  message: 'message',
+  visibleToCustomer: 'visibleToCustomer',
+  createdByLabel: 'createdByLabel'
+} as const
+
+export type JourneyEventScalarFieldEnum = (typeof JourneyEventScalarFieldEnum)[keyof typeof JourneyEventScalarFieldEnum]
+
+
 export const AppSettingsScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -2327,25 +2262,6 @@ export const SiteContentScalarFieldEnum = {
 } as const
 
 export type SiteContentScalarFieldEnum = (typeof SiteContentScalarFieldEnum)[keyof typeof SiteContentScalarFieldEnum]
-
-
-export const WhatsAppAuthSessionScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  phoneNumber: 'phoneNumber',
-  internalEmail: 'internalEmail',
-  token: 'token',
-  otpCode: 'otpCode',
-  purpose: 'purpose',
-  expiresAt: 'expiresAt',
-  consumedAt: 'consumedAt',
-  redirectPath: 'redirectPath',
-  usernameHint: 'usernameHint',
-  userId: 'userId'
-} as const
-
-export type WhatsAppAuthSessionScalarFieldEnum = (typeof WhatsAppAuthSessionScalarFieldEnum)[keyof typeof WhatsAppAuthSessionScalarFieldEnum]
 
 
 export const BlogPostScalarFieldEnum = {
@@ -2484,20 +2400,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'AuraOtpPurpose'
- */
-export type EnumAuraOtpPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuraOtpPurpose'>
-    
-
-
-/**
- * Reference to a field of type 'AuraOtpPurpose[]'
- */
-export type ListEnumAuraOtpPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuraOtpPurpose[]'>
     
 
 
@@ -2642,16 +2544,72 @@ export type ListEnumJcNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'AuthSessionPurpose'
+ * Reference to a field of type 'JourneyTransportType'
  */
-export type EnumAuthSessionPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthSessionPurpose'>
+export type EnumJourneyTransportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyTransportType'>
     
 
 
 /**
- * Reference to a field of type 'AuthSessionPurpose[]'
+ * Reference to a field of type 'JourneyTransportType[]'
  */
-export type ListEnumAuthSessionPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthSessionPurpose[]'>
+export type ListEnumJourneyTransportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyTransportType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyStatus'
+ */
+export type EnumJourneyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyStatus[]'
+ */
+export type ListEnumJourneyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneySpeedUnit'
+ */
+export type EnumJourneySpeedUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneySpeedUnit'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneySpeedUnit[]'
+ */
+export type ListEnumJourneySpeedUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneySpeedUnit[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyStopType'
+ */
+export type EnumJourneyStopTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyStopType'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyStopType[]'
+ */
+export type ListEnumJourneyStopTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyStopType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyEventType'
+ */
+export type EnumJourneyEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyEventType'>
+    
+
+
+/**
+ * Reference to a field of type 'JourneyEventType[]'
+ */
+export type ListEnumJourneyEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JourneyEventType[]'>
     
 
 
@@ -2779,11 +2737,8 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   auraUser?: Prisma.AuraUserOmit
-  auraPhoneIdentity?: Prisma.AuraPhoneIdentityOmit
   auraPasswordCredential?: Prisma.AuraPasswordCredentialOmit
-  auraOtpChallenge?: Prisma.AuraOtpChallengeOmit
   auraSession?: Prisma.AuraSessionOmit
-  auraRateLimitBucket?: Prisma.AuraRateLimitBucketOmit
   auraNotification?: Prisma.AuraNotificationOmit
   auraOutboxEvent?: Prisma.AuraOutboxEventOmit
   auraJobRun?: Prisma.AuraJobRunOmit
@@ -2794,9 +2749,11 @@ export type GlobalOmitConfig = {
   trajectoryStep?: Prisma.TrajectoryStepOmit
   requestStatusEvent?: Prisma.RequestStatusEventOmit
   jcNotification?: Prisma.JcNotificationOmit
+  journey?: Prisma.JourneyOmit
+  journeyStop?: Prisma.JourneyStopOmit
+  journeyEvent?: Prisma.JourneyEventOmit
   appSettings?: Prisma.AppSettingsOmit
   siteContent?: Prisma.SiteContentOmit
-  whatsAppAuthSession?: Prisma.WhatsAppAuthSessionOmit
   blogPost?: Prisma.BlogPostOmit
   adminAccessKey?: Prisma.AdminAccessKeyOmit
 }

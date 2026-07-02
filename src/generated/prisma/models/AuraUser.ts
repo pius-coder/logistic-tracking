@@ -41,6 +41,7 @@ export type AuraUserMinAggregateOutputType = {
   disabledAt: Date | null
   deletedAt: Date | null
   sessionVersion: number | null
+  username: string | null
   email: string | null
   displayName: string | null
   businessName: string | null
@@ -49,10 +50,6 @@ export type AuraUserMinAggregateOutputType = {
   countryId: string | null
   currencyCode: string | null
   onboardingCompleted: boolean | null
-  whatsappOptIn: boolean | null
-  referralCode: string | null
-  whatsappChallenge: boolean | null
-  hadWhatsapp: boolean | null
 }
 
 export type AuraUserMaxAggregateOutputType = {
@@ -62,6 +59,7 @@ export type AuraUserMaxAggregateOutputType = {
   disabledAt: Date | null
   deletedAt: Date | null
   sessionVersion: number | null
+  username: string | null
   email: string | null
   displayName: string | null
   businessName: string | null
@@ -70,10 +68,6 @@ export type AuraUserMaxAggregateOutputType = {
   countryId: string | null
   currencyCode: string | null
   onboardingCompleted: boolean | null
-  whatsappOptIn: boolean | null
-  referralCode: string | null
-  whatsappChallenge: boolean | null
-  hadWhatsapp: boolean | null
 }
 
 export type AuraUserCountAggregateOutputType = {
@@ -83,6 +77,7 @@ export type AuraUserCountAggregateOutputType = {
   disabledAt: number
   deletedAt: number
   sessionVersion: number
+  username: number
   email: number
   displayName: number
   businessName: number
@@ -91,10 +86,6 @@ export type AuraUserCountAggregateOutputType = {
   countryId: number
   currencyCode: number
   onboardingCompleted: number
-  whatsappOptIn: number
-  referralCode: number
-  whatsappChallenge: number
-  hadWhatsapp: number
   _all: number
 }
 
@@ -114,6 +105,7 @@ export type AuraUserMinAggregateInputType = {
   disabledAt?: true
   deletedAt?: true
   sessionVersion?: true
+  username?: true
   email?: true
   displayName?: true
   businessName?: true
@@ -122,10 +114,6 @@ export type AuraUserMinAggregateInputType = {
   countryId?: true
   currencyCode?: true
   onboardingCompleted?: true
-  whatsappOptIn?: true
-  referralCode?: true
-  whatsappChallenge?: true
-  hadWhatsapp?: true
 }
 
 export type AuraUserMaxAggregateInputType = {
@@ -135,6 +123,7 @@ export type AuraUserMaxAggregateInputType = {
   disabledAt?: true
   deletedAt?: true
   sessionVersion?: true
+  username?: true
   email?: true
   displayName?: true
   businessName?: true
@@ -143,10 +132,6 @@ export type AuraUserMaxAggregateInputType = {
   countryId?: true
   currencyCode?: true
   onboardingCompleted?: true
-  whatsappOptIn?: true
-  referralCode?: true
-  whatsappChallenge?: true
-  hadWhatsapp?: true
 }
 
 export type AuraUserCountAggregateInputType = {
@@ -156,6 +141,7 @@ export type AuraUserCountAggregateInputType = {
   disabledAt?: true
   deletedAt?: true
   sessionVersion?: true
+  username?: true
   email?: true
   displayName?: true
   businessName?: true
@@ -164,10 +150,6 @@ export type AuraUserCountAggregateInputType = {
   countryId?: true
   currencyCode?: true
   onboardingCompleted?: true
-  whatsappOptIn?: true
-  referralCode?: true
-  whatsappChallenge?: true
-  hadWhatsapp?: true
   _all?: true
 }
 
@@ -264,6 +246,7 @@ export type AuraUserGroupByOutputType = {
   disabledAt: Date | null
   deletedAt: Date | null
   sessionVersion: number
+  username: string
   email: string | null
   displayName: string | null
   businessName: string | null
@@ -272,10 +255,6 @@ export type AuraUserGroupByOutputType = {
   countryId: string | null
   currencyCode: string | null
   onboardingCompleted: boolean
-  whatsappOptIn: boolean
-  referralCode: string | null
-  whatsappChallenge: boolean
-  hadWhatsapp: boolean | null
   _count: AuraUserCountAggregateOutputType | null
   _avg: AuraUserAvgAggregateOutputType | null
   _sum: AuraUserSumAggregateOutputType | null
@@ -308,6 +287,7 @@ export type AuraUserWhereInput = {
   disabledAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   sessionVersion?: Prisma.IntFilter<"AuraUser"> | number
+  username?: Prisma.StringFilter<"AuraUser"> | string
   email?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
@@ -316,19 +296,13 @@ export type AuraUserWhereInput = {
   countryId?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   currencyCode?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   onboardingCompleted?: Prisma.BoolFilter<"AuraUser"> | boolean
-  whatsappOptIn?: Prisma.BoolFilter<"AuraUser"> | boolean
-  referralCode?: Prisma.StringNullableFilter<"AuraUser"> | string | null
-  whatsappChallenge?: Prisma.BoolFilter<"AuraUser"> | boolean
-  hadWhatsapp?: Prisma.BoolNullableFilter<"AuraUser"> | boolean | null
   country?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityListRelationFilter
   passwordCredential?: Prisma.XOR<Prisma.AuraPasswordCredentialNullableScalarRelationFilter, Prisma.AuraPasswordCredentialWhereInput> | null
   sessions?: Prisma.AuraSessionListRelationFilter
   notifications?: Prisma.AuraNotificationListRelationFilter
   auditLogs?: Prisma.AuraAuditLogListRelationFilter
   requests?: Prisma.RequestListRelationFilter
   jcNotifications?: Prisma.JcNotificationListRelationFilter
-  authSessions?: Prisma.WhatsAppAuthSessionListRelationFilter
 }
 
 export type AuraUserOrderByWithRelationInput = {
@@ -338,6 +312,7 @@ export type AuraUserOrderByWithRelationInput = {
   disabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,25 +321,19 @@ export type AuraUserOrderByWithRelationInput = {
   countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   currencyCode?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingCompleted?: Prisma.SortOrder
-  whatsappOptIn?: Prisma.SortOrder
-  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  whatsappChallenge?: Prisma.SortOrder
-  hadWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.CountryOrderByWithRelationInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityOrderByRelationAggregateInput
   passwordCredential?: Prisma.AuraPasswordCredentialOrderByWithRelationInput
   sessions?: Prisma.AuraSessionOrderByRelationAggregateInput
   notifications?: Prisma.AuraNotificationOrderByRelationAggregateInput
   auditLogs?: Prisma.AuraAuditLogOrderByRelationAggregateInput
   requests?: Prisma.RequestOrderByRelationAggregateInput
   jcNotifications?: Prisma.JcNotificationOrderByRelationAggregateInput
-  authSessions?: Prisma.WhatsAppAuthSessionOrderByRelationAggregateInput
 }
 
 export type AuraUserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  username?: string
   email?: string
-  referralCode?: string
   AND?: Prisma.AuraUserWhereInput | Prisma.AuraUserWhereInput[]
   OR?: Prisma.AuraUserWhereInput[]
   NOT?: Prisma.AuraUserWhereInput | Prisma.AuraUserWhereInput[]
@@ -380,19 +349,14 @@ export type AuraUserWhereUniqueInput = Prisma.AtLeast<{
   countryId?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   currencyCode?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   onboardingCompleted?: Prisma.BoolFilter<"AuraUser"> | boolean
-  whatsappOptIn?: Prisma.BoolFilter<"AuraUser"> | boolean
-  whatsappChallenge?: Prisma.BoolFilter<"AuraUser"> | boolean
-  hadWhatsapp?: Prisma.BoolNullableFilter<"AuraUser"> | boolean | null
   country?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityListRelationFilter
   passwordCredential?: Prisma.XOR<Prisma.AuraPasswordCredentialNullableScalarRelationFilter, Prisma.AuraPasswordCredentialWhereInput> | null
   sessions?: Prisma.AuraSessionListRelationFilter
   notifications?: Prisma.AuraNotificationListRelationFilter
   auditLogs?: Prisma.AuraAuditLogListRelationFilter
   requests?: Prisma.RequestListRelationFilter
   jcNotifications?: Prisma.JcNotificationListRelationFilter
-  authSessions?: Prisma.WhatsAppAuthSessionListRelationFilter
-}, "id" | "email" | "referralCode">
+}, "id" | "username" | "email">
 
 export type AuraUserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -401,6 +365,7 @@ export type AuraUserOrderByWithAggregationInput = {
   disabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -409,10 +374,6 @@ export type AuraUserOrderByWithAggregationInput = {
   countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   currencyCode?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingCompleted?: Prisma.SortOrder
-  whatsappOptIn?: Prisma.SortOrder
-  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  whatsappChallenge?: Prisma.SortOrder
-  hadWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AuraUserCountOrderByAggregateInput
   _avg?: Prisma.AuraUserAvgOrderByAggregateInput
   _max?: Prisma.AuraUserMaxOrderByAggregateInput
@@ -430,6 +391,7 @@ export type AuraUserScalarWhereWithAggregatesInput = {
   disabledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AuraUser"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AuraUser"> | Date | string | null
   sessionVersion?: Prisma.IntWithAggregatesFilter<"AuraUser"> | number
+  username?: Prisma.StringWithAggregatesFilter<"AuraUser"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
@@ -438,10 +400,6 @@ export type AuraUserScalarWhereWithAggregatesInput = {
   countryId?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   currencyCode?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   onboardingCompleted?: Prisma.BoolWithAggregatesFilter<"AuraUser"> | boolean
-  whatsappOptIn?: Prisma.BoolWithAggregatesFilter<"AuraUser"> | boolean
-  referralCode?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
-  whatsappChallenge?: Prisma.BoolWithAggregatesFilter<"AuraUser"> | boolean
-  hadWhatsapp?: Prisma.BoolNullableWithAggregatesFilter<"AuraUser"> | boolean | null
 }
 
 export type AuraUserCreateInput = {
@@ -451,6 +409,7 @@ export type AuraUserCreateInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -458,19 +417,13 @@ export type AuraUserCreateInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateInput = {
@@ -480,6 +433,7 @@ export type AuraUserUncheckedCreateInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -488,18 +442,12 @@ export type AuraUserUncheckedCreateInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUpdateInput = {
@@ -509,6 +457,7 @@ export type AuraUserUpdateInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -516,19 +465,13 @@ export type AuraUserUpdateInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateInput = {
@@ -538,6 +481,7 @@ export type AuraUserUncheckedUpdateInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -546,18 +490,12 @@ export type AuraUserUncheckedUpdateInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateManyInput = {
@@ -567,6 +505,7 @@ export type AuraUserCreateManyInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -575,10 +514,6 @@ export type AuraUserCreateManyInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
 }
 
 export type AuraUserUpdateManyMutationInput = {
@@ -588,6 +523,7 @@ export type AuraUserUpdateManyMutationInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -595,10 +531,6 @@ export type AuraUserUpdateManyMutationInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type AuraUserUncheckedUpdateManyInput = {
@@ -608,6 +540,7 @@ export type AuraUserUncheckedUpdateManyInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -616,10 +549,6 @@ export type AuraUserUncheckedUpdateManyInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type AuraUserCountOrderByAggregateInput = {
@@ -629,6 +558,7 @@ export type AuraUserCountOrderByAggregateInput = {
   disabledAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
@@ -637,10 +567,6 @@ export type AuraUserCountOrderByAggregateInput = {
   countryId?: Prisma.SortOrder
   currencyCode?: Prisma.SortOrder
   onboardingCompleted?: Prisma.SortOrder
-  whatsappOptIn?: Prisma.SortOrder
-  referralCode?: Prisma.SortOrder
-  whatsappChallenge?: Prisma.SortOrder
-  hadWhatsapp?: Prisma.SortOrder
 }
 
 export type AuraUserAvgOrderByAggregateInput = {
@@ -654,6 +580,7 @@ export type AuraUserMaxOrderByAggregateInput = {
   disabledAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
@@ -662,10 +589,6 @@ export type AuraUserMaxOrderByAggregateInput = {
   countryId?: Prisma.SortOrder
   currencyCode?: Prisma.SortOrder
   onboardingCompleted?: Prisma.SortOrder
-  whatsappOptIn?: Prisma.SortOrder
-  referralCode?: Prisma.SortOrder
-  whatsappChallenge?: Prisma.SortOrder
-  hadWhatsapp?: Prisma.SortOrder
 }
 
 export type AuraUserMinOrderByAggregateInput = {
@@ -675,6 +598,7 @@ export type AuraUserMinOrderByAggregateInput = {
   disabledAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
@@ -683,10 +607,6 @@ export type AuraUserMinOrderByAggregateInput = {
   countryId?: Prisma.SortOrder
   currencyCode?: Prisma.SortOrder
   onboardingCompleted?: Prisma.SortOrder
-  whatsappOptIn?: Prisma.SortOrder
-  referralCode?: Prisma.SortOrder
-  whatsappChallenge?: Prisma.SortOrder
-  hadWhatsapp?: Prisma.SortOrder
 }
 
 export type AuraUserSumOrderByAggregateInput = {
@@ -739,24 +659,6 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
-}
-
-export type NullableBoolFieldUpdateOperationsInput = {
-  set?: boolean | null
-}
-
-export type AuraUserCreateNestedOneWithoutPhoneIdentitiesInput = {
-  create?: Prisma.XOR<Prisma.AuraUserCreateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedCreateWithoutPhoneIdentitiesInput>
-  connectOrCreate?: Prisma.AuraUserCreateOrConnectWithoutPhoneIdentitiesInput
-  connect?: Prisma.AuraUserWhereUniqueInput
-}
-
-export type AuraUserUpdateOneRequiredWithoutPhoneIdentitiesNestedInput = {
-  create?: Prisma.XOR<Prisma.AuraUserCreateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedCreateWithoutPhoneIdentitiesInput>
-  connectOrCreate?: Prisma.AuraUserCreateOrConnectWithoutPhoneIdentitiesInput
-  upsert?: Prisma.AuraUserUpsertWithoutPhoneIdentitiesInput
-  connect?: Prisma.AuraUserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AuraUserUpdateToOneWithWhereWithoutPhoneIdentitiesInput, Prisma.AuraUserUpdateWithoutPhoneIdentitiesInput>, Prisma.AuraUserUncheckedUpdateWithoutPhoneIdentitiesInput>
 }
 
 export type AuraUserCreateNestedOneWithoutPasswordCredentialInput = {
@@ -889,150 +791,6 @@ export type AuraUserUpdateOneRequiredWithoutJcNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AuraUserUpdateToOneWithWhereWithoutJcNotificationsInput, Prisma.AuraUserUpdateWithoutJcNotificationsInput>, Prisma.AuraUserUncheckedUpdateWithoutJcNotificationsInput>
 }
 
-export type AuraUserCreateNestedOneWithoutAuthSessionsInput = {
-  create?: Prisma.XOR<Prisma.AuraUserCreateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedCreateWithoutAuthSessionsInput>
-  connectOrCreate?: Prisma.AuraUserCreateOrConnectWithoutAuthSessionsInput
-  connect?: Prisma.AuraUserWhereUniqueInput
-}
-
-export type AuraUserUpdateOneWithoutAuthSessionsNestedInput = {
-  create?: Prisma.XOR<Prisma.AuraUserCreateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedCreateWithoutAuthSessionsInput>
-  connectOrCreate?: Prisma.AuraUserCreateOrConnectWithoutAuthSessionsInput
-  upsert?: Prisma.AuraUserUpsertWithoutAuthSessionsInput
-  disconnect?: Prisma.AuraUserWhereInput | boolean
-  delete?: Prisma.AuraUserWhereInput | boolean
-  connect?: Prisma.AuraUserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AuraUserUpdateToOneWithWhereWithoutAuthSessionsInput, Prisma.AuraUserUpdateWithoutAuthSessionsInput>, Prisma.AuraUserUncheckedUpdateWithoutAuthSessionsInput>
-}
-
-export type AuraUserCreateWithoutPhoneIdentitiesInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  disabledAt?: Date | string | null
-  deletedAt?: Date | string | null
-  sessionVersion?: number
-  email?: string | null
-  displayName?: string | null
-  businessName?: string | null
-  isAdmin?: boolean
-  isBlocked?: boolean
-  currencyCode?: string | null
-  onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
-  sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
-  notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
-  auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
-  requests?: Prisma.RequestCreateNestedManyWithoutUserInput
-  jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
-}
-
-export type AuraUserUncheckedCreateWithoutPhoneIdentitiesInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  disabledAt?: Date | string | null
-  deletedAt?: Date | string | null
-  sessionVersion?: number
-  email?: string | null
-  displayName?: string | null
-  businessName?: string | null
-  isAdmin?: boolean
-  isBlocked?: boolean
-  countryId?: string | null
-  currencyCode?: string | null
-  onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
-  sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
-  auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
-  requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
-  jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type AuraUserCreateOrConnectWithoutPhoneIdentitiesInput = {
-  where: Prisma.AuraUserWhereUniqueInput
-  create: Prisma.XOR<Prisma.AuraUserCreateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedCreateWithoutPhoneIdentitiesInput>
-}
-
-export type AuraUserUpsertWithoutPhoneIdentitiesInput = {
-  update: Prisma.XOR<Prisma.AuraUserUpdateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedUpdateWithoutPhoneIdentitiesInput>
-  create: Prisma.XOR<Prisma.AuraUserCreateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedCreateWithoutPhoneIdentitiesInput>
-  where?: Prisma.AuraUserWhereInput
-}
-
-export type AuraUserUpdateToOneWithWhereWithoutPhoneIdentitiesInput = {
-  where?: Prisma.AuraUserWhereInput
-  data: Prisma.XOR<Prisma.AuraUserUpdateWithoutPhoneIdentitiesInput, Prisma.AuraUserUncheckedUpdateWithoutPhoneIdentitiesInput>
-}
-
-export type AuraUserUpdateWithoutPhoneIdentitiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
-  auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
-  requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
-  jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
-}
-
-export type AuraUserUncheckedUpdateWithoutPhoneIdentitiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
-  requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
-  jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
-}
-
 export type AuraUserCreateWithoutPasswordCredentialInput = {
   id?: string
   createdAt?: Date | string
@@ -1040,6 +798,7 @@ export type AuraUserCreateWithoutPasswordCredentialInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1047,18 +806,12 @@ export type AuraUserCreateWithoutPasswordCredentialInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutPasswordCredentialInput = {
@@ -1068,6 +821,7 @@ export type AuraUserUncheckedCreateWithoutPasswordCredentialInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1076,17 +830,11 @@ export type AuraUserUncheckedCreateWithoutPasswordCredentialInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutPasswordCredentialInput = {
@@ -1112,6 +860,7 @@ export type AuraUserUpdateWithoutPasswordCredentialInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1119,18 +868,12 @@ export type AuraUserUpdateWithoutPasswordCredentialInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutPasswordCredentialInput = {
@@ -1140,6 +883,7 @@ export type AuraUserUncheckedUpdateWithoutPasswordCredentialInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1148,17 +892,11 @@ export type AuraUserUncheckedUpdateWithoutPasswordCredentialInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateWithoutSessionsInput = {
@@ -1168,6 +906,7 @@ export type AuraUserCreateWithoutSessionsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1175,18 +914,12 @@ export type AuraUserCreateWithoutSessionsInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutSessionsInput = {
@@ -1196,6 +929,7 @@ export type AuraUserUncheckedCreateWithoutSessionsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1204,17 +938,11 @@ export type AuraUserUncheckedCreateWithoutSessionsInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutSessionsInput = {
@@ -1240,6 +968,7 @@ export type AuraUserUpdateWithoutSessionsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1247,18 +976,12 @@ export type AuraUserUpdateWithoutSessionsInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutSessionsInput = {
@@ -1268,6 +991,7 @@ export type AuraUserUncheckedUpdateWithoutSessionsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1276,17 +1000,11 @@ export type AuraUserUncheckedUpdateWithoutSessionsInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateWithoutNotificationsInput = {
@@ -1296,6 +1014,7 @@ export type AuraUserCreateWithoutNotificationsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1303,18 +1022,12 @@ export type AuraUserCreateWithoutNotificationsInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutNotificationsInput = {
@@ -1324,6 +1037,7 @@ export type AuraUserUncheckedCreateWithoutNotificationsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1332,17 +1046,11 @@ export type AuraUserUncheckedCreateWithoutNotificationsInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutNotificationsInput = {
@@ -1368,6 +1076,7 @@ export type AuraUserUpdateWithoutNotificationsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1375,18 +1084,12 @@ export type AuraUserUpdateWithoutNotificationsInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutNotificationsInput = {
@@ -1396,6 +1099,7 @@ export type AuraUserUncheckedUpdateWithoutNotificationsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1404,17 +1108,11 @@ export type AuraUserUncheckedUpdateWithoutNotificationsInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateWithoutAuditLogsInput = {
@@ -1424,6 +1122,7 @@ export type AuraUserCreateWithoutAuditLogsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1431,18 +1130,12 @@ export type AuraUserCreateWithoutAuditLogsInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutAuditLogsInput = {
@@ -1452,6 +1145,7 @@ export type AuraUserUncheckedCreateWithoutAuditLogsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1460,17 +1154,11 @@ export type AuraUserUncheckedCreateWithoutAuditLogsInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutAuditLogsInput = {
@@ -1496,6 +1184,7 @@ export type AuraUserUpdateWithoutAuditLogsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1503,18 +1192,12 @@ export type AuraUserUpdateWithoutAuditLogsInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutAuditLogsInput = {
@@ -1524,6 +1207,7 @@ export type AuraUserUncheckedUpdateWithoutAuditLogsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1532,17 +1216,11 @@ export type AuraUserUncheckedUpdateWithoutAuditLogsInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateWithoutCountryInput = {
@@ -1552,6 +1230,7 @@ export type AuraUserCreateWithoutCountryInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1559,18 +1238,12 @@ export type AuraUserCreateWithoutCountryInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutCountryInput = {
@@ -1580,6 +1253,7 @@ export type AuraUserUncheckedCreateWithoutCountryInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1587,18 +1261,12 @@ export type AuraUserUncheckedCreateWithoutCountryInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutCountryInput = {
@@ -1637,6 +1305,7 @@ export type AuraUserScalarWhereInput = {
   disabledAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   sessionVersion?: Prisma.IntFilter<"AuraUser"> | number
+  username?: Prisma.StringFilter<"AuraUser"> | string
   email?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
@@ -1645,10 +1314,6 @@ export type AuraUserScalarWhereInput = {
   countryId?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   currencyCode?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   onboardingCompleted?: Prisma.BoolFilter<"AuraUser"> | boolean
-  whatsappOptIn?: Prisma.BoolFilter<"AuraUser"> | boolean
-  referralCode?: Prisma.StringNullableFilter<"AuraUser"> | string | null
-  whatsappChallenge?: Prisma.BoolFilter<"AuraUser"> | boolean
-  hadWhatsapp?: Prisma.BoolNullableFilter<"AuraUser"> | boolean | null
 }
 
 export type AuraUserCreateWithoutRequestsInput = {
@@ -1658,6 +1323,7 @@ export type AuraUserCreateWithoutRequestsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1665,18 +1331,12 @@ export type AuraUserCreateWithoutRequestsInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutRequestsInput = {
@@ -1686,6 +1346,7 @@ export type AuraUserUncheckedCreateWithoutRequestsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1694,17 +1355,11 @@ export type AuraUserUncheckedCreateWithoutRequestsInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutRequestsInput = {
@@ -1730,6 +1385,7 @@ export type AuraUserUpdateWithoutRequestsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1737,18 +1393,12 @@ export type AuraUserUpdateWithoutRequestsInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutRequestsInput = {
@@ -1758,6 +1408,7 @@ export type AuraUserUncheckedUpdateWithoutRequestsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1766,17 +1417,11 @@ export type AuraUserUncheckedUpdateWithoutRequestsInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateWithoutJcNotificationsInput = {
@@ -1786,6 +1431,7 @@ export type AuraUserCreateWithoutJcNotificationsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1793,18 +1439,12 @@ export type AuraUserCreateWithoutJcNotificationsInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
   country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserUncheckedCreateWithoutJcNotificationsInput = {
@@ -1814,6 +1454,7 @@ export type AuraUserUncheckedCreateWithoutJcNotificationsInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -1822,17 +1463,11 @@ export type AuraUserUncheckedCreateWithoutJcNotificationsInput = {
   countryId?: string | null
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
   auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
   requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AuraUserCreateOrConnectWithoutJcNotificationsInput = {
@@ -1858,6 +1493,7 @@ export type AuraUserUpdateWithoutJcNotificationsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1865,18 +1501,12 @@ export type AuraUserUpdateWithoutJcNotificationsInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutJcNotificationsInput = {
@@ -1886,6 +1516,7 @@ export type AuraUserUncheckedUpdateWithoutJcNotificationsInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1894,145 +1525,11 @@ export type AuraUserUncheckedUpdateWithoutJcNotificationsInput = {
   countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type AuraUserCreateWithoutAuthSessionsInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  disabledAt?: Date | string | null
-  deletedAt?: Date | string | null
-  sessionVersion?: number
-  email?: string | null
-  displayName?: string | null
-  businessName?: string | null
-  isAdmin?: boolean
-  isBlocked?: boolean
-  currencyCode?: string | null
-  onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  country?: Prisma.CountryCreateNestedOneWithoutAuraUsersInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityCreateNestedManyWithoutUserInput
-  passwordCredential?: Prisma.AuraPasswordCredentialCreateNestedOneWithoutUserInput
-  sessions?: Prisma.AuraSessionCreateNestedManyWithoutUserInput
-  notifications?: Prisma.AuraNotificationCreateNestedManyWithoutRecipientInput
-  auditLogs?: Prisma.AuraAuditLogCreateNestedManyWithoutActorInput
-  requests?: Prisma.RequestCreateNestedManyWithoutUserInput
-  jcNotifications?: Prisma.JcNotificationCreateNestedManyWithoutUserInput
-}
-
-export type AuraUserUncheckedCreateWithoutAuthSessionsInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  disabledAt?: Date | string | null
-  deletedAt?: Date | string | null
-  sessionVersion?: number
-  email?: string | null
-  displayName?: string | null
-  businessName?: string | null
-  isAdmin?: boolean
-  isBlocked?: boolean
-  countryId?: string | null
-  currencyCode?: string | null
-  onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedCreateNestedManyWithoutUserInput
-  passwordCredential?: Prisma.AuraPasswordCredentialUncheckedCreateNestedOneWithoutUserInput
-  sessions?: Prisma.AuraSessionUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.AuraNotificationUncheckedCreateNestedManyWithoutRecipientInput
-  auditLogs?: Prisma.AuraAuditLogUncheckedCreateNestedManyWithoutActorInput
-  requests?: Prisma.RequestUncheckedCreateNestedManyWithoutUserInput
-  jcNotifications?: Prisma.JcNotificationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type AuraUserCreateOrConnectWithoutAuthSessionsInput = {
-  where: Prisma.AuraUserWhereUniqueInput
-  create: Prisma.XOR<Prisma.AuraUserCreateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedCreateWithoutAuthSessionsInput>
-}
-
-export type AuraUserUpsertWithoutAuthSessionsInput = {
-  update: Prisma.XOR<Prisma.AuraUserUpdateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedUpdateWithoutAuthSessionsInput>
-  create: Prisma.XOR<Prisma.AuraUserCreateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedCreateWithoutAuthSessionsInput>
-  where?: Prisma.AuraUserWhereInput
-}
-
-export type AuraUserUpdateToOneWithWhereWithoutAuthSessionsInput = {
-  where?: Prisma.AuraUserWhereInput
-  data: Prisma.XOR<Prisma.AuraUserUpdateWithoutAuthSessionsInput, Prisma.AuraUserUncheckedUpdateWithoutAuthSessionsInput>
-}
-
-export type AuraUserUpdateWithoutAuthSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  country?: Prisma.CountryUpdateOneWithoutAuraUsersNestedInput
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
-  passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
-  auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
-  requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
-  jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-}
-
-export type AuraUserUncheckedUpdateWithoutAuthSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
-  passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
-  requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
-  jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserCreateManyCountryInput = {
@@ -2042,6 +1539,7 @@ export type AuraUserCreateManyCountryInput = {
   disabledAt?: Date | string | null
   deletedAt?: Date | string | null
   sessionVersion?: number
+  username: string
   email?: string | null
   displayName?: string | null
   businessName?: string | null
@@ -2049,10 +1547,6 @@ export type AuraUserCreateManyCountryInput = {
   isBlocked?: boolean
   currencyCode?: string | null
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: string | null
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean | null
 }
 
 export type AuraUserUpdateWithoutCountryInput = {
@@ -2062,6 +1556,7 @@ export type AuraUserUpdateWithoutCountryInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2069,18 +1564,12 @@ export type AuraUserUpdateWithoutCountryInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateWithoutCountryInput = {
@@ -2090,6 +1579,7 @@ export type AuraUserUncheckedUpdateWithoutCountryInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2097,18 +1587,12 @@ export type AuraUserUncheckedUpdateWithoutCountryInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phoneIdentities?: Prisma.AuraPhoneIdentityUncheckedUpdateManyWithoutUserNestedInput
   passwordCredential?: Prisma.AuraPasswordCredentialUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.AuraSessionUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.AuraNotificationUncheckedUpdateManyWithoutRecipientNestedInput
   auditLogs?: Prisma.AuraAuditLogUncheckedUpdateManyWithoutActorNestedInput
   requests?: Prisma.RequestUncheckedUpdateManyWithoutUserNestedInput
   jcNotifications?: Prisma.JcNotificationUncheckedUpdateManyWithoutUserNestedInput
-  authSessions?: Prisma.WhatsAppAuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AuraUserUncheckedUpdateManyWithoutCountryInput = {
@@ -2118,6 +1602,7 @@ export type AuraUserUncheckedUpdateManyWithoutCountryInput = {
   disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2125,10 +1610,6 @@ export type AuraUserUncheckedUpdateManyWithoutCountryInput = {
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  whatsappOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappChallenge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hadWhatsapp?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 
@@ -2137,23 +1618,19 @@ export type AuraUserUncheckedUpdateManyWithoutCountryInput = {
  */
 
 export type AuraUserCountOutputType = {
-  phoneIdentities: number
   sessions: number
   notifications: number
   auditLogs: number
   requests: number
   jcNotifications: number
-  authSessions: number
 }
 
 export type AuraUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  phoneIdentities?: boolean | AuraUserCountOutputTypeCountPhoneIdentitiesArgs
   sessions?: boolean | AuraUserCountOutputTypeCountSessionsArgs
   notifications?: boolean | AuraUserCountOutputTypeCountNotificationsArgs
   auditLogs?: boolean | AuraUserCountOutputTypeCountAuditLogsArgs
   requests?: boolean | AuraUserCountOutputTypeCountRequestsArgs
   jcNotifications?: boolean | AuraUserCountOutputTypeCountJcNotificationsArgs
-  authSessions?: boolean | AuraUserCountOutputTypeCountAuthSessionsArgs
 }
 
 /**
@@ -2164,13 +1641,6 @@ export type AuraUserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the AuraUserCountOutputType
    */
   select?: Prisma.AuraUserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * AuraUserCountOutputType without action
- */
-export type AuraUserCountOutputTypeCountPhoneIdentitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AuraPhoneIdentityWhereInput
 }
 
 /**
@@ -2208,13 +1678,6 @@ export type AuraUserCountOutputTypeCountJcNotificationsArgs<ExtArgs extends runt
   where?: Prisma.JcNotificationWhereInput
 }
 
-/**
- * AuraUserCountOutputType without action
- */
-export type AuraUserCountOutputTypeCountAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WhatsAppAuthSessionWhereInput
-}
-
 
 export type AuraUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2223,6 +1686,7 @@ export type AuraUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   disabledAt?: boolean
   deletedAt?: boolean
   sessionVersion?: boolean
+  username?: boolean
   email?: boolean
   displayName?: boolean
   businessName?: boolean
@@ -2231,19 +1695,13 @@ export type AuraUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   countryId?: boolean
   currencyCode?: boolean
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: boolean
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean
   country?: boolean | Prisma.AuraUser$countryArgs<ExtArgs>
-  phoneIdentities?: boolean | Prisma.AuraUser$phoneIdentitiesArgs<ExtArgs>
   passwordCredential?: boolean | Prisma.AuraUser$passwordCredentialArgs<ExtArgs>
   sessions?: boolean | Prisma.AuraUser$sessionsArgs<ExtArgs>
   notifications?: boolean | Prisma.AuraUser$notificationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.AuraUser$auditLogsArgs<ExtArgs>
   requests?: boolean | Prisma.AuraUser$requestsArgs<ExtArgs>
   jcNotifications?: boolean | Prisma.AuraUser$jcNotificationsArgs<ExtArgs>
-  authSessions?: boolean | Prisma.AuraUser$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.AuraUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["auraUser"]>
 
@@ -2254,6 +1712,7 @@ export type AuraUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   disabledAt?: boolean
   deletedAt?: boolean
   sessionVersion?: boolean
+  username?: boolean
   email?: boolean
   displayName?: boolean
   businessName?: boolean
@@ -2262,10 +1721,6 @@ export type AuraUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   countryId?: boolean
   currencyCode?: boolean
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: boolean
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean
   country?: boolean | Prisma.AuraUser$countryArgs<ExtArgs>
 }, ExtArgs["result"]["auraUser"]>
 
@@ -2276,6 +1731,7 @@ export type AuraUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   disabledAt?: boolean
   deletedAt?: boolean
   sessionVersion?: boolean
+  username?: boolean
   email?: boolean
   displayName?: boolean
   businessName?: boolean
@@ -2284,10 +1740,6 @@ export type AuraUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   countryId?: boolean
   currencyCode?: boolean
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: boolean
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean
   country?: boolean | Prisma.AuraUser$countryArgs<ExtArgs>
 }, ExtArgs["result"]["auraUser"]>
 
@@ -2298,6 +1750,7 @@ export type AuraUserSelectScalar = {
   disabledAt?: boolean
   deletedAt?: boolean
   sessionVersion?: boolean
+  username?: boolean
   email?: boolean
   displayName?: boolean
   businessName?: boolean
@@ -2306,23 +1759,17 @@ export type AuraUserSelectScalar = {
   countryId?: boolean
   currencyCode?: boolean
   onboardingCompleted?: boolean
-  whatsappOptIn?: boolean
-  referralCode?: boolean
-  whatsappChallenge?: boolean
-  hadWhatsapp?: boolean
 }
 
-export type AuraUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "disabledAt" | "deletedAt" | "sessionVersion" | "email" | "displayName" | "businessName" | "isAdmin" | "isBlocked" | "countryId" | "currencyCode" | "onboardingCompleted" | "whatsappOptIn" | "referralCode" | "whatsappChallenge" | "hadWhatsapp", ExtArgs["result"]["auraUser"]>
+export type AuraUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "disabledAt" | "deletedAt" | "sessionVersion" | "username" | "email" | "displayName" | "businessName" | "isAdmin" | "isBlocked" | "countryId" | "currencyCode" | "onboardingCompleted", ExtArgs["result"]["auraUser"]>
 export type AuraUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   country?: boolean | Prisma.AuraUser$countryArgs<ExtArgs>
-  phoneIdentities?: boolean | Prisma.AuraUser$phoneIdentitiesArgs<ExtArgs>
   passwordCredential?: boolean | Prisma.AuraUser$passwordCredentialArgs<ExtArgs>
   sessions?: boolean | Prisma.AuraUser$sessionsArgs<ExtArgs>
   notifications?: boolean | Prisma.AuraUser$notificationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.AuraUser$auditLogsArgs<ExtArgs>
   requests?: boolean | Prisma.AuraUser$requestsArgs<ExtArgs>
   jcNotifications?: boolean | Prisma.AuraUser$jcNotificationsArgs<ExtArgs>
-  authSessions?: boolean | Prisma.AuraUser$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.AuraUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AuraUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2336,14 +1783,12 @@ export type $AuraUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "AuraUser"
   objects: {
     country: Prisma.$CountryPayload<ExtArgs> | null
-    phoneIdentities: Prisma.$AuraPhoneIdentityPayload<ExtArgs>[]
     passwordCredential: Prisma.$AuraPasswordCredentialPayload<ExtArgs> | null
     sessions: Prisma.$AuraSessionPayload<ExtArgs>[]
     notifications: Prisma.$AuraNotificationPayload<ExtArgs>[]
     auditLogs: Prisma.$AuraAuditLogPayload<ExtArgs>[]
     requests: Prisma.$RequestPayload<ExtArgs>[]
     jcNotifications: Prisma.$JcNotificationPayload<ExtArgs>[]
-    authSessions: Prisma.$WhatsAppAuthSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2352,6 +1797,7 @@ export type $AuraUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     disabledAt: Date | null
     deletedAt: Date | null
     sessionVersion: number
+    username: string
     email: string | null
     displayName: string | null
     businessName: string | null
@@ -2360,10 +1806,6 @@ export type $AuraUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     countryId: string | null
     currencyCode: string | null
     onboardingCompleted: boolean
-    whatsappOptIn: boolean
-    referralCode: string | null
-    whatsappChallenge: boolean
-    hadWhatsapp: boolean | null
   }, ExtArgs["result"]["auraUser"]>
   composites: {}
 }
@@ -2759,14 +2201,12 @@ readonly fields: AuraUserFieldRefs;
 export interface Prisma__AuraUserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   country<T extends Prisma.AuraUser$countryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$countryArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  phoneIdentities<T extends Prisma.AuraUser$phoneIdentitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$phoneIdentitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuraPhoneIdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   passwordCredential<T extends Prisma.AuraUser$passwordCredentialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$passwordCredentialArgs<ExtArgs>>): Prisma.Prisma__AuraPasswordCredentialClient<runtime.Types.Result.GetResult<Prisma.$AuraPasswordCredentialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.AuraUser$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuraSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.AuraUser$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuraNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.AuraUser$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuraAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   requests<T extends Prisma.AuraUser$requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jcNotifications<T extends Prisma.AuraUser$jcNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$jcNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JcNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  authSessions<T extends Prisma.AuraUser$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuraUser$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppAuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2802,6 +2242,7 @@ export interface AuraUserFieldRefs {
   readonly disabledAt: Prisma.FieldRef<"AuraUser", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AuraUser", 'DateTime'>
   readonly sessionVersion: Prisma.FieldRef<"AuraUser", 'Int'>
+  readonly username: Prisma.FieldRef<"AuraUser", 'String'>
   readonly email: Prisma.FieldRef<"AuraUser", 'String'>
   readonly displayName: Prisma.FieldRef<"AuraUser", 'String'>
   readonly businessName: Prisma.FieldRef<"AuraUser", 'String'>
@@ -2810,10 +2251,6 @@ export interface AuraUserFieldRefs {
   readonly countryId: Prisma.FieldRef<"AuraUser", 'String'>
   readonly currencyCode: Prisma.FieldRef<"AuraUser", 'String'>
   readonly onboardingCompleted: Prisma.FieldRef<"AuraUser", 'Boolean'>
-  readonly whatsappOptIn: Prisma.FieldRef<"AuraUser", 'Boolean'>
-  readonly referralCode: Prisma.FieldRef<"AuraUser", 'String'>
-  readonly whatsappChallenge: Prisma.FieldRef<"AuraUser", 'Boolean'>
-  readonly hadWhatsapp: Prisma.FieldRef<"AuraUser", 'Boolean'>
 }
     
 
@@ -3234,30 +2671,6 @@ export type AuraUser$countryArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * AuraUser.phoneIdentities
- */
-export type AuraUser$phoneIdentitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AuraPhoneIdentity
-   */
-  select?: Prisma.AuraPhoneIdentitySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AuraPhoneIdentity
-   */
-  omit?: Prisma.AuraPhoneIdentityOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AuraPhoneIdentityInclude<ExtArgs> | null
-  where?: Prisma.AuraPhoneIdentityWhereInput
-  orderBy?: Prisma.AuraPhoneIdentityOrderByWithRelationInput | Prisma.AuraPhoneIdentityOrderByWithRelationInput[]
-  cursor?: Prisma.AuraPhoneIdentityWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AuraPhoneIdentityScalarFieldEnum | Prisma.AuraPhoneIdentityScalarFieldEnum[]
-}
-
-/**
  * AuraUser.passwordCredential
  */
 export type AuraUser$passwordCredentialArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3394,30 +2807,6 @@ export type AuraUser$jcNotificationsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.JcNotificationScalarFieldEnum | Prisma.JcNotificationScalarFieldEnum[]
-}
-
-/**
- * AuraUser.authSessions
- */
-export type AuraUser$authSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WhatsAppAuthSession
-   */
-  select?: Prisma.WhatsAppAuthSessionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the WhatsAppAuthSession
-   */
-  omit?: Prisma.WhatsAppAuthSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WhatsAppAuthSessionInclude<ExtArgs> | null
-  where?: Prisma.WhatsAppAuthSessionWhereInput
-  orderBy?: Prisma.WhatsAppAuthSessionOrderByWithRelationInput | Prisma.WhatsAppAuthSessionOrderByWithRelationInput[]
-  cursor?: Prisma.WhatsAppAuthSessionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WhatsAppAuthSessionScalarFieldEnum | Prisma.WhatsAppAuthSessionScalarFieldEnum[]
 }
 
 /**

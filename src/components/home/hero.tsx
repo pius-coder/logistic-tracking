@@ -1,276 +1,375 @@
-import { Search } from "lucide-react";
+import {
+  ArrowRight,
+  PackageSearch,
+  ShieldCheck,
+} from "lucide-react";
+
+const HERO_STATS = [
+  { value: "150+", label: "Pays desservis" },
+  { value: "50K+", label: "Expéditions mensuelles" },
+  { value: "99,8 %", label: "Livraisons à l’heure" },
+  { value: "15+", label: "Années d’expertise" },
+] as const;
 
 export function Hero() {
   return (
     <section
       id="hero"
       className="
-        relative
-        isolate
-        min-h-[980px]
-        w-full
-        overflow-hidden
-        bg-[#07143f]
-
-        min-[810px]:min-h-[940px]
-
+        relative isolate flex min-h-[920px] w-full
+        overflow-hidden bg-[#06101f]
+        min-[810px]:min-h-[900px]
         min-[1200px]:h-[100svh]
         min-[1200px]:min-h-[850px]
         min-[1200px]:max-h-[980px]
       "
     >
+      {/* Image de fond */}
       <picture className="absolute inset-0 -z-30 block">
         <source
           media="(min-width: 810px)"
           srcSet="/images/hero-logistics.png"
         />
+
         <img
           src="/images/hero-mobile-logistics.png"
           alt=""
           draggable={false}
           className="
-            h-full
-            w-full
-            select-none
-            object-cover
-            object-bottom
-
+            size-full select-none object-cover
+            object-[center_bottom]
             min-[810px]:object-[center_bottom]
           "
         />
       </picture>
 
+      {/* Assombrissement principal */}
       <div
         aria-hidden="true"
         className="
-          absolute
-          inset-0
-          -z-20
+          pointer-events-none absolute inset-0 -z-20
+          bg-[linear-gradient(180deg,rgba(3,10,23,0.88)_0%,rgba(5,17,37,0.67)_33%,rgba(7,26,54,0.28)_61%,rgba(3,10,20,0.08)_78%,rgba(3,8,16,0.30)_100%)]
+        "
+      />
 
-          bg-[linear-gradient(180deg,rgba(7,15,58,0.58)_0%,rgba(18,57,201,0.26)_28%,rgba(47,124,255,0.08)_55%,transparent_76%)]
+      {/* Lumière centrale */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute left-1/2 top-[90px]
+          -z-10 h-[520px] w-[1050px]
+          -translate-x-1/2 rounded-full
+          bg-[#2e6fb4]/[0.13] blur-[130px]
+        "
+      />
 
-          min-[810px]:bg-[linear-gradient(180deg,rgba(7,15,58,0.58)_0%,rgba(18,57,201,0.28)_30%,rgba(47,124,255,0.06)_58%,transparent_78%)]
+      {/* Vignette latérale */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0 -z-10
+          bg-[radial-gradient(circle_at_center,transparent_25%,rgba(2,8,18,0.18)_72%,rgba(2,7,15,0.46)_100%)]
+        "
+      />
+
+      {/* Hairline supérieure */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-x-0 top-0 z-20
+          h-px bg-white/[0.08]
+        "
+      />
+
+      {/* Transition basse */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-x-0 bottom-0 z-[2]
+          h-36
+          bg-[linear-gradient(180deg,transparent_0%,rgba(3,9,18,0.18)_55%,rgba(3,9,18,0.42)_100%)]
         "
       />
 
       <div
-        aria-hidden="true"
         className="
-          absolute
-          left-1/2
-          top-[170px]
-          -z-10
-          h-[430px]
-          w-[115%]
-          max-w-[1000px]
-          -translate-x-1/2
-          rounded-full
-          bg-[#1e73ff]/15
-          blur-[110px]
-
-          min-[810px]:top-[130px]
-          min-[1200px]:top-[100px]
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          bottom-0
-          z-[1]
-          h-20
-          bg-gradient-to-b
-          from-transparent
-          to-black/10
-        "
-      />
-
-      <div
-        className="
-          relative
-          z-10
-          mx-auto
-          flex
-          w-full
-          max-w-[1200px]
-          flex-col
-          items-center
-
-          px-5
-          pt-[145px]
-
-          min-[430px]:pt-[150px]
-
+          relative z-10 mx-auto flex w-full max-w-[1200px]
+          flex-col items-center
+          px-5 pb-16 pt-[132px]
           min-[810px]:px-10
-          min-[810px]:pt-[130px]
-
-          min-[1200px]:pt-[115px]
+          min-[810px]:pb-20
+          min-[810px]:pt-[120px]
+          min-[1200px]:justify-center
+          min-[1200px]:pb-24
+          min-[1200px]:pt-[105px]
         "
       >
         <div
           className="
-            flex
-            w-full
-            max-w-[680px]
-            flex-col
-            items-center
-            gap-5
-            text-center
-            text-white
+            flex w-full max-w-[780px]
+            flex-col items-center text-center
           "
         >
-          <div className="flex flex-col items-center">
-            <h1
+          {/* Badge */}
+          <div
+            className="
+              inline-flex items-center gap-2.5
+              rounded-full border border-white/[0.11]
+              bg-white/[0.055] px-4 py-2.5
+              font-display text-[10px] font-bold
+              uppercase tracking-[0.18em]
+              text-white/62
+              shadow-[0_1px_2px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.08)]
+              backdrop-blur-xl
+            "
+          >
+            <span
               className="
-                font-display
-                text-[40px]
-                font-bold
-                leading-[0.96]
-                tracking-[-0.055em]
-
-                min-[390px]:text-[43px]
-                min-[430px]:text-[48px]
-
-                min-[810px]:whitespace-nowrap
-                min-[810px]:text-[68px]
-
-                min-[1200px]:text-[76px]
+                size-1.5 rounded-full bg-[#d0a65c]
+                shadow-[0_0_0_4px_rgba(208,166,92,0.10)]
               "
-            >
-              Logistique globale.
-            </h1>
+            />
 
-            <p
-              className="
-                font-instrument
-                text-[38px]
-                font-normal
-                italic
-                leading-[1]
-                tracking-[-0.055em]
-
-                min-[390px]:text-[40px]
-                min-[430px]:text-[46px]
-
-                min-[810px]:whitespace-nowrap
-                min-[810px]:text-[66px]
-
-                min-[1200px]:text-[74px]
-              "
-            >
-              Confiance absolue.
-            </p>
+            Réseau logistique international
           </div>
 
+          {/* Titre */}
+          <h1
+            className="
+              mt-7 max-w-[780px]
+              font-display text-[44px] font-bold
+              leading-[0.95] tracking-[-0.062em]
+              text-white
+              min-[390px]:text-[48px]
+              min-[430px]:text-[53px]
+              min-[810px]:text-[72px]
+              min-[1200px]:text-[82px]
+            "
+          >
+            Une logistique mondiale,
+            <span
+              className="
+                mt-1 block font-instrument
+                font-normal italic tracking-[-0.052em]
+                text-white/66
+              "
+            >
+              maîtrisée de bout en bout.
+            </span>
+          </h1>
+
+          {/* Description */}
           <p
             className="
-              max-w-[610px]
-              font-display
-              text-base
-              font-normal
-              leading-[1.55]
-              tracking-[-0.01em]
-              text-white/85
-
-              min-[810px]:text-lg
-              min-[1200px]:text-xl
+              mt-7 max-w-[660px]
+              font-display text-[16px]
+              leading-[1.65] tracking-[-0.015em]
+              text-white/64
+              min-[810px]:text-[18px]
+              min-[1200px]:text-[19px]
             "
           >
-            Du fret aérien à la livraison du dernier kilomètre, nous
-            concevons des solutions logistiques transparentes qui
-            connectent les entreprises dans plus de 150 pays avec
-            rapidité et fiabilité.
+            Du fret international à la livraison du dernier kilomètre, nous
+            connectons vos marchandises à plus de 150 pays avec visibilité,
+            précision et fiabilité opérationnelle.
           </p>
 
-          <div
+          {/* Formulaire de tracking */}
+          <form
+            action="/tracking"
+            method="get"
             className="
-              mt-2
-              flex
-              w-full
-              max-w-[460px]
-              items-center
-              justify-center
-              gap-0
-              border-b
-              border-white/30
-              pb-2
-
-              focus-within:border-white/60
+              relative mt-9 w-full max-w-[650px]
+              overflow-hidden rounded-[26px]
+              border border-white/[0.12]
+              bg-[#091827]/75 p-2
+              ring-1 ring-black/25
+              shadow-[0_2px_5px_rgba(0,0,0,0.28),0_28px_75px_-38px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.09)]
+              backdrop-blur-2xl
             "
           >
-            <Search
+            <div
               aria-hidden="true"
-              className="size-5 shrink-0 text-white/60"
-              strokeWidth={2}
-            />
-            <input
-              type="text"
-              placeholder="Entrez votre numéro de suivi"
               className="
-                w-full
-                bg-transparent
-                px-3
-                py-2
-                font-display
-                text-base
-                text-white
-                placeholder-white/50
-                outline-none
+                pointer-events-none absolute inset-px
+                rounded-[25px]
+                shadow-[inset_1px_0_0_rgba(255,255,255,0.025),inset_-1px_0_0_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.055)]
               "
             />
-            <button
-              type="button"
+
+            <div
               className="
-                shrink-0
-                rounded-[10px]
-                bg-white
-                px-5
-                py-2
-                font-display
-                text-sm
-                font-semibold
-                text-[#07143f]
-                transition-transform
-                duration-200
-
-                hover:scale-[1.03]
-
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-white
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-transparent
+                relative z-10 flex flex-col gap-2
+                min-[560px]:flex-row
               "
             >
-              Suivre
-            </button>
-          </div>
+              <label
+                className="
+                  group flex min-h-[58px] min-w-0 flex-1
+                  items-center gap-3.5 rounded-[18px]
+                  border border-white/[0.09]
+                  bg-white/[0.07] px-4
+                  shadow-[0_1px_2px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.055)]
+                  transition-[border-color,background-color,box-shadow]
+                  duration-200
+                  hover:bg-white/[0.085]
+                  focus-within:border-white/[0.20]
+                  focus-within:bg-white/[0.10]
+                  focus-within:shadow-[0_0_0_3px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.07)]
+                "
+              >
+                <PackageSearch
+                  className="
+                    size-5 shrink-0 text-white/42
+                    transition-colors duration-200
+                    group-focus-within:text-white/72
+                  "
+                  strokeWidth={1.7}
+                  aria-hidden="true"
+                />
 
+                <span className="sr-only">
+                  Numéro de suivi de l&apos;expédition
+                </span>
+
+                <input
+                  type="text"
+                  name="tracking"
+                  required
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder="Entrez votre numéro de suivi"
+                  className="
+                    min-w-0 flex-1 bg-transparent
+                    font-display text-[14px] font-medium
+                    tracking-[-0.01em] text-white
+                    outline-none
+                    placeholder:font-normal
+                    placeholder:text-white/32
+                    min-[810px]:text-[15px]
+                  "
+                />
+              </label>
+
+              <button
+                type="submit"
+                className="
+                  group flex min-h-[58px] shrink-0
+                  items-center justify-center gap-2.5
+                  rounded-[18px]
+                  border border-white/90
+                  bg-[#f7f5ef] px-7
+                  font-display text-[14px] font-bold
+                  tracking-[-0.015em] text-[#071423]
+                  ring-1 ring-black/20
+                  shadow-[0_1px_2px_rgba(0,0,0,0.24),0_14px_28px_-17px_rgba(0,0,0,0.80),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(7,20,35,0.08)]
+                  transition-[transform,background-color,box-shadow]
+                  duration-200 ease-out
+                  hover:-translate-y-0.5
+                  hover:bg-white
+                  hover:shadow-[0_2px_4px_rgba(0,0,0,0.25),0_20px_34px_-18px_rgba(0,0,0,0.88),inset_0_1px_0_rgba(255,255,255,1)]
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white/70
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-[#091827]
+                  active:translate-y-0
+                "
+              >
+                Suivre mon colis
+
+                <ArrowRight
+                  className="
+                    size-4 transition-transform duration-200
+                    group-hover:translate-x-0.5
+                  "
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+          </form>
+
+          {/* Réassurance */}
           <div
             className="
-              flex
-              w-full
-              max-w-[540px]
-              flex-wrap
-              items-center
-              justify-center
-              gap-x-5
-              gap-y-1
-              font-display
-              text-xs
-              leading-[1.6]
-              text-white/70
-
-              max-[430px]:max-w-[340px]
+              mt-4 flex items-center justify-center gap-2
+              font-display text-[11px]
+              tracking-[-0.005em] text-white/34
             "
           >
-            <span>150+ pays desservis</span>
-            <span>50 000+ expéditions / mois</span>
-            <span>99,8 % livrés à l&apos;heure</span>
-            <span>15+ ans d&apos;excellence</span>
+            <ShieldCheck
+              className="size-[14px] text-[#d0a65c]/75"
+              strokeWidth={1.7}
+              aria-hidden="true"
+            />
+
+            Suivi sécurisé, actualisé à chaque étape du transport
+          </div>
+
+          {/* Statistiques */}
+          <div
+            className="
+              mt-10 grid w-full max-w-[760px]
+              grid-cols-2 overflow-hidden
+              rounded-[26px]
+              border border-white/[0.09]
+              bg-[#071525]/55
+              ring-1 ring-black/20
+              shadow-[0_1px_2px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.055)]
+              backdrop-blur-xl
+              min-[810px]:grid-cols-4
+            "
+          >
+            {/* {HERO_STATS.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={`
+                  relative flex min-h-[94px]
+                  flex-col items-center justify-center
+                  px-3 py-5 text-center
+                  min-[810px]:min-h-[104px]
+                  ${
+                    index % 2 === 0
+                      ? "border-r border-white/[0.075]"
+                      : ""
+                  }
+                  ${
+                    index < 2
+                      ? "border-b border-white/[0.075] min-[810px]:border-b-0"
+                      : ""
+                  }
+                  ${
+                    index > 0
+                      ? "min-[810px]:border-l min-[810px]:border-white/[0.075]"
+                      : ""
+                  }
+                `}
+              >
+                <span
+                  className="
+                    font-display text-[23px] font-bold
+                    leading-none tracking-[-0.045em]
+                    text-white
+                    min-[810px]:text-[28px]
+                  "
+                >
+                  {stat.value}
+                </span>
+
+                <span
+                  className="
+                    mt-2 font-display text-[10px]
+                    font-semibold uppercase
+                    leading-[1.4] tracking-[0.10em]
+                    text-white/32
+                    min-[810px]:text-[11px]
+                  "
+                >
+                  {stat.label}
+                </span>
+              </div>
+            ))} */}
           </div>
         </div>
       </div>

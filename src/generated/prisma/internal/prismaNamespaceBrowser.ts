@@ -52,11 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   AuraUser: 'AuraUser',
-  AuraPhoneIdentity: 'AuraPhoneIdentity',
   AuraPasswordCredential: 'AuraPasswordCredential',
-  AuraOtpChallenge: 'AuraOtpChallenge',
   AuraSession: 'AuraSession',
-  AuraRateLimitBucket: 'AuraRateLimitBucket',
   AuraNotification: 'AuraNotification',
   AuraOutboxEvent: 'AuraOutboxEvent',
   AuraJobRun: 'AuraJobRun',
@@ -67,9 +64,11 @@ export const ModelName = {
   TrajectoryStep: 'TrajectoryStep',
   RequestStatusEvent: 'RequestStatusEvent',
   JcNotification: 'JcNotification',
+  Journey: 'Journey',
+  JourneyStop: 'JourneyStop',
+  JourneyEvent: 'JourneyEvent',
   AppSettings: 'AppSettings',
   SiteContent: 'SiteContent',
-  WhatsAppAuthSession: 'WhatsAppAuthSession',
   BlogPost: 'BlogPost',
   AdminAccessKey: 'AdminAccessKey'
 } as const
@@ -97,6 +96,7 @@ export const AuraUserScalarFieldEnum = {
   disabledAt: 'disabledAt',
   deletedAt: 'deletedAt',
   sessionVersion: 'sessionVersion',
+  username: 'username',
   email: 'email',
   displayName: 'displayName',
   businessName: 'businessName',
@@ -104,29 +104,10 @@ export const AuraUserScalarFieldEnum = {
   isBlocked: 'isBlocked',
   countryId: 'countryId',
   currencyCode: 'currencyCode',
-  onboardingCompleted: 'onboardingCompleted',
-  whatsappOptIn: 'whatsappOptIn',
-  referralCode: 'referralCode',
-  whatsappChallenge: 'whatsappChallenge',
-  hadWhatsapp: 'hadWhatsapp'
+  onboardingCompleted: 'onboardingCompleted'
 } as const
 
 export type AuraUserScalarFieldEnum = (typeof AuraUserScalarFieldEnum)[keyof typeof AuraUserScalarFieldEnum]
-
-
-export const AuraPhoneIdentityScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  countryCode: 'countryCode',
-  nationalNumber: 'nationalNumber',
-  phoneE164: 'phoneE164',
-  verifiedAt: 'verifiedAt',
-  whatsappVerifiedAt: 'whatsappVerifiedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuraPhoneIdentityScalarFieldEnum = (typeof AuraPhoneIdentityScalarFieldEnum)[keyof typeof AuraPhoneIdentityScalarFieldEnum]
 
 
 export const AuraPasswordCredentialScalarFieldEnum = {
@@ -138,24 +119,6 @@ export const AuraPasswordCredentialScalarFieldEnum = {
 } as const
 
 export type AuraPasswordCredentialScalarFieldEnum = (typeof AuraPasswordCredentialScalarFieldEnum)[keyof typeof AuraPasswordCredentialScalarFieldEnum]
-
-
-export const AuraOtpChallengeScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  phoneE164: 'phoneE164',
-  purpose: 'purpose',
-  codeHash: 'codeHash',
-  expiresAt: 'expiresAt',
-  consumedAt: 'consumedAt',
-  attempts: 'attempts',
-  maxAttempts: 'maxAttempts',
-  metadata: 'metadata',
-  sentAt: 'sentAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AuraOtpChallengeScalarFieldEnum = (typeof AuraOtpChallengeScalarFieldEnum)[keyof typeof AuraOtpChallengeScalarFieldEnum]
 
 
 export const AuraSessionScalarFieldEnum = {
@@ -174,16 +137,6 @@ export const AuraSessionScalarFieldEnum = {
 } as const
 
 export type AuraSessionScalarFieldEnum = (typeof AuraSessionScalarFieldEnum)[keyof typeof AuraSessionScalarFieldEnum]
-
-
-export const AuraRateLimitBucketScalarFieldEnum = {
-  key: 'key',
-  count: 'count',
-  resetAt: 'resetAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AuraRateLimitBucketScalarFieldEnum = (typeof AuraRateLimitBucketScalarFieldEnum)[keyof typeof AuraRateLimitBucketScalarFieldEnum]
 
 
 export const AuraNotificationScalarFieldEnum = {
@@ -372,6 +325,62 @@ export const JcNotificationScalarFieldEnum = {
 export type JcNotificationScalarFieldEnum = (typeof JcNotificationScalarFieldEnum)[keyof typeof JcNotificationScalarFieldEnum]
 
 
+export const JourneyScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  requestId: 'requestId',
+  publicToken: 'publicToken',
+  vehicleName: 'vehicleName',
+  transportType: 'transportType',
+  status: 'status',
+  averageSpeed: 'averageSpeed',
+  speedUnit: 'speedUnit',
+  publishedAt: 'publishedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  latestMessage: 'latestMessage',
+  problemMessage: 'problemMessage'
+} as const
+
+export type JourneyScalarFieldEnum = (typeof JourneyScalarFieldEnum)[keyof typeof JourneyScalarFieldEnum]
+
+
+export const JourneyStopScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  journeyId: 'journeyId',
+  placeName: 'placeName',
+  placeLabel: 'placeLabel',
+  mapboxPlaceId: 'mapboxPlaceId',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  stopType: 'stopType',
+  sequence: 'sequence',
+  estimatedArrivalAt: 'estimatedArrivalAt',
+  reachedAt: 'reachedAt',
+  note: 'note'
+} as const
+
+export type JourneyStopScalarFieldEnum = (typeof JourneyStopScalarFieldEnum)[keyof typeof JourneyStopScalarFieldEnum]
+
+
+export const JourneyEventScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  journeyId: 'journeyId',
+  stopId: 'stopId',
+  eventType: 'eventType',
+  title: 'title',
+  message: 'message',
+  visibleToCustomer: 'visibleToCustomer',
+  createdByLabel: 'createdByLabel'
+} as const
+
+export type JourneyEventScalarFieldEnum = (typeof JourneyEventScalarFieldEnum)[keyof typeof JourneyEventScalarFieldEnum]
+
+
 export const AppSettingsScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -400,25 +409,6 @@ export const SiteContentScalarFieldEnum = {
 } as const
 
 export type SiteContentScalarFieldEnum = (typeof SiteContentScalarFieldEnum)[keyof typeof SiteContentScalarFieldEnum]
-
-
-export const WhatsAppAuthSessionScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  phoneNumber: 'phoneNumber',
-  internalEmail: 'internalEmail',
-  token: 'token',
-  otpCode: 'otpCode',
-  purpose: 'purpose',
-  expiresAt: 'expiresAt',
-  consumedAt: 'consumedAt',
-  redirectPath: 'redirectPath',
-  usernameHint: 'usernameHint',
-  userId: 'userId'
-} as const
-
-export type WhatsAppAuthSessionScalarFieldEnum = (typeof WhatsAppAuthSessionScalarFieldEnum)[keyof typeof WhatsAppAuthSessionScalarFieldEnum]
 
 
 export const BlogPostScalarFieldEnum = {

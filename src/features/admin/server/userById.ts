@@ -14,7 +14,6 @@ export const adminUserById = defineOperationFn("admin.userById")
     const user = await ctx.db.auraUser.findUnique({
       where: { id: params.id },
       include: {
-        phoneIdentities: true,
         country: true,
         requests: {
           orderBy: { createdAt: "desc" },

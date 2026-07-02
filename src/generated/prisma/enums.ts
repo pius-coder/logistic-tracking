@@ -9,17 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const AuraOtpPurpose = {
-  REGISTER_PHONE: 'REGISTER_PHONE',
-  LOGIN_PHONE: 'LOGIN_PHONE',
-  RESET_PASSWORD: 'RESET_PASSWORD',
-  CHANGE_PHONE: 'CHANGE_PHONE',
-  SENSITIVE_ACTION: 'SENSITIVE_ACTION'
-} as const
-
-export type AuraOtpPurpose = (typeof AuraOtpPurpose)[keyof typeof AuraOtpPurpose]
-
-
 export const AuraOutboxStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
@@ -100,14 +89,60 @@ export const JcNotificationType = {
 export type JcNotificationType = (typeof JcNotificationType)[keyof typeof JcNotificationType]
 
 
-export const AuthSessionPurpose = {
-  SIGNUP: 'SIGNUP',
-  LOGIN: 'LOGIN',
-  COMPLETE_PROFILE: 'COMPLETE_PROFILE',
-  PHONE_CHANGE: 'PHONE_CHANGE'
+export const JourneyTransportType = {
+  MARITIME: 'MARITIME',
+  AERIEN: 'AERIEN'
 } as const
 
-export type AuthSessionPurpose = (typeof AuthSessionPurpose)[keyof typeof AuthSessionPurpose]
+export type JourneyTransportType = (typeof JourneyTransportType)[keyof typeof JourneyTransportType]
+
+
+export const JourneyStatus = {
+  BROUILLON: 'BROUILLON',
+  PLANIFIE: 'PLANIFIE',
+  EN_COURS: 'EN_COURS',
+  EN_PAUSE: 'EN_PAUSE',
+  PROBLEME: 'PROBLEME',
+  TERMINE: 'TERMINE',
+  ANNULE: 'ANNULE'
+} as const
+
+export type JourneyStatus = (typeof JourneyStatus)[keyof typeof JourneyStatus]
+
+
+export const JourneyStopType = {
+  DEPART: 'DEPART',
+  ESCALE: 'ESCALE',
+  DESTINATION: 'DESTINATION'
+} as const
+
+export type JourneyStopType = (typeof JourneyStopType)[keyof typeof JourneyStopType]
+
+
+export const JourneySpeedUnit = {
+  KNOTS: 'KNOTS',
+  KMH: 'KMH'
+} as const
+
+export type JourneySpeedUnit = (typeof JourneySpeedUnit)[keyof typeof JourneySpeedUnit]
+
+
+export const JourneyEventType = {
+  CREATED: 'CREATED',
+  PLAN_UPDATED: 'PLAN_UPDATED',
+  PUBLISHED: 'PUBLISHED',
+  STARTED: 'STARTED',
+  STOP_REACHED: 'STOP_REACHED',
+  ETA_UPDATED: 'ETA_UPDATED',
+  PAUSED: 'PAUSED',
+  RESUMED: 'RESUMED',
+  PROBLEM_REPORTED: 'PROBLEM_REPORTED',
+  PROBLEM_RESOLVED: 'PROBLEM_RESOLVED',
+  COMPLETED: 'COMPLETED',
+  NOTE: 'NOTE'
+} as const
+
+export type JourneyEventType = (typeof JourneyEventType)[keyof typeof JourneyEventType]
 
 
 export const BlogPostType = {

@@ -1,13 +1,6 @@
-export interface AuthChallengeResult {
-  challengeId: string;
-  phoneE164: string;
-  expiresAt: string;
-}
-
 export interface AuthUserSafe {
   id: string;
-  phoneE164: string;
-  phoneVerifiedAt: string | null;
+  username: string;
   displayName: string | null;
   businessName: string | null;
   email: string | null;
@@ -15,8 +8,6 @@ export interface AuthUserSafe {
   countryId: string | null;
   currencyCode: string | null;
   onboardingCompleted: boolean;
-  whatsappChallenge: boolean;
-  hadWhatsapp: boolean | null;
 }
 
 export interface AuthSessionResult {
