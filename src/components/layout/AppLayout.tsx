@@ -107,10 +107,12 @@ function AppChrome({
         user && "pb-16 min-[810px]:pb-0"
       )}
     >
-      <SupasteStyleHeader
-        pathname={pathname}
-        items={navigationItems}
-      />
+      {pathname !== "/" && (
+        <SupasteStyleHeader
+          pathname={pathname}
+          items={navigationItems}
+        />
+      )}
 
       <main className="flex-1">
         {children}

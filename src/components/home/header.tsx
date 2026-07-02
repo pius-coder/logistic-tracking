@@ -12,8 +12,8 @@ export function SiteHeader() {
       <div className="relative rounded-b-[18px] bg-white px-[10px] py-[5px] text-[#0a192f] min-[1200px]:p-[10px]">
         <div className="hidden items-center justify-between gap-10 min-[1200px]:flex">
           <a href="#hero" className="flex items-center gap-[10px] font-display text-base font-semibold tracking-[-0.02em] text-[#0a192f]">
-            <span className="flex size-[30px] items-center justify-center rounded-[8px] bg-[#006fff] text-[10px] font-bold text-white">
-              JC
+            <span className="relative flex size-[30px] items-center justify-center rounded-[8px] bg-[#0a192f]/10">
+              <span className="size-[10px] rounded-[2px] bg-[#0a192f]" />
             </span>
             <span>JC Import Express</span>
           </a>
@@ -39,8 +39,8 @@ export function SiteHeader() {
         <details className="group min-[1200px]:hidden">
           <summary className="flex h-10 cursor-pointer list-none items-center justify-between">
             <a href="#hero" className="flex items-center gap-[10px] font-display text-base font-semibold tracking-[-0.02em] text-[#0a192f]">
-              <span className="flex size-[30px] items-center justify-center rounded-[8px] bg-[#006fff] text-[10px] font-bold text-white">
-                JC
+              <span className="relative flex size-[30px] items-center justify-center rounded-[8px] bg-[#0a192f]/10">
+                <span className="size-[10px] rounded-[2px] bg-[#0a192f]" />
               </span>
               <span>JC Import Express</span>
             </a>
