@@ -48,7 +48,7 @@ function parseDataUrl(dataUrl: string): { mimeType: string; extension: string; b
 
 function resolveFilePath(key: string): string {
   // Ensure the path stays within STORAGE_PATH by resolving and checking
-  const base = join(/* turbopackIgnore: true */ process.cwd(), STORAGE_PATH);
+  const base = join(/*turbopackIgnore: true*/ process.cwd(), STORAGE_PATH);
   const target = join(base, key);
   if (!target.startsWith(base + "/") && target !== base) {
     throw new Error("Invalid file key: path traversal detected.");
