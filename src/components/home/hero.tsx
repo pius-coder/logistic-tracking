@@ -168,7 +168,7 @@ export function Hero({ content }: { content: HeroContent }) {
 
           {/* Formulaire de tracking */}
           <form
-            action="/tracking"
+            action="/voyage"
             method="get"
             className="
               relative mt-9 w-full max-w-[650px]

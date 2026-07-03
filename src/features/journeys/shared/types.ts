@@ -44,7 +44,6 @@ export type JourneyDto = {
   transportMode: "AVION" | "BATEAU";
   productDescription: string;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   packageCount: number;
   originCountry: { id: string; name: string; iso2: string } | null;
   destinationCountry: { id: string; name: string; iso2: string } | null;

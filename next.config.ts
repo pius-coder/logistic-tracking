@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
 
-  allowedDevOrigins: ["10.215.217.99", "10.238.48.99"],
+  allowedDevOrigins: ["10.215.217.99", "10.238.48.99", "172.20.10.2"],
   serverExternalPackages: [
     "prisma",
     "@prisma/client",

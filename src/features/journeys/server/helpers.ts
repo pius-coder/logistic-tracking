@@ -47,7 +47,6 @@ type SerializableJourney = {
     transportMode: "AVION" | "BATEAU";
     productDescription: string;
     packageWeightKg: number | null;
-    packageVolumeM3: number | null;
     packageCount: number;
     user: {
       displayName: string | null;
@@ -96,7 +95,6 @@ export function serializeJourney(journey: SerializableJourney, includePrivateEve
     transportMode: journey.request.transportMode,
     productDescription: journey.request.productDescription,
     packageWeightKg: journey.request.packageWeightKg,
-    packageVolumeM3: journey.request.packageVolumeM3,
     packageCount: journey.request.packageCount,
     originCountry: journey.request.originCountry
       ? {

@@ -17,7 +17,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, CheckCircle2, Copy, KeyRound, Package, Plane, Ship, UserPlus } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Copy,
+  KeyRound,
+  Package,
+  Plane,
+  Ship,
+  UserPlus,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface CountryOption {
@@ -31,19 +40,30 @@ type CreatedShipment = {
   id: string;
   requestNumber: string;
   client: {
-    username: string;
-    temporaryPassword: string;
+    username: string | null;
+    temporaryPassword: string | null;
     displayName: string | null;
     phone: string | null;
     email: string | null;
   };
 };
 
+interface UserOption {
+  id: string;
+  displayName: string | null;
+  businessName: string | null;
+  phone: string | null;
+  email: string | null;
+  country: { name: string; iso2: string } | null;
+  _count: { requests: number };
+}
+
 const emptyShipment = {
   clientName: "",
   clientPhone: "",
   clientEmail: "",
   clientBusinessName: "",
+  userId: "",
   originCountryId: "",
   destinationCountryId: "",
   recipientName: "",
@@ -52,31 +72,49 @@ const emptyShipment = {
   city: "",
   region: "",
   packageWeightKg: "",
-  packageVolumeM3: "",
   packageCount: "1",
   productDescription: "",
   transportMode: "AVION" as TransportMode,
   adminNotes: "",
 };
 
+
 export default function NouveauSuiviPage() {
   const router = useRouter();
   const [shipmentForm, setShipmentForm] = useState(emptyShipment);
-  const [createdShipment, setCreatedShipment] = useState<CreatedShipment | null>(null);
+  const [createdShipment, setCreatedShipment] =
+    useState<CreatedShipment | null>(null);
 
-  const { data: countriesData } = useAuraQuery<{ countries: CountryOption[] }>("catalog.countries");
-  const createShipment = useAuraMutation<Record<string, unknown>, CreatedShipment>("admin.createShipment", {
-    invalidate: ["admin.trackingShipments", "admin.trackingDashboard", "admin.users"],
+  const { data: countriesData } = useAuraQuery<{ countries: CountryOption[] }>(
+    "catalog.countries",
+  );
+  const createShipment = useAuraMutation<
+    Record<string, unknown>,
+    CreatedShipment
+  >("admin.createShipment", {
+    invalidate: [
+      "admin.trackingShipments",
+      "admin.trackingDashboard",
+      "admin.users",
+    ],
   });
 
   const countries = countriesData?.countries ?? [];
 
   const handleOriginChange = useCallback(
-    (value: string | null) => setShipmentForm((current) => ({ ...current, originCountryId: value ?? "" })),
+    (value: string | null) =>
+      setShipmentForm((current) => ({
+        ...current,
+        originCountryId: value ?? "",
+      })),
     [],
   );
   const handleDestinationChange = useCallback(
-    (value: string | null) => setShipmentForm((current) => ({ ...current, destinationCountryId: value ?? "" })),
+    (value: string | null) =>
+      setShipmentForm((current) => ({
+        ...current,
+        destinationCountryId: value ?? "",
+      })),
     [],
   );
 
@@ -89,11 +127,11 @@ export default function NouveauSuiviPage() {
 
     const created = await createShipment.mutateAsync({
       ...shipmentForm,
+      userId: shipmentForm.userId && shipmentForm.userId !== "search" ? shipmentForm.userId : undefined,
       originCountryId: shipmentForm.originCountryId || null,
       clientEmail: shipmentForm.clientEmail || null,
       clientBusinessName: shipmentForm.clientBusinessName || null,
       packageWeightKg: shipmentForm.packageWeightKg || null,
-      packageVolumeM3: shipmentForm.packageVolumeM3 || null,
     });
 
     setCreatedShipment(created);
@@ -116,10 +154,15 @@ export default function NouveauSuiviPage() {
     <main className="grid min-h-screen gap-6 px-4 py-6 xl:grid-cols-[360px_minmax(0,1fr)] md:px-6">
       <section className="space-y-4">
         <div>
-          <p className="text-sm font-medium text-muted-foreground">Nouveau tracking</p>
-          <h1 className="text-2xl font-semibold tracking-tight">Créer un colis</h1>
+          <p className="text-sm font-medium text-muted-foreground">
+            Nouveau tracking
+          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Créer un colis
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Le compte client est créé automatiquement depuis les informations saisies ici.
+            Créez un colis pour un nouveau client ou associez-le à un client
+            existant.
           </p>
         </div>
 
@@ -132,24 +175,37 @@ export default function NouveauSuiviPage() {
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">1</span>
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">
+                1
+              </span>
               <div>
                 <p className="font-medium">Remplir le formulaire</p>
-                <p className="text-muted-foreground">Saisir les infos client et colis ci-contre.</p>
+                <p className="text-muted-foreground">
+                  Saisir les infos client et colis ci-contre.
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">2</span>
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">
+                2
+              </span>
               <div>
                 <p className="font-medium">Transmettre les accès</p>
-                <p className="text-muted-foreground">Un identifiant + mot de passe provisoire est généré automatiquement à partager au client.</p>
+                <p className="text-muted-foreground">
+                  Un identifiant + mot de passe provisoire est généré
+                  automatiquement à partager au client.
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">3</span>
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">
+                3
+              </span>
               <div>
                 <p className="font-medium">Configurer le trajet</p>
-                <p className="text-muted-foreground">Définir les étapes, publier et démarrer le suivi.</p>
+                <p className="text-muted-foreground">
+                  Définir les étapes, publier et démarrer le suivi.
+                </p>
               </div>
             </div>
           </CardContent>
@@ -160,25 +216,57 @@ export default function NouveauSuiviPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
                 <KeyRound className="h-4 w-4" />
-                Accès client générés
+                {createdShipment.client.temporaryPassword
+                  ? "Accès client générés"
+                  : "Colis créé"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <div className="rounded-md border bg-muted/50 p-3 space-y-2">
                 <InfoLine label="Colis" value={createdShipment.requestNumber} />
-                <InfoLine label="Identifiant" value={createdShipment.client.username} />
-                <InfoLine label="Mot de passe provisoire" value={createdShipment.client.temporaryPassword} />
+                {createdShipment.client.temporaryPassword ? (
+                  <>
+                    <InfoLine
+                      label="Identifiant"
+                      value={createdShipment.client.username ?? ""}
+                    />
+                    <InfoLine
+                      label="Mot de passe provisoire"
+                      value={createdShipment.client.temporaryPassword}
+                    />
+                  </>
+                ) : (
+                  <InfoLine
+                    label="Client lié"
+                    value={`${createdShipment.client.displayName ?? ""} — ${createdShipment.client.phone ?? ""}`}
+                  />
+                )}
               </div>
               <p className="text-xs text-muted-foreground flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                Colis créé — transmettez ces accès au client, puis configurez le trajet.
+                {createdShipment.client.temporaryPassword
+                  ? "Colis créé — transmettez ces accès au client, puis configurez le trajet."
+                  : "Colis créé — le client existant est lié à ce colis."}
               </p>
               <div className="grid gap-2">
-                <Button type="button" variant="outline" onClick={copyCredentials}>
-                  <Copy className="h-4 w-4" />
-                  Copier les accès
-                </Button>
-                <Button type="button" onClick={() => router.push(`/dashboard/admin/requests/${createdShipment.id}/journey`)}>
+                {createdShipment.client.temporaryPassword ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={copyCredentials}
+                  >
+                    <Copy className="h-4 w-4" />
+                    Copier les accès
+                  </Button>
+                ) : null}
+                <Button
+                  type="button"
+                  onClick={() =>
+                    router.push(
+                      `/dashboard/admin/requests/${createdShipment.id}/journey`,
+                    )
+                  }
+                >
                   <ArrowRight className="h-4 w-4" />
                   Configurer le trajet
                 </Button>
@@ -191,36 +279,125 @@ export default function NouveauSuiviPage() {
       <form onSubmit={submitShipment} className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Client</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <UserPlus className="h-4 w-4" />
+              Client
+            </CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Nom du client *">
-              <Input
-                value={shipmentForm.clientName}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, clientName: event.target.value }))}
-                required
+          <CardContent className="space-y-4">
+            <div className="flex items-center rounded-md border p-1">
+              <button
+                type="button"
+                onClick={() =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    userId: "",
+                    clientName: "",
+                    clientPhone: "",
+                    clientEmail: "",
+                    clientBusinessName: "",
+                  }))
+                }
+                className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  !shipmentForm.userId
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Nouveau client
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setShipmentForm((current) => ({ ...current, userId: "search" }))
+                }
+                className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  shipmentForm.userId === "search"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Client existant
+              </button>
+            </div>
+
+            {shipmentForm.userId === "search" ? (
+              <ExistingUserSelector
+                onSelect={(user) =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    userId: user.id,
+                    clientName: user.displayName ?? "",
+                    clientPhone: user.phone ?? "",
+                    clientEmail: user.email ?? "",
+                    clientBusinessName: user.businessName ?? "",
+                  }))
+                }
               />
-            </Field>
-            <Field label="Téléphone client *">
-              <Input
-                value={shipmentForm.clientPhone}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, clientPhone: event.target.value }))}
-                required
-              />
-            </Field>
-            <Field label="Email">
-              <Input
-                value={shipmentForm.clientEmail}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, clientEmail: event.target.value }))}
-                type="email"
-              />
-            </Field>
-            <Field label="Entreprise">
-              <Input
-                value={shipmentForm.clientBusinessName}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, clientBusinessName: event.target.value }))}
-              />
-            </Field>
+            ) : null}
+
+            {!shipmentForm.userId || shipmentForm.userId === "search" ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                <Field label="Nom du client *">
+                  <Input
+                    value={shipmentForm.clientName}
+                    onChange={(event) =>
+                      setShipmentForm((current) => ({
+                        ...current,
+                        clientName: event.target.value,
+                      }))
+                    }
+                    required={!shipmentForm.userId}
+                  />
+                </Field>
+                <Field label="Téléphone client *">
+                  <Input
+                    value={shipmentForm.clientPhone}
+                    onChange={(event) =>
+                      setShipmentForm((current) => ({
+                        ...current,
+                        clientPhone: event.target.value,
+                      }))
+                    }
+                    required={!shipmentForm.userId}
+                  />
+                </Field>
+                <Field label="Email">
+                  <Input
+                    value={shipmentForm.clientEmail}
+                    onChange={(event) =>
+                      setShipmentForm((current) => ({
+                        ...current,
+                        clientEmail: event.target.value,
+                      }))
+                    }
+                    type="email"
+                  />
+                </Field>
+                <Field label="Entreprise">
+                  <Input
+                    value={shipmentForm.clientBusinessName}
+                    onChange={(event) =>
+                      setShipmentForm((current) => ({
+                        ...current,
+                        clientBusinessName: event.target.value,
+                      }))
+                    }
+                  />
+                </Field>
+              </div>
+            ) : (
+              <div className="rounded-md border bg-muted/30 p-3 text-sm space-y-1">
+                <p className="font-medium">{shipmentForm.clientName}</p>
+                <p className="text-muted-foreground">{shipmentForm.clientPhone}</p>
+                {shipmentForm.clientEmail ? (
+                  <p className="text-muted-foreground">{shipmentForm.clientEmail}</p>
+                ) : null}
+                {shipmentForm.clientBusinessName ? (
+                  <p className="text-muted-foreground">{shipmentForm.clientBusinessName}</p>
+                ) : null}
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -234,9 +411,15 @@ export default function NouveauSuiviPage() {
               <Combobox
                 value={shipmentForm.originCountryId}
                 onValueChange={handleOriginChange}
-                itemToStringLabel={(id) => countries.find((country) => country.id === id)?.name ?? ""}
+                itemToStringLabel={(id) =>
+                  countries.find((country) => country.id === id)?.name ?? ""
+                }
               >
-                <ComboboxInput placeholder="Pays d&apos;origine" showTrigger showClear />
+                <ComboboxInput
+                  placeholder="Pays d'origine"
+                  showTrigger
+                  showClear
+                />
                 <ComboboxContent>
                   <ComboboxList>
                     {countries.map((country) => (
@@ -254,7 +437,9 @@ export default function NouveauSuiviPage() {
               <Combobox
                 value={shipmentForm.destinationCountryId}
                 onValueChange={handleDestinationChange}
-                itemToStringLabel={(id) => countries.find((country) => country.id === id)?.name ?? ""}
+                itemToStringLabel={(id) =>
+                  countries.find((country) => country.id === id)?.name ?? ""
+                }
               >
                 <ComboboxInput placeholder="Destination" showTrigger />
                 <ComboboxContent>
@@ -273,15 +458,30 @@ export default function NouveauSuiviPage() {
               <Label>Mode du trajet *</Label>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
                 {[
-                  { value: "AVION" as TransportMode, label: "Avion uniquement", icon: Plane },
-                  { value: "BATEAU" as TransportMode, label: "Bateau uniquement", icon: Ship },
+                  {
+                    value: "AVION" as TransportMode,
+                    label: "Avion uniquement",
+                    icon: Plane,
+                  },
+                  {
+                    value: "BATEAU" as TransportMode,
+                    label: "Bateau uniquement",
+                    icon: Ship,
+                  },
                 ].map(({ value, label, icon: Icon }) => (
                   <button
                     key={value}
                     type="button"
-                    onClick={() => setShipmentForm((current) => ({ ...current, transportMode: value }))}
+                    onClick={() =>
+                      setShipmentForm((current) => ({
+                        ...current,
+                        transportMode: value,
+                      }))
+                    }
                     className={`flex h-12 items-center gap-3 rounded-md border px-3 text-left text-sm transition-colors ${
-                      shipmentForm.transportMode === value ? "border-primary bg-primary/10" : "bg-background hover:bg-muted"
+                      shipmentForm.transportMode === value
+                        ? "border-primary bg-primary/10"
+                        : "bg-background hover:bg-muted"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -295,55 +495,18 @@ export default function NouveauSuiviPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Destinataire et livraison</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="Nom du destinataire *">
-              <Input
-                value={shipmentForm.recipientName}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, recipientName: event.target.value }))}
-                required
-              />
-            </Field>
-            <Field label="Téléphone destinataire *">
-              <Input
-                value={shipmentForm.recipientPhone}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, recipientPhone: event.target.value }))}
-                required
-              />
-            </Field>
-            <Field label="Ville">
-              <Input
-                value={shipmentForm.city}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, city: event.target.value }))}
-              />
-            </Field>
-            <Field label="Région">
-              <Input
-                value={shipmentForm.region}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, region: event.target.value }))}
-              />
-            </Field>
-            <div className="space-y-2 md:col-span-2">
-              <Label>Adresse complète *</Label>
-              <Textarea
-                value={shipmentForm.deliveryAddress}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, deliveryAddress: event.target.value }))}
-                required
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
             <CardTitle className="text-base">Détails du colis</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-3">
             <Field label="Nombre de colis *">
               <Input
                 value={shipmentForm.packageCount}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, packageCount: event.target.value }))}
+                onChange={(event) =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    packageCount: event.target.value,
+                  }))
+                }
                 type="number"
                 min="1"
                 required
@@ -352,28 +515,28 @@ export default function NouveauSuiviPage() {
             <Field label="Poids total kg">
               <Input
                 value={shipmentForm.packageWeightKg}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, packageWeightKg: event.target.value }))}
+                onChange={(event) =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    packageWeightKg: event.target.value,
+                  }))
+                }
                 type="number"
                 min="0"
                 step="0.01"
                 placeholder="ex: 42.5"
               />
             </Field>
-            <Field label="Volume m3">
-              <Input
-                value={shipmentForm.packageVolumeM3}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, packageVolumeM3: event.target.value }))}
-                type="number"
-                min="0"
-                step="0.001"
-                placeholder="ex: 1.2"
-              />
-            </Field>
             <div className="space-y-2 md:col-span-3">
               <Label>Contenu du colis *</Label>
               <Textarea
                 value={shipmentForm.productDescription}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, productDescription: event.target.value }))}
+                onChange={(event) =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    productDescription: event.target.value,
+                  }))
+                }
                 placeholder="Décrire clairement ce qui est transporté."
                 required
               />
@@ -382,8 +545,13 @@ export default function NouveauSuiviPage() {
               <Label>Notes admin</Label>
               <Textarea
                 value={shipmentForm.adminNotes}
-                onChange={(event) => setShipmentForm((current) => ({ ...current, adminNotes: event.target.value }))}
-                placeholder="Informations internes visibles seulement par l&apos;équipe."
+                onChange={(event) =>
+                  setShipmentForm((current) => ({
+                    ...current,
+                    adminNotes: event.target.value,
+                  }))
+                }
+                placeholder="Informations internes visibles seulement par l'équipe."
               />
             </div>
           </CardContent>
@@ -417,6 +585,58 @@ function InfoLine({ label, value }: { label: string; value: string }) {
     <div>
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="break-words font-medium">{value}</p>
+    </div>
+  );
+}
+
+function ExistingUserSelector({
+  onSelect,
+}: {
+  onSelect: (user: UserOption) => void;
+}) {
+  const [search, setSearch] = useState("");
+
+  const { data, isFetching } = useAuraQuery<
+    { users: UserOption[]; total: number }
+  >("admin.users", { params: { page: 1, limit: 15, search: search || undefined } });
+
+  const users = data?.users ?? [];
+
+  return (
+    <div className="space-y-2">
+      <Label>Rechercher un client existant</Label>
+      <Input
+        placeholder="Nom, téléphone, email..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      {isFetching ? (
+        <p className="text-sm text-muted-foreground">Recherche en cours...</p>
+      ) : users.length > 0 ? (
+        <div className="max-h-52 overflow-y-auto space-y-1 rounded-md border">
+          {users.map((user) => (
+            <button
+              key={user.id}
+              type="button"
+              onClick={() => onSelect(user)}
+              className="w-full rounded-md px-3 py-2 text-left text-sm hover:bg-muted transition-colors"
+            >
+              <p className="font-medium">
+                {user.displayName || user.businessName || "Sans nom"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {user.phone}
+                {user.country ? ` — ${user.country.name}` : ""}
+                {user._count.requests > 0
+                  ? ` — ${user._count.requests} colis`
+                  : ""}
+              </p>
+            </button>
+          ))}
+        </div>
+      ) : search.trim().length > 0 ? (
+        <p className="text-sm text-muted-foreground">Aucun client trouvé.</p>
+      ) : null}
     </div>
   );
 }

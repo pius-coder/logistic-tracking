@@ -36,7 +36,6 @@ interface ShipmentRow {
   transportMode: TransportMode;
   productDescription: string;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   packageCount: number;
   user: { label: string };
   recipientName: string;
@@ -227,7 +226,6 @@ function ShipmentTableRow({ shipment }: { shipment: ShipmentRow }) {
         <div className="mt-0.5 text-xs text-muted-foreground">
           {shipment.packageCount} colis
           {shipment.packageWeightKg ? ` · ${shipment.packageWeightKg} kg` : ""}
-          {shipment.packageVolumeM3 ? ` · ${shipment.packageVolumeM3} m³` : ""}
         </div>
       </TableCell>
       <TableCell>

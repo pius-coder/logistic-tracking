@@ -2,12 +2,14 @@ import "server-only";
 
 import { filesystemDriver } from "./filesystem";
 import { s3Driver } from "./s3";
+import { cloudinaryDriver } from "./cloudinary";
 import type { AuraStorage, AuraStorageDriver } from "./types";
 
 const drivers = new Map<string, AuraStorageDriver>();
 
 drivers.set(filesystemDriver.name, filesystemDriver);
 drivers.set(s3Driver.name, s3Driver);
+drivers.set(cloudinaryDriver.name, cloudinaryDriver);
 
 export function registerStorageDriver(driver: AuraStorageDriver): void {
   drivers.set(driver.name, driver);

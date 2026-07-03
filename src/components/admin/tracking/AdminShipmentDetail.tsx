@@ -46,7 +46,6 @@ interface ShipmentDetail {
   recipientPhone: string;
   deliveryAddress: string;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   packageCount: number;
   productDescription: string;
   adminNotes: string | null;
@@ -135,7 +134,6 @@ export function AdminShipmentDetail({ requestId }: { requestId: string }) {
   const [editForm, setEditForm] = useState({
     productDescription: "",
     packageWeightKg: "",
-    packageVolumeM3: "",
     packageCount: "1",
     adminNotes: "",
   });
@@ -170,7 +168,6 @@ export function AdminShipmentDetail({ requestId }: { requestId: string }) {
       setEditForm({
         productDescription: data.productDescription,
         packageWeightKg: data.packageWeightKg?.toString() ?? "",
-        packageVolumeM3: data.packageVolumeM3?.toString() ?? "",
         packageCount: data.packageCount.toString(),
         adminNotes: data.adminNotes ?? "",
       });
@@ -189,7 +186,6 @@ export function AdminShipmentDetail({ requestId }: { requestId: string }) {
       requestId,
       ...editForm,
       packageWeightKg: editForm.packageWeightKg || null,
-      packageVolumeM3: editForm.packageVolumeM3 || null,
     });
     toast.success("Colis mis à jour.");
   }
@@ -259,10 +255,9 @@ export function AdminShipmentDetail({ requestId }: { requestId: string }) {
       </div>
 
       {/* KPIs */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <InfoCard title="Mode" value={data.transportMode === "AVION" ? "Avion" : "Bateau"} icon={TransportIcon} />
         <InfoCard title="Poids" value={data.packageWeightKg ? `${data.packageWeightKg} kg` : "—"} icon={Package} />
-        <InfoCard title="Volume" value={data.packageVolumeM3 ? `${data.packageVolumeM3} m³` : "—"} icon={Package} />
         <InfoCard title="Colis" value={String(data.packageCount)} icon={Package} />
       </div>
 
@@ -309,20 +304,6 @@ export function AdminShipmentDetail({ requestId }: { requestId: string }) {
                     type="number"
                     min="0"
                     step="0.01"
-                  />
-                </Field>
-                <Field label="Volume m³">
-                  <Input
-                    value={editForm.packageVolumeM3}
-                    onChange={(event) =>
-                      setEditForm((current) => ({
-                        ...current,
-                        packageVolumeM3: event.target.value,
-                      }))
-                    }
-                    type="number"
-                    min="0"
-                    step="0.001"
                   />
                 </Field>
                 <div className="space-y-2 md:col-span-3">

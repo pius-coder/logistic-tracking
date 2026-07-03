@@ -137,7 +137,7 @@ export function JourneyTrackingClient({
       />
 
       {hasEstimatedPosition ? (
-        <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/[0.10] bg-[#071522]/80 px-3 py-2 font-display text-[10px] font-semibold text-white/62 shadow-[0_10px_28px_-16px_rgba(0,0,0,0.75)] backdrop-blur-xl">
+        <div className="pointer-events-none absolute left-4 top-[66px] z-10 rounded-full border border-white/[0.10] bg-[#071522]/80 px-3 py-2 font-display text-[10px] font-semibold text-white/62 shadow-[0_10px_28px_-16px_rgba(0,0,0,0.75)] backdrop-blur-xl">
           Position estimée entre {currentStop?.placeName} et{" "}
           {nextStop?.placeName}
         </div>

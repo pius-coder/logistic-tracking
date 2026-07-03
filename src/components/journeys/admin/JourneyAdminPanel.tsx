@@ -46,7 +46,6 @@ type ShipmentForJourney = {
   transportMode: TransportMode;
   productDescription: string;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   packageCount: number;
   user: { label: string };
   originCountry: { name: string; iso2: string } | null;
@@ -387,7 +386,6 @@ export function JourneyAdminPanel({
           <CardContent className="grid gap-3 text-sm md:grid-cols-3">
             <Info label="Contenu" value={shipment?.productDescription ?? "-"} />
             <Info label="Poids" value={`${shipment?.packageWeightKg ?? "-"} kg`} />
-            <Info label="Volume" value={`${shipment?.packageVolumeM3 ?? "-"} m3`} />
           </CardContent>
         </Card>
 

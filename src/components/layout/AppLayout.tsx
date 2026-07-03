@@ -40,7 +40,7 @@ const CHROMELESS_PATHS = new Set([
   "/reset-password/verify",
 ]);
 
-const CHROMELESS_PREFIXES = ["/tracking/", "/voyage/"];
+const CHROMELESS_PREFIXES = ["/tracking/"];
 
 function isChromelessRoute(pathname: string): boolean {
   return (

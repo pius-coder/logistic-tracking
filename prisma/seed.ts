@@ -1,3 +1,4 @@
+import "dotenv/config";
 import {
   PrismaClient,
   TransportMode,
@@ -15,41 +16,209 @@ if (!connectionString) {
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
-const seedCountriesData = [
-  { name: "Cote d'Ivoire", slug: "cote-divoire", iso2: "CI", dialingCode: "+225", currencyCode: "XOF", currencyName: "Franc CFA BCEAO", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa", isFeatured: true },
-  { name: "Senegal", slug: "senegal", iso2: "SN", dialingCode: "+221", currencyCode: "XOF", currencyName: "Franc CFA BCEAO", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa", isFeatured: true },
-  { name: "Mali", slug: "mali", iso2: "ML", dialingCode: "+223", currencyCode: "XOF", currencyName: "Franc CFA BCEAO", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa", isFeatured: true },
-  { name: "Nigeria", slug: "nigeria", iso2: "NG", dialingCode: "+234", currencyCode: "NGN", currencyName: "Naira", currencySymbol: "N", usdExchangeRate: 1450, continent: "Africa", isFeatured: true },
-  { name: "Ghana", slug: "ghana", iso2: "GH", dialingCode: "+233", currencyCode: "GHS", currencyName: "Cedi", currencySymbol: "GHc", usdExchangeRate: 15.2, continent: "Africa" },
-  { name: "Cameroon", slug: "cameroon", iso2: "CM", dialingCode: "+237", currencyCode: "XAF", currencyName: "Franc CFA BEAC", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa" },
-  { name: "Benin", slug: "benin", iso2: "BJ", dialingCode: "+229", currencyCode: "XOF", currencyName: "Franc CFA BCEAO", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa" },
-  { name: "Togo", slug: "togo", iso2: "TG", dialingCode: "+228", currencyCode: "XOF", currencyName: "Franc CFA BCEAO", currencySymbol: "F CFA", usdExchangeRate: 605, continent: "Africa" },
-  { name: "Republique democratique du Congo", slug: "rdc", iso2: "CD", dialingCode: "+243", currencyCode: "CDF", currencyName: "Franc congolais", currencySymbol: "FC", usdExchangeRate: 2850, continent: "Africa" },
-  { name: "Maroc", slug: "maroc", iso2: "MA", dialingCode: "+212", currencyCode: "MAD", currencyName: "Dirham marocain", currencySymbol: "DH", usdExchangeRate: 10.1, continent: "Africa" },
-  { name: "Chine", slug: "chine", iso2: "CN", dialingCode: "+86", currencyCode: "CNY", currencyName: "Yuan", currencySymbol: "¥", usdExchangeRate: 7.2, continent: "Asia", isHub: true },
-  { name: "Emirats arabes unis", slug: "emirats-arabes-unis", iso2: "AE", dialingCode: "+971", currencyCode: "AED", currencyName: "Dirham des EAU", currencySymbol: "AED", usdExchangeRate: 3.67, continent: "Asia", isHub: true },
-  { name: "France", slug: "france", iso2: "FR", dialingCode: "+33", currencyCode: "EUR", currencyName: "Euro", currencySymbol: "€", usdExchangeRate: 0.92, continent: "Europe", isHub: true },
-  { name: "Allemagne", slug: "allemagne", iso2: "DE", dialingCode: "+49", currencyCode: "EUR", currencyName: "Euro", currencySymbol: "€", usdExchangeRate: 0.92, continent: "Europe", isHub: true },
-  { name: "Italie", slug: "italie", iso2: "IT", dialingCode: "+39", currencyCode: "EUR", currencyName: "Euro", currencySymbol: "€", usdExchangeRate: 0.92, continent: "Europe", isHub: true },
-  { name: "Etats-Unis", slug: "etats-unis", iso2: "US", dialingCode: "+1", currencyCode: "USD", currencyName: "Dollar", currencySymbol: "$", usdExchangeRate: 1, continent: "America", isHub: true },
-];
+type Continent =
+  "Africa" | "Asia" | "Europe" | "America" | "Oceania" | "Antarctica";
+
+type CountrySeed = {
+  name: string;
+  slug: string;
+  iso2: string;
+  dialingCode: string | null;
+  currencyCode: string | null;
+  currencyName: string | null;
+  currencySymbol: string | null;
+  usdExchangeRate: number | null;
+  continent: Continent | string | null;
+  isFeatured?: boolean;
+  isHub?: boolean;
+};
+
+type RestCountryCurrency = {
+  code?: string;
+  name?: string;
+  symbol?: string;
+};
+
+type RestCountry = {
+  names?: {
+    common?: string;
+    official?: string;
+    translations?: {
+      fra?: {
+        common?: string;
+        official?: string;
+      };
+    };
+  };
+  codes?: {
+    alpha_2: string;
+  };
+  calling_codes?: string[];
+  currencies?: RestCountryCurrency[];
+  continents?: string[];
+  classification?: {
+    sovereign?: boolean;
+  };
+};
+
+const countryOverrides: Record<string, Partial<CountrySeed>> = {
+  CI: { isFeatured: true },
+  SN: { isFeatured: true },
+  ML: { isFeatured: true },
+  NG: { isFeatured: true },
+
+  CN: { isHub: true },
+  AE: { isHub: true },
+  FR: { isHub: true },
+  DE: { isHub: true },
+  IT: { isHub: true },
+  US: { isHub: true },
+};
+
+const manualExchangeRates: Record<string, number> = {
+  XOF: 605,
+  XAF: 605,
+  NGN: 1450,
+  GHS: 15.2,
+  CDF: 2850,
+  MAD: 10.1,
+  CNY: 7.2,
+  AED: 3.67,
+  EUR: 0.92,
+  USD: 1,
+};
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getDialingCode(callingCodes?: RestCountry["calling_codes"]): string | null {
+  if (!callingCodes?.length) return null;
+
+  return `+${callingCodes[0]}`;
+}
+
+function getCurrency(currencies?: RestCountry["currencies"]): {
+  currencyCode: string | null;
+  currencyName: string | null;
+  currencySymbol: string | null;
+} {
+  if (!currencies?.length) {
+    return {
+      currencyCode: null,
+      currencyName: null,
+      currencySymbol: null,
+    };
+  }
+
+  const currency = currencies[0];
+
+  return {
+    currencyCode: currency.code ?? null,
+    currencyName: currency.name ?? null,
+    currencySymbol: currency.symbol ?? null,
+  };
+}
+
+async function getSeedCountriesData(): Promise<CountrySeed[]> {
+  console.log("[seed]   → Fetching https://api.restcountries.com/countries/v5 ...");
+  const response = await fetch("https://api.restcountries.com/countries/v5", {
+    headers: {
+      Authorization: `Bearer ${process.env.REST_COUNTRIES_API_KEY ?? "rc_live_demo"}`,
+    },
+  });
+  console.log(`[seed]   → Response status: ${response.status} ${response.statusText}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch countries: ${response.status}`);
+  }
+
+  console.log("[seed]   → Parsing JSON...");
+  const payload = (await response.json()) as { data?: { objects?: unknown[] } };
+  console.log("[seed]   → JSON parsed OK");
+  const countriesResponse = payload.data?.objects;
+
+  if (!Array.isArray(countriesResponse)) {
+    console.log(JSON.stringify(payload));
+    throw new Error("[seed] Invalid countries response: expected data.objects array");
+  }
+
+  const countries = countriesResponse as RestCountry[];
+
+  return countries
+    .filter((country) => country?.codes?.alpha_2 && country.classification?.sovereign !== false)
+    .map((country): CountrySeed => {
+      const iso2 = country.codes!.alpha_2;
+
+      const name =
+        country.names?.translations?.fra?.common ??
+        country.names?.common ??
+        country.names?.official ??
+        iso2;
+
+      const currency = getCurrency(country.currencies);
+
+      return {
+        name,
+        slug: slugify(name),
+        iso2,
+        dialingCode: getDialingCode(country.calling_codes),
+        currencyCode: currency.currencyCode,
+        currencyName: currency.currencyName,
+        currencySymbol: currency.currencySymbol,
+        usdExchangeRate: currency.currencyCode
+          ? (manualExchangeRates[currency.currencyCode] ?? null)
+          : null,
+        continent: country.continents?.[0] ?? null,
+        ...countryOverrides[iso2],
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+console.log("[seed] Fetching countries from REST Countries API...");
+const seedCountriesData = await getSeedCountriesData();
+console.log(`[seed] Fetched ${seedCountriesData.length} countries from API`);
+
+function sanitizeCountry(c: CountrySeed) {
+  return {
+    ...c,
+    dialingCode: c.dialingCode ?? "",
+    currencyCode: c.currencyCode ?? "",
+    currencyName: c.currencyName ?? "",
+    currencySymbol: c.currencySymbol ?? "",
+    usdExchangeRate: c.usdExchangeRate ?? 1,
+    continent: c.continent ?? "Africa",
+  };
+}
 
 async function seedCountries() {
   for (const country of seedCountriesData) {
+    const data = sanitizeCountry(country);
     await prisma.country.upsert({
       where: { slug: country.slug },
-      update: country,
-      create: country,
+      update: data,
+      create: data,
     });
   }
   console.log(`[seed] ${seedCountriesData.length} countries`);
 }
 
 async function seedAdminUser() {
-  const coteIvoire = await prisma.country.findUnique({ where: { slug: "cote-divoire" } });
+  const coteIvoire = await prisma.country.findUnique({
+    where: { slug: "cote-divoire" },
+  });
   const adminUsername = "admin";
   const adminEmail = "admin@jc-import-express.internal";
-  const adminPassword = process.env.JC_IMPORT_EXPRESS_ADMIN_PASSWORD || "Admin@12345";
+  const adminPassword =
+    process.env.JC_IMPORT_EXPRESS_ADMIN_PASSWORD || "Admin@12345";
 
   const existing = await prisma.auraUser.findUnique({
     where: { username: adminUsername },
@@ -59,8 +228,12 @@ async function seedAdminUser() {
     await prisma.auraUser.update({
       where: { id: existing.id },
       data: {
-        isAdmin: true, displayName: "Admin JC Import Express", businessName: "JC Import Express",
-        countryId: coteIvoire?.id, currencyCode: "XOF", email: adminEmail,
+        isAdmin: true,
+        displayName: "Admin JC Import Express",
+        businessName: "JC Import Express",
+        countryId: coteIvoire?.id,
+        currencyCode: "XOF",
+        email: adminEmail,
       },
     });
     console.log("[seed] Admin user updated");
@@ -69,8 +242,13 @@ async function seedAdminUser() {
 
   const user = await prisma.auraUser.create({
     data: {
-      username: adminUsername, email: adminEmail, displayName: "Admin JC Import Express",
-      businessName: "JC Import Express", isAdmin: true, countryId: coteIvoire?.id, currencyCode: "XOF",
+      username: adminUsername,
+      email: adminEmail,
+      displayName: "Admin JC Import Express",
+      businessName: "JC Import Express",
+      isAdmin: true,
+      countryId: coteIvoire?.id,
+      currencyCode: "XOF",
       passwordCredential: {
         create: { passwordHash: hashSync(adminPassword, 12) },
       },
@@ -80,7 +258,9 @@ async function seedAdminUser() {
 }
 
 async function seedRequests(clientId: string) {
-  const coteIvoire = await prisma.country.findUnique({ where: { slug: "cote-divoire" } });
+  const coteIvoire = await prisma.country.findUnique({
+    where: { slug: "cote-divoire" },
+  });
   const chine = await prisma.country.findUnique({ where: { slug: "chine" } });
 
   if (!coteIvoire || !chine) {
@@ -88,12 +268,23 @@ async function seedRequests(clientId: string) {
     return;
   }
 
-  async function upsertRequest(requestNumber: string, data: Parameters<typeof prisma.request.create>[0]["data"]) {
-    const existing = await prisma.request.findUnique({ where: { requestNumber } });
+  async function upsertRequest(
+    requestNumber: string,
+    data: Parameters<typeof prisma.request.create>[0]["data"],
+  ) {
+    const existing = await prisma.request.findUnique({
+      where: { requestNumber },
+    });
     if (existing) {
-      await prisma.trajectoryStep.deleteMany({ where: { requestId: existing.id } });
-      await prisma.jcNotification.deleteMany({ where: { requestId: existing.id } });
-      await prisma.requestStatusEvent.deleteMany({ where: { requestId: existing.id } });
+      await prisma.trajectoryStep.deleteMany({
+        where: { requestId: existing.id },
+      });
+      await prisma.jcNotification.deleteMany({
+        where: { requestId: existing.id },
+      });
+      await prisma.requestStatusEvent.deleteMany({
+        where: { requestId: existing.id },
+      });
       await prisma.request.update({ where: { id: existing.id }, data });
       return prisma.request.findUniqueOrThrow({ where: { id: existing.id } });
     }
@@ -114,27 +305,75 @@ async function seedRequests(clientId: string) {
     productDescription: "Smartphones et accessoires",
     transportMode: TransportMode.AVION,
     status: RequestStatus.EN_COURS,
-    latestStatusMessage: "Votre expedition est en cours de transit vers Abidjan.",
+    latestStatusMessage:
+      "Votre expedition est en cours de transit vers Abidjan.",
     statusEvents: {
       create: [
-        { status: RequestStatus.EN_ATTENTE, title: "Demande recue", message: "Votre demande a ete enregistree.", createdByLabel: "Systeme" },
-        { status: RequestStatus.EN_COURS, title: "Expedition confirmee", message: "Votre expedition est en preparation.", createdByLabel: "Systeme" },
+        {
+          status: RequestStatus.EN_ATTENTE,
+          title: "Demande recue",
+          message: "Votre demande a ete enregistree.",
+          createdByLabel: "Systeme",
+        },
+        {
+          status: RequestStatus.EN_COURS,
+          title: "Expedition confirmee",
+          message: "Votre expedition est en preparation.",
+          createdByLabel: "Systeme",
+        },
       ],
     },
   });
 
   await prisma.trajectoryStep.createMany({
     data: [
-      { requestId: request1.id, countryId: chine.id, locationName: "Shenzhen, Chine", stepType: TrajectoryStepType.ORIGIN, sequence: 0, reachedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), timerDurationHours: 48 },
-      { requestId: request1.id, countryId: null, locationName: "Transit aerien Dubai", stepType: TrajectoryStepType.ESCALE, sequence: 1, reachedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), timerDurationHours: 12 },
-      { requestId: request1.id, countryId: coteIvoire.id, locationName: "Abidjan, Cote d'Ivoire", stepType: TrajectoryStepType.DESTINATION, sequence: 2, timerDurationHours: 24 },
+      {
+        requestId: request1.id,
+        countryId: chine.id,
+        locationName: "Shenzhen, Chine",
+        stepType: TrajectoryStepType.ORIGIN,
+        sequence: 0,
+        reachedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        timerDurationHours: 48,
+      },
+      {
+        requestId: request1.id,
+        countryId: null,
+        locationName: "Transit aerien Dubai",
+        stepType: TrajectoryStepType.ESCALE,
+        sequence: 1,
+        reachedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        timerDurationHours: 12,
+      },
+      {
+        requestId: request1.id,
+        countryId: coteIvoire.id,
+        locationName: "Abidjan, Cote d'Ivoire",
+        stepType: TrajectoryStepType.DESTINATION,
+        sequence: 2,
+        timerDurationHours: 24,
+      },
     ],
   });
 
   await prisma.jcNotification.createMany({
     data: [
-      { userId: clientId, requestId: request1.id, type: "REQUEST_CREATED", title: "Nouvelle demande", message: "Votre demande GI-240101-001 a ete creee.", deepLink: `/tracking/${request1.id}` },
-      { userId: clientId, requestId: request1.id, type: "REQUEST_STATUS_UPDATED", title: "Expedition en cours", message: "Votre expedition est en transit.", deepLink: `/tracking/${request1.id}` },
+      {
+        userId: clientId,
+        requestId: request1.id,
+        type: "REQUEST_CREATED",
+        title: "Nouvelle demande",
+        message: "Votre demande GI-240101-001 a ete creee.",
+        deepLink: `/tracking/${request1.id}`,
+      },
+      {
+        userId: clientId,
+        requestId: request1.id,
+        type: "REQUEST_STATUS_UPDATED",
+        title: "Expedition en cours",
+        message: "Votre expedition est en transit.",
+        deepLink: `/tracking/${request1.id}`,
+      },
     ],
   });
 
@@ -147,22 +386,30 @@ async function seedRequests(clientId: string) {
     recipientName: "Amadou Diallo",
     recipientPhone: "221770000001",
     deliveryAddress: "A confirmer.",
-    productDescription: "Materiel medical - desinfectants, masques chirurgicaux",
+    productDescription:
+      "Materiel medical - desinfectants, masques chirurgicaux",
     transportMode: TransportMode.BATEAU,
     status: RequestStatus.EN_ATTENTE,
     latestStatusMessage: "Votre demande est en attente de devis.",
     statusEvents: {
       create: [
-        { status: RequestStatus.EN_ATTENTE, title: "Demande recue", message: "Un conseiller va vous contacter sous peu.", createdByLabel: "Systeme" },
+        {
+          status: RequestStatus.EN_ATTENTE,
+          title: "Demande recue",
+          message: "Un conseiller va vous contacter sous peu.",
+          createdByLabel: "Systeme",
+        },
       ],
     },
   });
 
   await prisma.jcNotification.create({
     data: {
-      userId: clientId, requestId: request2.id,
+      userId: clientId,
+      requestId: request2.id,
       type: "REQUEST_CREATED",
-      title: "Demande de transit", message: "Votre demande GI-240102-002 a ete creee.",
+      title: "Demande de transit",
+      message: "Votre demande GI-240102-002 a ete creee.",
       deepLink: `/tracking/${request2.id}`,
     },
   });
@@ -171,7 +418,9 @@ async function seedRequests(clientId: string) {
 }
 
 async function seedAdminAccessKey() {
-  const existing = await prisma.adminAccessKey.findFirst({ where: { isActive: true } });
+  const existing = await prisma.adminAccessKey.findFirst({
+    where: { isActive: true },
+  });
   if (existing) {
     console.log("[seed] Admin access key already exists");
     return;
@@ -225,14 +474,17 @@ Une fois la marchandise dédouanée, organisez la distribution locale.
 - Ignorer les fluctuations des taux de change
 
 Avec JC Import Express, simplifiez vos démarches d'import-export et suivez vos expéditions en temps réel.`,
-    excerpt: "Découvrez les étapes essentielles pour importer depuis la Chine vers l'Afrique : recherche de fournisseurs, transport, douane et distribution.",
+    excerpt:
+      "Découvrez les étapes essentielles pour importer depuis la Chine vers l'Afrique : recherche de fournisseurs, transport, douane et distribution.",
     tags: "import,chine,afrique,guide,logistique",
     metaTitle: "Guide Import-Export Chine-Afrique | JC Import Express",
-    metaDesc: "Guide complet pour importer depuis la Chine vers l'Afrique : fournisseurs, transport maritime et aérien, douane, et conseils pratiques.",
+    metaDesc:
+      "Guide complet pour importer depuis la Chine vers l'Afrique : fournisseurs, transport maritime et aérien, douane, et conseils pratiques.",
   },
   {
     type: BlogPostType.ADVICE,
-    title: "Fret maritime vs fret aérien : lequel choisir pour votre expédition ?",
+    title:
+      "Fret maritime vs fret aérien : lequel choisir pour votre expédition ?",
     slug: "fret-maritime-vs-fret-aerien",
     content: `# Fret maritime vs fret aérien : lequel choisir ?
 
@@ -276,10 +528,12 @@ Le choix du mode de transport est crucial dans toute opération d'import-export.
 Choisissez le fret maritime pour les marchandises volumineuses, lourdes, ou lorsque le coût est le facteur principal. Préférez le fret aérien pour les produits de valeur, périssables, ou urgents.
 
 Chez JC Import Express, nous combinons les deux modes pour optimiser vos expéditions.`,
-    excerpt: "Fret maritime ou aérien ? Comparez les coûts, délais et avantages de chaque mode de transport pour choisir la meilleure option.",
+    excerpt:
+      "Fret maritime ou aérien ? Comparez les coûts, délais et avantages de chaque mode de transport pour choisir la meilleure option.",
     tags: "fret,maritime,aerien,transport,conseil",
     metaTitle: "Fret Maritime vs Aérien : Guide Comparatif | JC Import Express",
-    metaDesc: "Comparez les avantages et inconvénients du fret maritime et aérien pour vos expéditions depuis la Chine vers l'Afrique.",
+    metaDesc:
+      "Comparez les avantages et inconvénients du fret maritime et aérien pour vos expéditions depuis la Chine vers l'Afrique.",
   },
   {
     type: BlogPostType.BLOG,
@@ -331,10 +585,12 @@ Une fois le bon à enlever délivré, vous pouvez récupérer votre marchandise.
 - **Prévoyez un budget douane** : les frais peuvent représenter 30-50% de la valeur de la marchandise
 
 Besoin d'aide pour vos formalités douanières ? JC Import Express vous accompagne de l'achat à la livraison.`,
-    excerpt: "Tout savoir sur les formalités douanières en Côte d'Ivoire : documents requis, processus de dédouanement, droits et taxes.",
+    excerpt:
+      "Tout savoir sur les formalités douanières en Côte d'Ivoire : documents requis, processus de dédouanement, droits et taxes.",
     tags: "douane,cote-d-ivoire,import,formalites,afrique",
     metaTitle: "Formalités Douanières Côte d'Ivoire | Guide Import",
-    metaDesc: "Guide complet des formalités douanières pour importer en Côte d'Ivoire : documents, procédures, droits et taxes à prévoir.",
+    metaDesc:
+      "Guide complet des formalités douanières pour importer en Côte d'Ivoire : documents, procédures, droits et taxes à prévoir.",
   },
   {
     type: BlogPostType.ADVICE,
@@ -384,10 +640,12 @@ Chaque étape a un chronomètre qui vous indique le temps restant estimé.
 - **Partage** : envoyez le lien de suivi à vos partenaires
 
 Avec JC Import Express, votre expédition n'a plus de secrets pour vous. Suivez-la en temps réel, où que vous soyez.`,
-    excerpt: "Découvrez comment suivre vos expéditions en temps réel avec JC Import Express : tracking, notifications WhatsApp, carte interactive.",
+    excerpt:
+      "Découvrez comment suivre vos expéditions en temps réel avec JC Import Express : tracking, notifications WhatsApp, carte interactive.",
     tags: "suivi,tracking,logistique,whatsapp,temps-reel",
     metaTitle: "Suivi Expédition Temps Réel | JC Import Express",
-    metaDesc: "Suivez vos expéditions en temps réel avec notre système de tracking : notifications WhatsApp, carte interactive, et chronomètres d'étape.",
+    metaDesc:
+      "Suivez vos expéditions en temps réel avec notre système de tracking : notifications WhatsApp, carte interactive, et chronomètres d'étape.",
   },
   {
     type: BlogPostType.BLOG,
@@ -434,106 +692,268 @@ Jeux éducatifs, équipements sportifs, vélos.
 - **Localisation** : les hubs comme la Chine, Dubaï et la Turquie restent dominants
 
 Vous souhaitez importer l'un de ces produits ? JC Import Express vous aide à trouver les meilleurs fournisseurs et à gérer toute la logistique.`,
-    excerpt: "Découvrez le classement 2026 des produits les plus importés en Afrique : électronique, machines, véhicules, alimentaire et plus.",
+    excerpt:
+      "Découvrez le classement 2026 des produits les plus importés en Afrique : électronique, machines, véhicules, alimentaire et plus.",
     tags: "import,top,produits,afrique,2026,tendances",
     metaTitle: "Top 10 Produits Importés en Afrique 2026 | JC Import Express",
-    metaDesc: "Classement 2026 des produits les plus importés en Afrique : électronique, machines, véhicules, alimentaire et tendances du marché.",
+    metaDesc:
+      "Classement 2026 des produits les plus importés en Afrique : électronique, machines, véhicules, alimentaire et tendances du marché.",
   },
 ];
 
 const SITE_CONTENT = [
-  { section: "metadata", key: "homeTitle", value: "JC Import Express | Suivi de Colis International — Tracking en Temps Réel" },
-  { section: "metadata", key: "homeDescription", value: "Suivez vos colis et marchandises en temps réel. Tracking international par avion, bateau et camion. Notification WhatsApp à chaque étape." },
-  { section: "metadata", key: "blogTitle", value: "Blog | JC Import Express — Guide Import-Export Afrique" },
-  { section: "metadata", key: "blogDescription", value: "Conseils, guides et astuces pour importer vos produits en Afrique. Fret maritime, fret aérien, douane, et tout ce qu'il faut savoir." },
+  {
+    section: "metadata",
+    key: "homeTitle",
+    value:
+      "JC Import Express | Suivi de Colis International — Tracking en Temps Réel",
+  },
+  {
+    section: "metadata",
+    key: "homeDescription",
+    value:
+      "Suivez vos colis et marchandises en temps réel. Tracking international par avion, bateau et camion. Notification WhatsApp à chaque étape.",
+  },
+  {
+    section: "metadata",
+    key: "blogTitle",
+    value: "Blog | JC Import Express — Guide Import-Export Afrique",
+  },
+  {
+    section: "metadata",
+    key: "blogDescription",
+    value:
+      "Conseils, guides et astuces pour importer vos produits en Afrique. Fret maritime, fret aérien, douane, et tout ce qu'il faut savoir.",
+  },
   { section: "header", key: "brandName", value: "JC Import Express" },
   { section: "header", key: "phone", value: "+86 130 5916 2331 " },
   {
-    section: "header", key: "navLinks", value: JSON.stringify([
+    section: "header",
+    key: "navLinks",
+    value: JSON.stringify([
       { label: "Accueil", href: "#hero" },
       { label: "Services", href: "#services" },
       { label: "À propos", href: "#about" },
       { label: "FAQ", href: "#faq" },
       { label: "Contact", href: "#contact" },
-    ])
+    ]),
   },
   { section: "hero", key: "badge", value: "Réseau logistique international" },
   { section: "hero", key: "title", value: "Une logistique mondiale," },
   { section: "hero", key: "accent", value: "maîtrisée de bout en bout." },
-  { section: "hero", key: "description", value: "Du fret international à la livraison du dernier kilomètre, nous connectons vos marchandises à plus de 150 pays avec visibilité, précision et fiabilité opérationnelle." },
+  {
+    section: "hero",
+    key: "description",
+    value:
+      "Du fret international à la livraison du dernier kilomètre, nous connectons vos marchandises à plus de 150 pays avec visibilité, précision et fiabilité opérationnelle.",
+  },
   { section: "hero", key: "desktopImage", value: "/images/hero-logistics.png" },
-  { section: "hero", key: "mobileImage", value: "/images/hero-mobile-logistics.png" },
-  { section: "hero", key: "trackingPlaceholder", value: "Entrez votre numéro de suivi" },
+  {
+    section: "hero",
+    key: "mobileImage",
+    value: "/images/hero-mobile-logistics.png",
+  },
+  {
+    section: "hero",
+    key: "trackingPlaceholder",
+    value: "Entrez votre numéro de suivi",
+  },
   { section: "hero", key: "trackingButton", value: "Suivre mon colis" },
   {
-    section: "hero", key: "stats", value: JSON.stringify([
+    section: "hero",
+    key: "stats",
+    value: JSON.stringify([
       { value: "150+", label: "Pays desservis" },
       { value: "50K+", label: "Expéditions mensuelles" },
       { value: "99,8 %", label: "Livraisons à l’heure" },
       { value: "15+", label: "Années d’expertise" },
-    ])
+    ]),
   },
   { section: "products", key: "eyebrow", value: "Nos Produits" },
-  { section: "products", key: "title", value: "Solutions logistiques adaptées à" },
+  {
+    section: "products",
+    key: "title",
+    value: "Solutions logistiques adaptées à",
+  },
   { section: "products", key: "accent", value: "vos besoins" },
-  { section: "products", key: "description", value: "Des tarifs transparents et compétitifs pour toutes vos expéditions, du petit colis au conteneur complet." },
+  {
+    section: "products",
+    key: "description",
+    value:
+      "Des tarifs transparents et compétitifs pour toutes vos expéditions, du petit colis au conteneur complet.",
+  },
   { section: "features", key: "eyebrow", value: "Ce que nous offrons" },
   { section: "features", key: "title", value: "Des solutions logistiques" },
   { section: "features", key: "accent", value: "complètes et fiables" },
-  { section: "features", key: "description", value: "Des solutions de chaîne d’approvisionnement de bout en bout, conçues autour de votre activité, de vos itinéraires et de vos exigences opérationnelles." },
   {
-    section: "features", key: "stats", value: JSON.stringify([
+    section: "features",
+    key: "description",
+    value:
+      "Des solutions de chaîne d’approvisionnement de bout en bout, conçues autour de votre activité, de vos itinéraires et de vos exigences opérationnelles.",
+  },
+  {
+    section: "features",
+    key: "stats",
+    value: JSON.stringify([
       { value: "150+", label: "Pays desservis", icon: "globe" },
       { value: "50K+", label: "Expéditions / mois", icon: "package" },
       { value: "99,8%", label: "Livraisons à l'heure", icon: "clock" },
       { value: "15+", label: "Années d'excellence", icon: "award" },
-    ])
+    ]),
   },
   {
-    section: "features", key: "services", value: JSON.stringify([
-      { title: "Fret aérien", description: "Solutions de fret aérien urgent avec suivi et options prioritaires.", icon: "plane", features: ["Options express et prioritaires", "Cargaison à température contrôlée", "Suivi en temps réel"] },
-      { title: "Fret maritime", description: "Expédition en conteneur complet ou groupage sur les grandes routes commerciales.", icon: "ship", features: ["Solutions FCL et LCL", "Port-à-port et porte-à-porte", "Dédouanement inclus"] },
-      { title: "Transport terrestre", description: "Transport routier intermodal pour palettes, colis et marchandises professionnelles.", icon: "truck", features: ["Flotte suivie par GPS", "Services programmés", "Livraison porte-à-porte"] },
-    ])
+    section: "features",
+    key: "services",
+    value: JSON.stringify([
+      {
+        title: "Fret aérien",
+        description:
+          "Solutions de fret aérien urgent avec suivi et options prioritaires.",
+        icon: "plane",
+        features: [
+          "Options express et prioritaires",
+          "Cargaison à température contrôlée",
+          "Suivi en temps réel",
+        ],
+      },
+      {
+        title: "Fret maritime",
+        description:
+          "Expédition en conteneur complet ou groupage sur les grandes routes commerciales.",
+        icon: "ship",
+        features: [
+          "Solutions FCL et LCL",
+          "Port-à-port et porte-à-porte",
+          "Dédouanement inclus",
+        ],
+      },
+      {
+        title: "Transport terrestre",
+        description:
+          "Transport routier intermodal pour palettes, colis et marchandises professionnelles.",
+        icon: "truck",
+        features: [
+          "Flotte suivie par GPS",
+          "Services programmés",
+          "Livraison porte-à-porte",
+        ],
+      },
+    ]),
   },
   {
-    section: "features", key: "trackingSteps", value: JSON.stringify([
+    section: "features",
+    key: "trackingSteps",
+    value: JSON.stringify([
       { label: "Commande confirmée", time: "15 janv. · 10:30", done: true },
       { label: "Colis ramassé", time: "15 janv. · 14:15", done: true },
       { label: "En transit", time: "16 janv. · 08:00", done: true },
       { label: "Dédouanement", time: "Estimé le 18 janv.", done: false },
       { label: "Livraison", time: "Estimé le 19 janv.", done: false },
-    ])
+    ]),
   },
   { section: "features", key: "testimonialEyebrow", value: "Témoignages" },
-  { section: "features", key: "testimonialTitle", value: "La confiance se mesure dans les résultats." },
-  { section: "features", key: "testimonialDescription", value: "Des entreprises s’appuient sur notre réseau pour sécuriser leurs opérations logistiques." },
-  { section: "benefits", key: "eyebrow", value: "À propos de JC Import Express" },
-  { section: "benefits", key: "title", value: "Votre partenaire de confiance en" },
-  { section: "benefits", key: "accent", value: "solutions logistiques mondiales." },
-  { section: "benefits", key: "description", value: "Fondée en 2010, JC Import Express est devenue un partenaire logistique fiable pour les expéditions internationales." },
   {
-    section: "benefits", key: "items", value: JSON.stringify([
-      { title: "Notre mission", description: "Redéfinir la logistique avec innovation et fiabilité.", icon: "mission" },
-      { title: "Notre vision", description: "Devenir le partenaire logistique le plus fiable pour vos imports.", icon: "vision" },
-      { title: "Dédouanement intégré", description: "Notre équipe gère vos documents et formalités douanières.", icon: "customs" },
-    ])
+    section: "features",
+    key: "testimonialTitle",
+    value: "La confiance se mesure dans les résultats.",
+  },
+  {
+    section: "features",
+    key: "testimonialDescription",
+    value:
+      "Des entreprises s’appuient sur notre réseau pour sécuriser leurs opérations logistiques.",
+  },
+  {
+    section: "benefits",
+    key: "eyebrow",
+    value: "À propos de JC Import Express",
+  },
+  {
+    section: "benefits",
+    key: "title",
+    value: "Votre partenaire de confiance en",
+  },
+  {
+    section: "benefits",
+    key: "accent",
+    value: "solutions logistiques mondiales.",
+  },
+  {
+    section: "benefits",
+    key: "description",
+    value:
+      "Fondée en 2010, JC Import Express est devenue un partenaire logistique fiable pour les expéditions internationales.",
+  },
+  {
+    section: "benefits",
+    key: "items",
+    value: JSON.stringify([
+      {
+        title: "Notre mission",
+        description: "Redéfinir la logistique avec innovation et fiabilité.",
+        icon: "mission",
+      },
+      {
+        title: "Notre vision",
+        description:
+          "Devenir le partenaire logistique le plus fiable pour vos imports.",
+        icon: "vision",
+      },
+      {
+        title: "Dédouanement intégré",
+        description:
+          "Notre équipe gère vos documents et formalités douanières.",
+        icon: "customs",
+      },
+    ]),
   },
   { section: "faq", key: "eyebrow", value: "FAQ" },
   { section: "faq", key: "title", value: "Questions fréquentes" },
-  { section: "faq", key: "description", value: "Les réponses essentielles pour comprendre simplement nos services logistiques." },
   {
-    section: "faq", key: "items", value: JSON.stringify([
-      { question: "Comment puis-je suivre mon expédition ?", answer: "Entrez votre numéro de suivi sur la page d'accueil pour obtenir les mises à jour disponibles." },
-      { question: "Quels types de cargaison traitez-vous ?", answer: "Nous traitons les colis, palettes, conteneurs, marchandises générales et dossiers de dédouanement." },
-      { question: "Proposez-vous le dédouanement international ?", answer: "Oui, notre équipe accompagne la préparation documentaire et le suivi des formalités douanières." },
-    ])
+    section: "faq",
+    key: "description",
+    value:
+      "Les réponses essentielles pour comprendre simplement nos services logistiques.",
+  },
+  {
+    section: "faq",
+    key: "items",
+    value: JSON.stringify([
+      {
+        question: "Comment puis-je suivre mon expédition ?",
+        answer:
+          "Entrez votre numéro de suivi sur la page d'accueil pour obtenir les mises à jour disponibles.",
+      },
+      {
+        question: "Quels types de cargaison traitez-vous ?",
+        answer:
+          "Nous traitons les colis, palettes, conteneurs, marchandises générales et dossiers de dédouanement.",
+      },
+      {
+        question: "Proposez-vous le dédouanement international ?",
+        answer:
+          "Oui, notre équipe accompagne la préparation documentaire et le suivi des formalités douanières.",
+      },
+    ]),
   },
   { section: "pricing", key: "eyebrow", value: "Contact" },
   { section: "pricing", key: "title", value: "Obtenez un devis" },
-  { section: "pricing", key: "description", value: "Notre équipe conçoit une solution adaptée à votre expédition." },
-  { section: "pricing", key: "panelTitle", value: "Échangez directement avec notre équipe logistique." },
-  { section: "pricing", key: "panelDescription", value: "Nous analysons votre itinéraire, vos délais et vos contraintes afin de vous proposer une réponse exploitable." },
+  {
+    section: "pricing",
+    key: "description",
+    value: "Notre équipe conçoit une solution adaptée à votre expédition.",
+  },
+  {
+    section: "pricing",
+    key: "panelTitle",
+    value: "Échangez directement avec notre équipe logistique.",
+  },
+  {
+    section: "pricing",
+    key: "panelDescription",
+    value:
+      "Nous analysons votre itinéraire, vos délais et vos contraintes afin de vous proposer une réponse exploitable.",
+  },
   { section: "pricing", key: "addressLabel", value: "Siège social" },
   { section: "pricing", key: "address", value: "Wyoming, États-Unis" },
   { section: "pricing", key: "phoneLabel", value: "Téléphone" },
@@ -541,66 +961,154 @@ const SITE_CONTENT = [
   { section: "pricing", key: "emailLabel", value: "Email" },
   { section: "pricing", key: "email", value: "support@nexttracelogistics.com" },
   { section: "pricing", key: "availabilityTitle", value: "Disponibilité" },
-  { section: "pricing", key: "availabilityBody", value: "Lundi au vendredi : 8h–20h HNE · Support de suivi : 24h/24, 7j/7" },
+  {
+    section: "pricing",
+    key: "availabilityBody",
+    value: "Lundi au vendredi : 8h–20h HNE · Support de suivi : 24h/24, 7j/7",
+  },
   { section: "pricing", key: "formEyebrow", value: "Demande personnalisée" },
-  { section: "pricing", key: "formTitle", value: "Parlez-nous de votre expédition." },
-  { section: "pricing", key: "formDescription", value: "Renseignez les informations essentielles pour préparer une proposition adaptée." },
-  { section: "pricing", key: "privacy", value: "Vos informations sont utilisées uniquement pour traiter votre demande de devis." },
+  {
+    section: "pricing",
+    key: "formTitle",
+    value: "Parlez-nous de votre expédition.",
+  },
+  {
+    section: "pricing",
+    key: "formDescription",
+    value:
+      "Renseignez les informations essentielles pour préparer une proposition adaptée.",
+  },
+  {
+    section: "pricing",
+    key: "privacy",
+    value:
+      "Vos informations sont utilisées uniquement pour traiter votre demande de devis.",
+  },
   { section: "blog", key: "eyebrow", value: "Actualités & Conseils" },
   { section: "blog", key: "title", value: "Dernières" },
   { section: "blog", key: "accent", value: "publications" },
-  { section: "blog", key: "description", value: "Suivez nos actualités, guides et conseils pour optimiser vos expéditions internationales." },
+  {
+    section: "blog",
+    key: "description",
+    value:
+      "Suivez nos actualités, guides et conseils pour optimiser vos expéditions internationales.",
+  },
   { section: "blog", key: "cta", value: "Voir tous les articles" },
   { section: "blog", key: "listEyebrow", value: "Blog" },
   { section: "blog", key: "listTitle", value: "Guide Import-Export Afrique" },
-  { section: "blog", key: "listDescription", value: "Conseils pratiques, guides étape par étape et astuces pour importer vos produits en Afrique en toute sérénité." },
+  {
+    section: "blog",
+    key: "listDescription",
+    value:
+      "Conseils pratiques, guides étape par étape et astuces pour importer vos produits en Afrique en toute sérénité.",
+  },
 ];
 
 const PRODUCT_SEEDS = [
   {
     slug: "conteneur-maritime-20-pieds",
     name: "Conteneur Maritime 20 pieds",
-    shortDescription: "Conteneur standard dry van pour fret maritime. Capacité de 33 m³, charge utile jusqu'à 28 tonnes.",
-    fullDescription: "Parfait pour vos expéditions de taille moyenne, ce conteneur maritime de 20 pieds est une solution standard du transport international.\n\nIl convient aux marchandises sèches : meubles, vêtements, produits manufacturés, machines et biens de consommation.",
+    shortDescription:
+      "Conteneur standard dry van pour fret maritime. Capacité de 33 m³, charge utile jusqu'à 28 tonnes.",
+    fullDescription:
+      "Parfait pour vos expéditions de taille moyenne, ce conteneur maritime de 20 pieds est une solution standard du transport international.\n\nIl convient aux marchandises sèches : meubles, vêtements, produits manufacturés, machines et biens de consommation.",
     imageUrl: "/images/shipping-containers.jpg",
-    gallery: ["/images/shipping-containers.jpg", "/images/warehouse.jpg", "/images/ocean-freight.jpg"],
+    gallery: [
+      "/images/shipping-containers.jpg",
+      "/images/warehouse.jpg",
+      "/images/ocean-freight.jpg",
+    ],
     priceXaf: 3_600_000,
     likes: 47,
-    features: ["Capacité intérieure : 33 m³", "Charge utile max : 28 000 kg", "Acier Corten anti-corrosion", "Certifié CSC"],
+    features: [
+      "Capacité intérieure : 33 m³",
+      "Charge utile max : 28 000 kg",
+      "Acier Corten anti-corrosion",
+      "Certifié CSC",
+    ],
     sortOrder: 1,
     testimonials: [
-      { name: "Amadou Diallo", advice: "Conteneur reçu en parfait état, conforme à la description.", star: 5, showOnLanding: true, sortOrder: 1 },
-      { name: "Fatima Ndiaye", advice: "Excellent rapport qualité-prix pour l'export vers l'Afrique de l'Ouest.", star: 5, showOnLanding: false, sortOrder: 2 },
+      {
+        name: "Amadou Diallo",
+        advice: "Conteneur reçu en parfait état, conforme à la description.",
+        star: 5,
+        showOnLanding: true,
+        sortOrder: 1,
+      },
+      {
+        name: "Fatima Ndiaye",
+        advice:
+          "Excellent rapport qualité-prix pour l'export vers l'Afrique de l'Ouest.",
+        star: 5,
+        showOnLanding: false,
+        sortOrder: 2,
+      },
     ],
   },
   {
     slug: "fret-aerien-express-100kg",
     name: "Fret Aérien Express (100 kg)",
-    shortDescription: "Service de fret aérien prioritaire pour colis standard. Délai de 3 à 5 jours ouvrés.",
-    fullDescription: "Notre service de fret aérien express est adapté aux envois urgents vers l'Afrique.\n\nIl couvre jusqu'à 100 kg de marchandises avec suivi en temps réel et manutention sécurisée.",
+    shortDescription:
+      "Service de fret aérien prioritaire pour colis standard. Délai de 3 à 5 jours ouvrés.",
+    fullDescription:
+      "Notre service de fret aérien express est adapté aux envois urgents vers l'Afrique.\n\nIl couvre jusqu'à 100 kg de marchandises avec suivi en temps réel et manutention sécurisée.",
     imageUrl: "/images/air-freight.jpg",
-    gallery: ["/images/air-freight.jpg", "/images/tracking-map.jpg", "/images/warehouse.jpg"],
+    gallery: [
+      "/images/air-freight.jpg",
+      "/images/tracking-map.jpg",
+      "/images/warehouse.jpg",
+    ],
     priceXaf: 900_000,
     likes: 62,
-    features: ["Poids max : 100 kg", "Délai : 3 à 5 jours ouvrés", "Suivi 24h/24", "Dédouanement accéléré inclus"],
+    features: [
+      "Poids max : 100 kg",
+      "Délai : 3 à 5 jours ouvrés",
+      "Suivi 24h/24",
+      "Dédouanement accéléré inclus",
+    ],
     sortOrder: 2,
     testimonials: [
-      { name: "Sophie Leblanc", advice: "Livraison ultra-rapide, mon colis est arrivé à Douala en 4 jours.", star: 5, showOnLanding: true, sortOrder: 3 },
+      {
+        name: "Sophie Leblanc",
+        advice:
+          "Livraison ultra-rapide, mon colis est arrivé à Douala en 4 jours.",
+        star: 5,
+        showOnLanding: true,
+        sortOrder: 3,
+      },
     ],
   },
   {
     slug: "service-dedouanement-complet",
     name: "Service Dédouanement Complet",
-    shortDescription: "Accompagnement douanier complet pour vos marchandises : documents, conformité et suivi.",
-    fullDescription: "Notre service de dédouanement complet vous accompagne de la préparation des documents à la libération des marchandises.\n\nIl couvre la classification tarifaire, les déclarations, les calculs de droits et les échanges avec les autorités.",
+    shortDescription:
+      "Accompagnement douanier complet pour vos marchandises : documents, conformité et suivi.",
+    fullDescription:
+      "Notre service de dédouanement complet vous accompagne de la préparation des documents à la libération des marchandises.\n\nIl couvre la classification tarifaire, les déclarations, les calculs de droits et les échanges avec les autorités.",
     imageUrl: "/images/tracking-map.jpg",
-    gallery: ["/images/tracking-map.jpg", "/images/warehouse.jpg", "/images/shipping-containers.jpg"],
+    gallery: [
+      "/images/tracking-map.jpg",
+      "/images/warehouse.jpg",
+      "/images/shipping-containers.jpg",
+    ],
     priceXaf: 250_000,
     likes: 54,
-    features: ["Classification tarifaire", "Préparation des documents", "Interface avec les autorités", "Assistance prioritaire"],
+    features: [
+      "Classification tarifaire",
+      "Préparation des documents",
+      "Interface avec les autorités",
+      "Assistance prioritaire",
+    ],
     sortOrder: 3,
     testimonials: [
-      { name: "Hélène Zadi", advice: "Notre conteneur a été libéré rapidement grâce à leur expertise.", star: 5, showOnLanding: true, sortOrder: 4 },
+      {
+        name: "Hélène Zadi",
+        advice:
+          "Notre conteneur a été libéré rapidement grâce à leur expertise.",
+        star: 5,
+        showOnLanding: true,
+        sortOrder: 4,
+      },
     ],
   },
 ];
@@ -619,7 +1127,13 @@ async function seedBlogPosts() {
 async function seedSiteContent() {
   for (const item of SITE_CONTENT) {
     await prisma.siteContent.upsert({
-      where: { section_key_locale: { section: item.section, key: item.key, locale: "fr" } },
+      where: {
+        section_key_locale: {
+          section: item.section,
+          key: item.key,
+          locale: "fr",
+        },
+      },
       update: {
         value: item.value,
         draftContent: item.value,
@@ -654,7 +1168,11 @@ async function seedProductsAndTestimonials() {
     for (const testimonial of testimonials) {
       await prisma.productTestimonial.upsert({
         where: { id: `${savedProduct.id}-${testimonial.sortOrder}` },
-        update: { ...testimonial, productId: savedProduct.id, isPublished: true },
+        update: {
+          ...testimonial,
+          productId: savedProduct.id,
+          isPublished: true,
+        },
         create: {
           id: `${savedProduct.id}-${testimonial.sortOrder}`,
           ...testimonial,
@@ -671,23 +1189,37 @@ async function seedAppSettings() {
   await prisma.appSettings.upsert({
     where: { id: "default" },
     update: {},
-    create: { id: "default", adminWhatsAppNumber: "2250700000000", evolutionInstanceId: "jc-import-express" },
+    create: {
+      id: "default",
+      adminWhatsAppNumber: "2250700000000",
+      evolutionInstanceId: "jc-import-express",
+    },
   });
   console.log("[seed] App settings");
 }
 
 async function main() {
-  console.log("[seed] Starting...");
+  console.log("[seed] Starting main...");
   await seedCountries();
+  console.log("[seed] ✔ Countries seeded");
   await seedAdminUser();
+  console.log("[seed] ✔ Admin user");
   await seedAdminAccessKey();
+  console.log("[seed] ✔ Admin access key");
   await seedAppSettings();
+  console.log("[seed] ✔ App settings");
   await seedSiteContent();
+  console.log("[seed] ✔ Site content");
   await seedProductsAndTestimonials();
+  console.log("[seed] ✔ Products & testimonials");
   await seedBlogPosts();
+  console.log("[seed] ✔ Blog posts");
   console.log("[seed] Done.");
 }
 
 main()
-  .catch((e) => { console.error("[seed] Error:", e); process.exit(1); })
+  .catch((e) => {
+    console.error("[seed] Error:", e);
+    process.exit(1);
+  })
   .finally(() => prisma.$disconnect());
