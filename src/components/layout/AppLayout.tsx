@@ -59,12 +59,12 @@ function getNavigationItems(user?: CurrentUser): NavigationItem[] {
     ...BASE_NAV_ITEMS,
     ...(user?.isAdmin
       ? [
-        {
-          href: "/dashboard/admin",
-          label: "Admin",
-          icon: ShieldCheck,
-        },
-      ]
+          {
+            href: "/dashboard/admin",
+            label: "Admin",
+            icon: ShieldCheck,
+          },
+        ]
       : []),
   ];
 }
@@ -76,11 +76,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  return (
-    <AppChrome pathname={pathname}>
-      {children}
-    </AppChrome>
-  );
+  return <AppChrome pathname={pathname}>{children}</AppChrome>;
 }
 
 function AppChrome({
@@ -94,9 +90,7 @@ function AppChrome({
     retry: false,
   });
 
-  const user = (
-    authData as { user?: CurrentUser } | undefined
-  )?.user;
+  const user = (authData as { user?: CurrentUser } | undefined)?.user;
 
   const navigationItems = getNavigationItems(user);
 
@@ -104,28 +98,18 @@ function AppChrome({
     <div
       className={cn(
         "flex min-h-dvh flex-col bg-background",
-        user && "pb-16 min-[810px]:pb-0"
+        user && "pb-16 min-[810px]:pb-0",
       )}
     >
       {pathname !== "/" && (
-        <SupasteStyleHeader
-          pathname={pathname}
-          items={navigationItems}
-        />
+        <SupasteStyleHeader pathname={pathname} items={navigationItems} />
       )}
 
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
 
       <Footer />
 
-      {user && (
-        <MobileBottomNav
-          pathname={pathname}
-          items={navigationItems}
-        />
-      )}
+      {user && <MobileBottomNav pathname={pathname} items={navigationItems} />}
 
       <SupportButton hasBottomNavigation={Boolean(user)} />
     </div>
@@ -149,9 +133,7 @@ function SupasteStyleHeader({
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1200px)");
 
-    const handleDesktopChange = (
-      event: MediaQueryListEvent
-    ) => {
+    const handleDesktopChange = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setMobileMenuOpen(false);
       }
@@ -160,10 +142,7 @@ function SupasteStyleHeader({
     mediaQuery.addEventListener("change", handleDesktopChange);
 
     return () => {
-      mediaQuery.removeEventListener(
-        "change",
-        handleDesktopChange
-      );
+      mediaQuery.removeEventListener("change", handleDesktopChange);
     };
   }, []);
 
@@ -190,10 +169,10 @@ function SupasteStyleHeader({
         mobileMenuOpen
           ? "w-[min(350px,100vw)] min-[1200px]:w-auto"
           : [
-            "w-[min(350px,100vw)]",
-            "min-[810px]:w-[810px]",
-            "min-[1200px]:w-auto",
-          ]
+              "w-[min(350px,100vw)]",
+              "min-[810px]:w-[810px]",
+              "min-[1200px]:w-auto",
+            ],
       )}
     >
       <nav
@@ -203,13 +182,13 @@ function SupasteStyleHeader({
           "transition-[width,height] duration-300",
           mobileMenuOpen
             ? [
-              "max-h-dvh flex-col items-start justify-start",
-              "gap-[30px] overflow-y-auto px-[10px] py-[5px]",
-            ]
+                "max-h-dvh flex-col items-start justify-start",
+                "gap-[30px] overflow-y-auto px-[10px] py-[5px]",
+              ]
             : [
-              "h-[50px] flex-row items-center justify-center",
-              "gap-[30px] overflow-visible px-[10px] py-[5px]",
-            ],
+                "h-[50px] flex-row items-center justify-center",
+                "gap-[30px] overflow-visible px-[10px] py-[5px]",
+              ],
           [
             "min-[1200px]:h-min",
             "min-[1200px]:max-h-none",
@@ -220,7 +199,7 @@ function SupasteStyleHeader({
             "min-[1200px]:gap-[30px]",
             "min-[1200px]:overflow-visible",
             "min-[1200px]:p-[10px]",
-          ]
+          ],
         )}
       >
         <div
@@ -234,13 +213,13 @@ function SupasteStyleHeader({
               "min-[1200px]:flex-none",
               "min-[1200px]:flex-row",
               "min-[1200px]:gap-[40px]",
-            ]
+            ],
           )}
         >
           <div
             className={cn(
               "relative flex h-min w-full flex-row items-center justify-between overflow-visible",
-              "min-[1200px]:w-min min-[1200px]:flex-none min-[1200px]:justify-start min-[1200px]:gap-[10px]"
+              "min-[1200px]:w-min min-[1200px]:flex-none min-[1200px]:justify-start min-[1200px]:gap-[10px]",
             )}
           >
             <Link
@@ -260,19 +239,13 @@ function SupasteStyleHeader({
               type="button"
               aria-expanded={mobileMenuOpen}
               aria-controls="JC Import Express-primary-links"
-              aria-label={
-                mobileMenuOpen
-                  ? "Fermer le menu"
-                  : "Ouvrir le menu"
-              }
+              aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               className={cn(
                 "relative h-10 w-10 flex-none cursor-pointer overflow-hidden rounded-md",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70",
-                "min-[1200px]:hidden"
+                "min-[1200px]:hidden",
               )}
-              onClick={() =>
-                setMobileMenuOpen((open) => !open)
-              }
+              onClick={() => setMobileMenuOpen((open) => !open)}
             >
               <span
                 aria-hidden="true"
@@ -281,7 +254,7 @@ function SupasteStyleHeader({
                   "transition-[top,transform,opacity] duration-300",
                   mobileMenuOpen
                     ? "top-[19px] rotate-45"
-                    : "top-[12px] rotate-0"
+                    : "top-[12px] rotate-0",
                 )}
               />
 
@@ -290,9 +263,7 @@ function SupasteStyleHeader({
                 className={cn(
                   "absolute left-1/2 top-[19px] h-0.5 w-5 -translate-x-1/2 rounded-[10px] bg-[#757575]",
                   "transition-opacity duration-200",
-                  mobileMenuOpen
-                    ? "opacity-0"
-                    : "opacity-100"
+                  mobileMenuOpen ? "opacity-0" : "opacity-100",
                 )}
               />
 
@@ -303,7 +274,7 @@ function SupasteStyleHeader({
                   "transition-[top,transform,opacity] duration-300",
                   mobileMenuOpen
                     ? "top-[19px] -rotate-45"
-                    : "top-[26px] rotate-0"
+                    : "top-[26px] rotate-0",
                 )}
               />
             </button>
@@ -314,10 +285,7 @@ function SupasteStyleHeader({
             className={cn(
               "relative max-w-[1200px] overflow-visible",
               mobileMenuOpen
-                ? [
-                  "flex w-full flex-col items-start gap-[30px]",
-                  "p-[30px]",
-                ]
+                ? ["flex w-full flex-col items-start gap-[30px]", "p-[30px]"]
                 : "hidden",
               [
                 "min-[1200px]:flex",
@@ -329,7 +297,7 @@ function SupasteStyleHeader({
                 "min-[1200px]:justify-end",
                 "min-[1200px]:gap-[20px]",
                 "min-[1200px]:p-0",
-              ]
+              ],
             )}
           >
             {items.map(({ href, label }) => {
@@ -345,9 +313,7 @@ function SupasteStyleHeader({
                     "text-2xl leading-[1.2]",
                     "transition-opacity duration-200",
                     "min-[1200px]:w-auto min-[1200px]:whitespace-pre min-[1200px]:text-sm",
-                    active
-                      ? "opacity-100"
-                      : "opacity-60 hover:opacity-100"
+                    active ? "opacity-100" : "opacity-60 hover:opacity-100",
                   )}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -375,32 +341,23 @@ function BrandMark() {
   );
 }
 
-function CornerDecoration({
-  side,
-}: {
-  side: "left" | "right";
-}) {
+function CornerDecoration({ side }: { side: "left" | "right" }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
         "absolute top-0 block size-5 overflow-visible",
-        side === "right"
-          ? "-right-5"
-          : "-left-5"
+        side === "right" ? "-right-5" : "-left-5",
       )}
     >
       <svg
         viewBox="0 0 20 20"
         className={cn(
           "absolute left-0 top-0 block size-5 shrink-0 [image-rendering:pixelated]",
-          side === "left" && "rotate-90"
+          side === "left" && "rotate-90",
         )}
       >
-        <path
-          d="M 0 0 L 20 0 C 8.954 0 0 8.954 0 20 Z"
-          fill="rgb(0, 0, 0)"
-        />
+        <path d="M 0 0 L 20 0 C 8.954 0 0 8.954 0 20 Z" fill="rgb(0, 0, 0)" />
       </svg>
     </span>
   );
@@ -432,15 +389,12 @@ function MobileBottomNav({
                 "text-[10px] font-semibold transition-all",
                 active
                   ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground opacity-70 hover:bg-muted hover:opacity-100"
+                  : "text-muted-foreground opacity-70 hover:bg-muted hover:opacity-100",
               )}
             >
               <Icon
                 aria-hidden="true"
-                className={cn(
-                  "size-4",
-                  active && "scale-110"
-                )}
+                className={cn("size-4", active && "scale-110")}
               />
               <span>{label}</span>
             </Link>
@@ -451,13 +405,7 @@ function MobileBottomNav({
   );
 }
 
-import {
-  ArrowUpRight,
-  Mail,
-  MapPin,
-  PackageSearch,
-  Phone,
-} from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, PackageSearch, Phone } from "lucide-react";
 
 const FOOTER_MENU = [
   { href: "/", label: "Accueil" },
@@ -646,8 +594,8 @@ export function Footer() {
                 tracking-[-0.01em] text-white/48
               "
             >
-              Suivez vos colis depuis la Chine, l&apos;Europe et les
-              États-Unis avec des mises à jour fiables à chaque étape.
+              Suivez vos colis depuis la Chine, l&apos;Europe et les États-Unis
+              avec des mises à jour fiables à chaque étape.
             </p>
           </div>
 
@@ -713,7 +661,6 @@ export function Footer() {
               "
             >
               Obtenir un devis
-
               <ArrowUpRight
                 className="
                   size-4 transition-transform duration-200
@@ -864,7 +811,7 @@ export function Footer() {
                   </span>
 
                   <span className="font-display text-[14px] leading-[1.5] text-white/56">
-                    Shenzhen, China
+                    Shanghai, China
                   </span>
                 </div>
               </div>
@@ -1007,11 +954,14 @@ function SupportButton({
     "public.getWhatsAppNumber",
     { staleTime: 60_000 },
   );
-  const rawNumber = waData?.number ?? process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP_NUMBER ?? "2250700000000";
+  const rawNumber =
+    waData?.number ??
+    process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP_NUMBER ??
+    "2250700000000";
   const supportNumber = rawNumber.replace(/\D/g, "");
 
   const message = encodeURIComponent(
-    "Bonjour JC Import Express, j'ai besoin d'aide pour mon envoi."
+    "Bonjour JC Import Express, j'ai besoin d'aide pour mon envoi.",
   );
 
   return (
@@ -1024,7 +974,7 @@ function SupportButton({
         "bg-green-500 text-white shadow-md transition-all",
         "hover:scale-105 hover:shadow-lg hover:shadow-green-500/25",
         "min-[810px]:bottom-6",
-        hasBottomNavigation ? "bottom-20" : "bottom-6"
+        hasBottomNavigation ? "bottom-20" : "bottom-6",
       )}
       aria-label="Contacter le support WhatsApp"
     >
