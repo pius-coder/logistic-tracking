@@ -43,6 +43,7 @@ export type AuraUserMinAggregateOutputType = {
   sessionVersion: number | null
   username: string | null
   email: string | null
+  phone: string | null
   displayName: string | null
   businessName: string | null
   isAdmin: boolean | null
@@ -61,6 +62,7 @@ export type AuraUserMaxAggregateOutputType = {
   sessionVersion: number | null
   username: string | null
   email: string | null
+  phone: string | null
   displayName: string | null
   businessName: string | null
   isAdmin: boolean | null
@@ -79,6 +81,7 @@ export type AuraUserCountAggregateOutputType = {
   sessionVersion: number
   username: number
   email: number
+  phone: number
   displayName: number
   businessName: number
   isAdmin: number
@@ -107,6 +110,7 @@ export type AuraUserMinAggregateInputType = {
   sessionVersion?: true
   username?: true
   email?: true
+  phone?: true
   displayName?: true
   businessName?: true
   isAdmin?: true
@@ -125,6 +129,7 @@ export type AuraUserMaxAggregateInputType = {
   sessionVersion?: true
   username?: true
   email?: true
+  phone?: true
   displayName?: true
   businessName?: true
   isAdmin?: true
@@ -143,6 +148,7 @@ export type AuraUserCountAggregateInputType = {
   sessionVersion?: true
   username?: true
   email?: true
+  phone?: true
   displayName?: true
   businessName?: true
   isAdmin?: true
@@ -248,6 +254,7 @@ export type AuraUserGroupByOutputType = {
   sessionVersion: number
   username: string
   email: string | null
+  phone: string | null
   displayName: string | null
   businessName: string | null
   isAdmin: boolean
@@ -289,6 +296,7 @@ export type AuraUserWhereInput = {
   sessionVersion?: Prisma.IntFilter<"AuraUser"> | number
   username?: Prisma.StringFilter<"AuraUser"> | string
   email?: Prisma.StringNullableFilter<"AuraUser"> | string | null
+  phone?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   isAdmin?: Prisma.BoolFilter<"AuraUser"> | boolean
@@ -314,6 +322,7 @@ export type AuraUserOrderByWithRelationInput = {
   sessionVersion?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
@@ -342,6 +351,7 @@ export type AuraUserWhereUniqueInput = Prisma.AtLeast<{
   disabledAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"AuraUser"> | Date | string | null
   sessionVersion?: Prisma.IntFilter<"AuraUser"> | number
+  phone?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   isAdmin?: Prisma.BoolFilter<"AuraUser"> | boolean
@@ -367,6 +377,7 @@ export type AuraUserOrderByWithAggregationInput = {
   sessionVersion?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
@@ -393,6 +404,7 @@ export type AuraUserScalarWhereWithAggregatesInput = {
   sessionVersion?: Prisma.IntWithAggregatesFilter<"AuraUser"> | number
   username?: Prisma.StringWithAggregatesFilter<"AuraUser"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableWithAggregatesFilter<"AuraUser"> | string | null
   isAdmin?: Prisma.BoolWithAggregatesFilter<"AuraUser"> | boolean
@@ -411,6 +423,7 @@ export type AuraUserCreateInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -435,6 +448,7 @@ export type AuraUserUncheckedCreateInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -459,6 +473,7 @@ export type AuraUserUpdateInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -483,6 +498,7 @@ export type AuraUserUncheckedUpdateInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -507,6 +523,7 @@ export type AuraUserCreateManyInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -525,6 +542,7 @@ export type AuraUserUpdateManyMutationInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -542,6 +560,7 @@ export type AuraUserUncheckedUpdateManyInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -560,6 +579,7 @@ export type AuraUserCountOrderByAggregateInput = {
   sessionVersion?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
@@ -582,6 +602,7 @@ export type AuraUserMaxOrderByAggregateInput = {
   sessionVersion?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
@@ -600,6 +621,7 @@ export type AuraUserMinOrderByAggregateInput = {
   sessionVersion?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   businessName?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
@@ -800,6 +822,7 @@ export type AuraUserCreateWithoutPasswordCredentialInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -823,6 +846,7 @@ export type AuraUserUncheckedCreateWithoutPasswordCredentialInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -862,6 +886,7 @@ export type AuraUserUpdateWithoutPasswordCredentialInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -885,6 +910,7 @@ export type AuraUserUncheckedUpdateWithoutPasswordCredentialInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -908,6 +934,7 @@ export type AuraUserCreateWithoutSessionsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -931,6 +958,7 @@ export type AuraUserUncheckedCreateWithoutSessionsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -970,6 +998,7 @@ export type AuraUserUpdateWithoutSessionsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -993,6 +1022,7 @@ export type AuraUserUncheckedUpdateWithoutSessionsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1016,6 +1046,7 @@ export type AuraUserCreateWithoutNotificationsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1039,6 +1070,7 @@ export type AuraUserUncheckedCreateWithoutNotificationsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1078,6 +1110,7 @@ export type AuraUserUpdateWithoutNotificationsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1101,6 +1134,7 @@ export type AuraUserUncheckedUpdateWithoutNotificationsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1124,6 +1158,7 @@ export type AuraUserCreateWithoutAuditLogsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1147,6 +1182,7 @@ export type AuraUserUncheckedCreateWithoutAuditLogsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1186,6 +1222,7 @@ export type AuraUserUpdateWithoutAuditLogsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1209,6 +1246,7 @@ export type AuraUserUncheckedUpdateWithoutAuditLogsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1232,6 +1270,7 @@ export type AuraUserCreateWithoutCountryInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1255,6 +1294,7 @@ export type AuraUserUncheckedCreateWithoutCountryInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1307,6 +1347,7 @@ export type AuraUserScalarWhereInput = {
   sessionVersion?: Prisma.IntFilter<"AuraUser"> | number
   username?: Prisma.StringFilter<"AuraUser"> | string
   email?: Prisma.StringNullableFilter<"AuraUser"> | string | null
+  phone?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   displayName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   businessName?: Prisma.StringNullableFilter<"AuraUser"> | string | null
   isAdmin?: Prisma.BoolFilter<"AuraUser"> | boolean
@@ -1325,6 +1366,7 @@ export type AuraUserCreateWithoutRequestsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1348,6 +1390,7 @@ export type AuraUserUncheckedCreateWithoutRequestsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1387,6 +1430,7 @@ export type AuraUserUpdateWithoutRequestsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1410,6 +1454,7 @@ export type AuraUserUncheckedUpdateWithoutRequestsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1433,6 +1478,7 @@ export type AuraUserCreateWithoutJcNotificationsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1456,6 +1502,7 @@ export type AuraUserUncheckedCreateWithoutJcNotificationsInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1495,6 +1542,7 @@ export type AuraUserUpdateWithoutJcNotificationsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1518,6 +1566,7 @@ export type AuraUserUncheckedUpdateWithoutJcNotificationsInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1541,6 +1590,7 @@ export type AuraUserCreateManyCountryInput = {
   sessionVersion?: number
   username: string
   email?: string | null
+  phone?: string | null
   displayName?: string | null
   businessName?: string | null
   isAdmin?: boolean
@@ -1558,6 +1608,7 @@ export type AuraUserUpdateWithoutCountryInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1581,6 +1632,7 @@ export type AuraUserUncheckedUpdateWithoutCountryInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1604,6 +1656,7 @@ export type AuraUserUncheckedUpdateManyWithoutCountryInput = {
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1688,6 +1741,7 @@ export type AuraUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   sessionVersion?: boolean
   username?: boolean
   email?: boolean
+  phone?: boolean
   displayName?: boolean
   businessName?: boolean
   isAdmin?: boolean
@@ -1714,6 +1768,7 @@ export type AuraUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   sessionVersion?: boolean
   username?: boolean
   email?: boolean
+  phone?: boolean
   displayName?: boolean
   businessName?: boolean
   isAdmin?: boolean
@@ -1733,6 +1788,7 @@ export type AuraUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   sessionVersion?: boolean
   username?: boolean
   email?: boolean
+  phone?: boolean
   displayName?: boolean
   businessName?: boolean
   isAdmin?: boolean
@@ -1752,6 +1808,7 @@ export type AuraUserSelectScalar = {
   sessionVersion?: boolean
   username?: boolean
   email?: boolean
+  phone?: boolean
   displayName?: boolean
   businessName?: boolean
   isAdmin?: boolean
@@ -1761,7 +1818,7 @@ export type AuraUserSelectScalar = {
   onboardingCompleted?: boolean
 }
 
-export type AuraUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "disabledAt" | "deletedAt" | "sessionVersion" | "username" | "email" | "displayName" | "businessName" | "isAdmin" | "isBlocked" | "countryId" | "currencyCode" | "onboardingCompleted", ExtArgs["result"]["auraUser"]>
+export type AuraUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "disabledAt" | "deletedAt" | "sessionVersion" | "username" | "email" | "phone" | "displayName" | "businessName" | "isAdmin" | "isBlocked" | "countryId" | "currencyCode" | "onboardingCompleted", ExtArgs["result"]["auraUser"]>
 export type AuraUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   country?: boolean | Prisma.AuraUser$countryArgs<ExtArgs>
   passwordCredential?: boolean | Prisma.AuraUser$passwordCredentialArgs<ExtArgs>
@@ -1799,6 +1856,7 @@ export type $AuraUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     sessionVersion: number
     username: string
     email: string | null
+    phone: string | null
     displayName: string | null
     businessName: string | null
     isAdmin: boolean
@@ -2244,6 +2302,7 @@ export interface AuraUserFieldRefs {
   readonly sessionVersion: Prisma.FieldRef<"AuraUser", 'Int'>
   readonly username: Prisma.FieldRef<"AuraUser", 'String'>
   readonly email: Prisma.FieldRef<"AuraUser", 'String'>
+  readonly phone: Prisma.FieldRef<"AuraUser", 'String'>
   readonly displayName: Prisma.FieldRef<"AuraUser", 'String'>
   readonly businessName: Prisma.FieldRef<"AuraUser", 'String'>
   readonly isAdmin: Prisma.FieldRef<"AuraUser", 'Boolean'>

@@ -81,12 +81,12 @@ export function LoginForm() {
   return (
     <AuthShell
       title="Connexion"
-      description="Connectez-vous avec votre nom d'utilisateur et mot de passe."
+      description="Connectez-vous avec votre nom d&apos;utilisateur et mot de passe."
     >
       <form className="space-y-4" onSubmit={handleSubmit}>
         <FieldGroup>
           <Field>
-            <FieldLabel>Nom d'utilisateur</FieldLabel>
+            <FieldLabel>Nom d&apos;utilisateur</FieldLabel>
             <Input autoComplete="username" {...form.register("username")} />
             <FieldError>{form.formState.errors.username?.message}</FieldError>
           </Field>

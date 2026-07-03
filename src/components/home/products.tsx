@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PRODUCTS, XAF_TO_USD_RATE } from "./landing-data";
+import type { LandingProduct, ProductsContent } from "./types";
 
 function formatXAF(amount: number): string {
   return new Intl.NumberFormat("fr-FR", {
@@ -10,16 +10,15 @@ function formatXAF(amount: number): string {
   }).format(amount);
 }
 
-function formatUSD(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
+export function Products({
+  content,
+  products,
+}: {
+  content: ProductsContent;
+  products: LandingProduct[];
+}) {
+  if (products.length === 0) return null;
 
-export function Products() {
   return (
     <section
       id="products"
@@ -49,24 +48,20 @@ export function Products() {
       <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center gap-12 min-[810px]:gap-16">
         <header className="flex max-w-[650px] flex-col items-center gap-5 text-center">
           <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
-            Nos Produits
+            {content.eyebrow}
           </span>
           <h2 className="font-display text-[38px] font-bold leading-none tracking-[-0.05em] min-[810px]:text-5xl min-[1200px]:text-[60px]">
-            Solutions logistiques adaptées à{" "}
-            <span className="font-instrument font-normal italic">vos besoins</span>
+            {content.title}{" "}
+            <span className="font-instrument font-normal italic">{content.accent}</span>
           </h2>
           <p className="font-display text-base leading-[1.4] tracking-[-0.01em] text-[#0a192f]/65 min-[810px]:text-lg min-[1200px]:text-xl">
-            Des tarifs transparents et compétitifs pour toutes vos expéditions,
-            du petit colis au conteneur complet.
+            {content.description}
           </p>
         </header>
 
         <div className="grid w-full grid-cols-1 gap-5 min-[640px]:grid-cols-2 min-[1200px]:grid-cols-3">
-          {PRODUCTS.map((product) => {
-            const usdPrice = product.priceXAF / XAF_TO_USD_RATE;
-            const avgRating = product.reviews.length
-              ? product.reviews.reduce((a, r) => a + r.rating, 0) / product.reviews.length
-              : 0;
+          {products.map((product) => {
+            const avgRating = product.averageRating;
 
             return (
               <Link
@@ -81,7 +76,7 @@ export function Products() {
 
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -112,7 +107,7 @@ export function Products() {
                       ))}
                     </div>
                     <span className="text-[11px] font-medium text-[#0a192f]/45">
-                      ({product.reviews.length})
+                      ({product.testimonialCount})
                     </span>
                   </div>
 
@@ -121,15 +116,12 @@ export function Products() {
                   </h3>
 
                   <p className="font-display text-[14px] leading-[1.65] tracking-[-0.01em] text-[#0a192f]/60 min-[810px]:text-[15px]">
-                    {product.shortDescription}
+                      {product.shortDescription}
                   </p>
 
                   <div className="mt-auto flex flex-col gap-1 pt-4">
                     <span className="font-display text-[28px] font-bold tracking-[-0.05em] text-[#0a192f]">
-                      {formatXAF(product.priceXAF)} FCFA
-                    </span>
-                    <span className="font-display text-[13px] font-medium tracking-[-0.01em] text-[#0a192f]/45">
-                      ~ {formatUSD(usdPrice)}
+                      {formatXAF(product.priceXaf)} FCFA
                     </span>
                   </div>
                 </div>

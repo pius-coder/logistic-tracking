@@ -1,11 +1,10 @@
+import { AdminDashboardShell } from "@/components/admin-dashboard/AdminDashboardShell";
 import { Suspense } from "react";
-import { DashboardShell } from "@/components/dashboard/DashboardShell";
-import { DashboardSkeleton } from "@/components/dashboard/DashboardSkeleton";
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<DashboardSkeleton />}>
-      <DashboardShell />
+    <Suspense fallback={<>Loading...</>}>
+      <AdminDashboardShell />
     </Suspense>
   );
 }

@@ -1,11 +1,12 @@
 import "server-only";
 
 import { defineOperationFn } from "@/aura/server/operation";
+import type { AuraDb } from "@/aura/server/db";
 import { requireAdmin } from "@/features/admin/server/common";
 import { journeyIssueSchema, journeyRequestIdSchema } from "../shared/schemas";
 import { createJourneyNotification } from "./helpers";
 
-async function getJourney(ctx: any, requestId: string) {
+async function getJourney(ctx: { db: AuraDb }, requestId: string) {
   const journey = await ctx.db.journey.findUnique({
     where: { requestId },
     include: {
@@ -27,8 +28,12 @@ export const adminPauseJourney = defineOperationFn("journey.adminPause")
     if (journey.status !== "EN_COURS") throw new Error("Seul un voyage en cours peut être mis en pause.");
     const message = "Le voyage a été temporairement mis en pause.";
 
-    await ctx.db.$transaction(async (tx: any) => {
+    await ctx.db.$transaction(async (tx) => {
       await tx.journey.update({ where: { id: journey.id }, data: { status: "EN_PAUSE", latestMessage: message } });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: { status: "EN_PAUSE", latestStatusMessage: message },
+      });
       await tx.journeyEvent.create({
         data: { journeyId: journey.id, eventType: "PAUSED", title: "Voyage en pause", message, visibleToCustomer: true, createdByLabel: "Administrateur" },
       });
@@ -54,10 +59,14 @@ export const adminResumeJourney = defineOperationFn("journey.adminResume")
     if (!["EN_PAUSE", "PROBLEME"].includes(journey.status)) throw new Error("Ce voyage n’est pas en pause.");
     const message = "Le voyage a repris normalement.";
 
-    await ctx.db.$transaction(async (tx: any) => {
+    await ctx.db.$transaction(async (tx) => {
       await tx.journey.update({
         where: { id: journey.id },
         data: { status: "EN_COURS", latestMessage: message, problemMessage: null },
+      });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: { status: "EN_COURS", latestStatusMessage: message, problemType: null },
       });
       await tx.journeyEvent.create({
         data: { journeyId: journey.id, eventType: "RESUMED", title: "Voyage repris", message, visibleToCustomer: true, createdByLabel: "Administrateur" },
@@ -85,16 +94,24 @@ export const adminReportJourneyProblem = defineOperationFn("journey.adminReportP
       throw new Error("Un problème ne peut pas être signalé dans l’état actuel.");
     }
 
-    await ctx.db.$transaction(async (tx: any) => {
+    await ctx.db.$transaction(async (tx) => {
       await tx.journey.update({
         where: { id: journey.id },
         data: { status: "PROBLEME", latestMessage: input.message, problemMessage: input.message },
+      });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: {
+          status: "PROBLEME",
+          problemType: input.problemType,
+          latestStatusMessage: input.message,
+        },
       });
       await tx.journeyEvent.create({
         data: {
           journeyId: journey.id,
           eventType: "PROBLEM_REPORTED",
-          title: "Incident signalé",
+          title: input.title,
           message: input.message,
           visibleToCustomer: true,
           createdByLabel: "Administrateur",

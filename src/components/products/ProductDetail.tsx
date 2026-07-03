@@ -1,23 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Heart, MapPin, Phone, Star, Mail, Clock3, ShieldCheck, Send } from "lucide-react";
-import type { Product } from "@/components/home/landing-data";
-import { XAF_TO_USD_RATE } from "@/components/home/landing-data";
+import type { ProductTestimonialView, ProductView } from "@/features/catalog/types";
 
 function formatXAF(amount: number): string {
   return new Intl.NumberFormat("fr-FR", {
     style: "decimal",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-function formatUSD(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
   }).format(amount);
 }
 
@@ -39,36 +29,44 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md
   );
 }
 
-function ReviewCard({ review }: { review: { id: string; author: string; avatar: string; rating: number; comment: string; date: string } }) {
+function initialsFor(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function ReviewCard({ review }: { review: ProductTestimonialView }) {
   return (
     <div className="group relative isolate flex flex-col gap-4 overflow-hidden rounded-[26px] border border-black/[0.07] bg-[#f7f6f2] p-6 ring-1 ring-white/80 shadow-[0_0_0_1px_rgba(255,255,255,0.42),0_1px_2px_rgba(15,23,42,0.05),0_18px_45px_-30px_rgba(15,23,42,0.30),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-black/[0.10] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.55),0_2px_4px_rgba(15,23,42,0.06),0_28px_60px_-34px_rgba(15,23,42,0.40),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(15,23,42,0.05)]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-px rounded-[25px] shadow-[inset_1px_0_0_rgba(255,255,255,0.62),inset_-1px_0_0_rgba(15,23,42,0.025),inset_0_1px_0_rgba(255,255,255,0.82),inset_0_-1px_0_rgba(15,23,42,0.04)]" />
       <div className="relative z-10 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-[#152841] bg-[#0a192f] font-display text-[10px] font-bold uppercase tracking-[0.05em] text-white/85 ring-1 ring-white/30 shadow-[0_1px_2px_rgba(15,23,42,0.20),0_8px_18px_-10px_rgba(10,25,47,0.55),inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(0,0,0,0.22)]">
-            {review.avatar}
+            {initialsFor(review.name)}
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="font-display text-[13px] font-bold leading-[18px] tracking-[-0.02em] text-[#0a192f]">{review.author}</span>
-            <span className="font-display text-[11px] leading-[15px] tracking-[-0.01em] text-[#0a192f]/45">{review.date}</span>
+            <span className="font-display text-[13px] font-bold leading-[18px] tracking-[-0.02em] text-[#0a192f]">{review.name}</span>
+            <span className="font-display text-[11px] leading-[15px] tracking-[-0.01em] text-[#0a192f]/45">Avis vérifié</span>
           </div>
         </div>
-        <StarRating rating={review.rating} size="sm" />
+        <StarRating rating={review.star} size="sm" />
       </div>
-      <p className="relative z-10 font-display text-[13px] leading-[1.65] tracking-[-0.01em] text-[#0a192f]/70">{review.comment}</p>
+      <p className="relative z-10 font-display text-[13px] leading-[1.65] tracking-[-0.01em] text-[#0a192f]/70">{review.advice}</p>
     </div>
   );
 }
 
 interface ProductDetailProps {
-  product: Product;
+  product: ProductView;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-  const usdPrice = product.priceXAF / XAF_TO_USD_RATE;
-  const avgRating = product.reviews.length
-    ? product.reviews.reduce((a, r) => a + r.rating, 0) / product.reviews.length
-    : 0;
+  const avgRating = product.averageRating;
+  const gallery = product.gallery.length > 0 ? product.gallery : [product.imageUrl];
 
   return (
     <div className="flex w-full flex-col items-center bg-[#f5f4f0]">
@@ -76,7 +74,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
       <section className="relative isolate flex min-h-[70vh] w-full overflow-hidden bg-[#06101f] min-[1200px]:min-h-[80vh]">
         <div className="absolute inset-0 -z-20">
           <Image
-            src={product.image}
+            src={product.imageUrl}
             alt={product.name}
             fill
             priority
@@ -107,7 +105,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               </div>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.11] bg-white/[0.055] px-3.5 py-1.5 font-display text-[11px] font-medium text-white/50 backdrop-blur-xl shadow-[0_1px_2px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.08)]">
                 <StarRating rating={avgRating} size="sm" />
-                <span>{avgRating.toFixed(1)} ({product.reviews.length} avis)</span>
+                <span>{avgRating.toFixed(1)} ({product.testimonialCount} avis)</span>
               </div>
             </div>
 
@@ -122,10 +120,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <div className="flex flex-wrap items-end gap-6">
               <div className="flex flex-col gap-1">
                 <span className="font-display text-[38px] font-bold tracking-[-0.05em] text-white min-[810px]:text-[48px]">
-                  {formatXAF(product.priceXAF)} FCFA
-                </span>
-                <span className="font-display text-[14px] font-medium tracking-[-0.01em] text-white/45">
-                  ~ {formatUSD(usdPrice)}
+                  {formatXAF(product.priceXaf)} FCFA
                 </span>
               </div>
               <a
@@ -194,7 +189,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               </h3>
             </div>
             <div className="grid grid-cols-2 gap-4 min-[810px]:grid-cols-3 min-[1200px]:grid-cols-4">
-              {product.gallery.map((img, i) => (
+              {gallery.map((img, i) => (
                 <div
                   key={i}
                   className="group relative aspect-[4/3] overflow-hidden rounded-[22px] border border-white/80 ring-1 ring-black/[0.07] shadow-[0_0_0_1px_rgba(255,255,255,0.48),0_1px_2px_rgba(15,23,42,0.06),0_14px_38px_-24px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(15,23,42,0.05)]"
@@ -230,13 +225,13 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <div className="flex items-center gap-3">
               <StarRating rating={avgRating} size="md" />
               <span className="font-display text-[15px] font-medium tracking-[-0.01em] text-[#0a192f]/55">
-                {avgRating.toFixed(1)} / 5 — {product.reviews.length} avis vérifiés
+                {avgRating.toFixed(1)} / 5 — {product.testimonialCount} avis vérifiés
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-5 min-[810px]:grid-cols-2 min-[1200px]:grid-cols-3">
-            {product.reviews.map((review) => (
+            {product.testimonials.map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}
           </div>
@@ -268,7 +263,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   Wyoming, États-Unis
                 </span>
                 <div className="flex flex-col items-center gap-2 min-[810px]:flex-row min-[810px]:gap-5">
-                  <a href="tel:+14122273484" className="font-display text-[13px] text-white/50 transition-colors duration-200 hover:text-white">+1 (412) 227-3484</a>
+                  <a href="tel:+14122273484" className="font-display text-[13px] text-white/50 transition-colors duration-200 hover:text-white">+86 130 5916 2331 </a>
                   <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/20 min-[810px]:block" />
                   <a href="mailto:support@nexttracelogistics.com" className="font-display text-[13px] text-white/50 transition-colors duration-200 hover:text-white">support@nexttracelogistics.com</a>
                 </div>

@@ -57,6 +57,14 @@ export const adminConfirmNextStop = defineOperationFn("journey.adminConfirmNextS
           problemMessage: null,
         },
       });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: {
+          status: isFinal ? "TERMINE" : "EN_COURS",
+          latestStatusMessage: message,
+          problemType: null,
+        },
+      });
 
       await tx.journeyEvent.create({
         data: {

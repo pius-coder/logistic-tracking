@@ -9,8 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { UpdateSettingsInput } from "@/features/admin/shared/schemas";
 
 export default function AdminSettingsPage() {
-  const { data: settingsData } = useAuraQuery("admin.getSettings", {});
-  const settings = (settingsData as any)?.settings;
+  const { data: settingsData } = useAuraQuery<{
+    settings: { adminWhatsAppNumber: string | null; evolutionInstanceId: string | null };
+  }>("admin.getSettings", {});
+  const settings = settingsData?.settings;
 
   const updateSettings = useAuraMutation<UpdateSettingsInput, { settings: { adminWhatsAppNumber: string | null; evolutionInstanceId: string | null } }>("admin.updateSettings", {
     invalidate: ["admin.getSettings"],

@@ -8,7 +8,9 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import { mailHref, phoneHref } from "@/lib/site-content";
 import { SectionHeading } from "./ui";
+import type { PricingContent } from "./types";
 
 const LABEL_CLASS =
   "font-display text-[12px] font-semibold leading-4 tracking-[-0.01em] text-[#0a192f]/62";
@@ -16,7 +18,7 @@ const LABEL_CLASS =
 const FIELD_CLASS =
   "h-[52px] w-full rounded-[14px] border border-black/[0.09] bg-[#faf9f6] px-4 font-display text-[14px] font-medium tracking-[-0.012em] text-[#0a192f] outline-none ring-0 shadow-[0_1px_2px_rgba(15,23,42,0.035),inset_0_1px_0_rgba(255,255,255,0.95)] transition-[border-color,background-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-[#0a192f]/28 hover:border-black/[0.14] focus:border-[#0a192f]/25 focus:bg-white focus:ring-4 focus:ring-[#0a192f]/10";
 
-export function Pricing() {
+export function Pricing({ content }: { content: PricingContent }) {
   return (
     <section
       id="contact"
@@ -47,8 +49,9 @@ export function Pricing() {
       <div className="relative z-10 flex w-full max-w-[1100px] flex-col items-center gap-12 min-[810px]:gap-16">
         <div className="w-full max-w-[720px]">
           <SectionHeading
-            title="Obtenez un devis"
-            description="Que vous ayez besoin d'une expédition ponctuelle ou d'un partenaire logistique complet, notre équipe conçoit une solution adaptée à vos opérations."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
         </div>
 
@@ -120,7 +123,7 @@ export function Pricing() {
                       min-[810px]:text-[32px]
                     "
                   >
-                    Échangez directement avec notre équipe logistique.
+                    {content.panelTitle}
                   </h3>
 
                   <p
@@ -130,9 +133,7 @@ export function Pricing() {
                       tracking-[-0.01em] text-white/55
                     "
                   >
-                    Nous analysons votre itinéraire, vos délais et vos
-                    contraintes afin de vous proposer une réponse claire et
-                    exploitable.
+                    {content.panelDescription}
                   </p>
                 </div>
 
@@ -156,18 +157,18 @@ export function Pricing() {
 
                     <div className="flex min-w-0 flex-col gap-1">
                       <span className="font-display text-[11px] font-semibold uppercase tracking-[0.11em] text-white/34">
-                        Siège social
+                        {content.addressLabel}
                       </span>
 
                       <span className="font-display text-[14px] font-medium tracking-[-0.01em] text-white/82">
-                        Wyoming, États-Unis
+                        {content.address}
                       </span>
                     </div>
                   </div>
 
                   {/* Téléphone */}
                   <a
-                    href="tel:+14122273484"
+                    href={phoneHref(content.phone)}
                     className="
                       group flex items-center gap-4
                       border-b border-white/[0.08] py-5
@@ -196,18 +197,18 @@ export function Pricing() {
 
                     <div className="flex min-w-0 flex-col gap-1">
                       <span className="font-display text-[11px] font-semibold uppercase tracking-[0.11em] text-white/34">
-                        Téléphone
+                        {content.phoneLabel}
                       </span>
 
                       <span className="font-display text-[14px] font-medium tracking-[-0.01em] text-white/82 transition-colors group-hover:text-white">
-                        +1 (412) 227-3484
+                        {content.phone}
                       </span>
                     </div>
                   </a>
 
                   {/* Email */}
                   <a
-                    href="mailto:support@nexttracelogistics.com"
+                    href={mailHref(content.email)}
                     className="
                       group flex items-center gap-4 py-5
                       outline-none
@@ -235,11 +236,11 @@ export function Pricing() {
 
                     <div className="flex min-w-0 flex-col gap-1 overflow-hidden">
                       <span className="font-display text-[11px] font-semibold uppercase tracking-[0.11em] text-white/34">
-                        Email
+                        {content.emailLabel}
                       </span>
 
                       <span className="truncate font-display text-[14px] font-medium tracking-[-0.01em] text-white/82 transition-colors group-hover:text-white">
-                        support@nexttracelogistics.com
+                        {content.email}
                       </span>
                     </div>
                   </a>
@@ -263,13 +264,11 @@ export function Pricing() {
 
                     <div className="flex flex-col gap-1.5">
                       <span className="font-display text-[12px] font-semibold text-white/72">
-                        Disponibilité
+                        {content.availabilityTitle}
                       </span>
 
                       <p className="font-display text-[12px] leading-[1.55] text-white/42">
-                        Lundi au vendredi : 8h–20h HNE
-                        <br />
-                        Support de suivi : 24h/24, 7j/7
+                        {content.availabilityBody}
                       </p>
                     </div>
                   </div>
@@ -288,7 +287,7 @@ export function Pricing() {
             >
               <div className="border-b border-black/[0.065] pb-7">
                 <span className="font-display text-[11px] font-bold uppercase tracking-[0.15em] text-[#0a192f]/38">
-                  Demande personnalisée
+                  {content.formEyebrow}
                 </span>
 
                 <h3
@@ -299,7 +298,7 @@ export function Pricing() {
                     min-[810px]:text-[28px]
                   "
                 >
-                  Parlez-nous de votre expédition.
+                  {content.formTitle}
                 </h3>
 
                 <p
@@ -309,8 +308,7 @@ export function Pricing() {
                     tracking-[-0.008em] text-[#0a192f]/52
                   "
                 >
-                  Renseignez les informations essentielles. Notre équipe
-                  pourra ainsi préparer une proposition adaptée à votre besoin.
+                  {content.formDescription}
                 </p>
               </div>
 
@@ -521,8 +519,7 @@ export function Pricing() {
                       text-[#0a192f]/38
                     "
                   >
-                    Vos informations sont utilisées uniquement pour traiter
-                    votre demande de devis.
+                    {content.privacy}
                   </p>
                 </div>
               </div>

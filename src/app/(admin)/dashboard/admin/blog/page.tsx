@@ -22,8 +22,8 @@ interface BlogPost {
 }
 
 export default function AdminBlogPage() {
-  const { data, isLoading } = useAuraQuery("admin.blogPosts", { params: { limit: 100 } });
-  const posts: BlogPost[] = (data as any)?.posts || [];
+  const { data, isLoading } = useAuraQuery<{ posts: BlogPost[] }>("admin.blogPosts", { params: { limit: 100 } });
+  const posts = data?.posts ?? [];
 
   const saveMutation = useAuraMutation<SaveBlogPostInput, { id: string }>("admin.saveBlogPost", {
     invalidate: ["admin.blogPosts"],
@@ -151,7 +151,7 @@ export default function AdminBlogPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Type de contenu</Label>
-                <select value={postType} onChange={(e) => setPostType(e.target.value as any)} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                <select value={postType} onChange={(e) => setPostType(e.target.value as "BLOG" | "ADVICE")} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                   <option value="BLOG">Article de Blog</option>
                   <option value="ADVICE">Conseil (guide)</option>
                 </select>

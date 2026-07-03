@@ -40,7 +40,7 @@ const CHROMELESS_PATHS = new Set([
   "/reset-password/verify",
 ]);
 
-const CHROMELESS_PREFIXES = ["/tracking/"];
+const CHROMELESS_PREFIXES = ["/tracking/", "/voyage/"];
 
 function isChromelessRoute(pathname: string): boolean {
   return (
@@ -59,12 +59,12 @@ function getNavigationItems(user?: CurrentUser): NavigationItem[] {
     ...BASE_NAV_ITEMS,
     ...(user?.isAdmin
       ? [
-          {
-            href: "/dashboard/admin",
-            label: "Admin",
-            icon: ShieldCheck,
-          },
-        ]
+        {
+          href: "/dashboard/admin",
+          label: "Admin",
+          icon: ShieldCheck,
+        },
+      ]
       : []),
   ];
 }
@@ -132,7 +132,7 @@ function AppChrome({
   );
 }
 
-  function SupasteStyleHeader({
+function SupasteStyleHeader({
   pathname,
   items,
 }: {
@@ -142,7 +142,8 @@ function AppChrome({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    setMobileMenuOpen(false);
+    const timeoutId = window.setTimeout(() => setMobileMenuOpen(false), 0);
+    return () => window.clearTimeout(timeoutId);
   }, [pathname]);
 
   useEffect(() => {
@@ -189,10 +190,10 @@ function AppChrome({
         mobileMenuOpen
           ? "w-[min(350px,100vw)] min-[1200px]:w-auto"
           : [
-              "w-[min(350px,100vw)]",
-              "min-[810px]:w-[810px]",
-              "min-[1200px]:w-auto",
-            ]
+            "w-[min(350px,100vw)]",
+            "min-[810px]:w-[810px]",
+            "min-[1200px]:w-auto",
+          ]
       )}
     >
       <nav
@@ -202,13 +203,13 @@ function AppChrome({
           "transition-[width,height] duration-300",
           mobileMenuOpen
             ? [
-                "max-h-dvh flex-col items-start justify-start",
-                "gap-[30px] overflow-y-auto px-[10px] py-[5px]",
-              ]
+              "max-h-dvh flex-col items-start justify-start",
+              "gap-[30px] overflow-y-auto px-[10px] py-[5px]",
+            ]
             : [
-                "h-[50px] flex-row items-center justify-center",
-                "gap-[30px] overflow-visible px-[10px] py-[5px]",
-              ],
+              "h-[50px] flex-row items-center justify-center",
+              "gap-[30px] overflow-visible px-[10px] py-[5px]",
+            ],
           [
             "min-[1200px]:h-min",
             "min-[1200px]:max-h-none",
@@ -314,9 +315,9 @@ function AppChrome({
               "relative max-w-[1200px] overflow-visible",
               mobileMenuOpen
                 ? [
-                    "flex w-full flex-col items-start gap-[30px]",
-                    "p-[30px]",
-                  ]
+                  "flex w-full flex-col items-start gap-[30px]",
+                  "p-[30px]",
+                ]
                 : "hidden",
               [
                 "min-[1200px]:flex",
@@ -892,7 +893,7 @@ export function Footer() {
                   </span>
 
                   <span className="font-display text-[14px] leading-[1.5] text-white/56 transition-colors group-hover:text-white">
-                    +1 (412) 227-3484
+                    +86 130 5916 2331
                   </span>
                 </div>
               </a>

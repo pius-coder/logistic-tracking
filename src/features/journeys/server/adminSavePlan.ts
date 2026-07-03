@@ -23,10 +23,31 @@ export const adminSaveJourneyPlan = defineOperationFn("journey.adminSavePlan")
         id: true,
         userId: true,
         requestNumber: true,
+        transportMode: true,
       },
     });
 
     if (!request) throw new Error("Demande introuvable.");
+    const expectedTransportType = request.transportMode === "AVION" ? "AERIEN" : "MARITIME";
+    if (input.transportType !== expectedTransportType) {
+      throw new Error("Le trajet doit respecter le mode choisi pour le colis.");
+    }
+
+    const nodeTerms =
+      input.transportType === "AERIEN"
+        ? ["airport", "aeroport", "aéroport", "airfield", "aerodrome", "aérodrome"]
+        : ["port", "harbor", "harbour", "seaport", "maritime", "terminal portuaire", "container terminal"];
+
+    for (const stop of input.stops) {
+      const label = `${stop.placeName} ${stop.placeLabel ?? ""}`.toLowerCase();
+      if (!stop.mapboxPlaceId || !nodeTerms.some((term) => label.includes(term))) {
+        throw new Error(
+          input.transportType === "AERIEN"
+            ? "Chaque étape doit être un aéroport sélectionné dans la liste."
+            : "Chaque étape doit être un port sélectionné dans la liste.",
+        );
+      }
+    }
 
     const existing = await ctx.db.journey.findUnique({
       where: { requestId: input.requestId },
@@ -90,7 +111,7 @@ export const adminSaveJourneyPlan = defineOperationFn("journey.adminSavePlan")
       const incomingExistingIds = new Set(
         orderedStops
           .map((stop) => stop.id)
-          .filter((id): id is string => Boolean(id) && existingIds.has(id)),
+          .filter((id): id is string => typeof id === "string" && existingIds.has(id)),
       );
 
       const removableIds = journey.stops

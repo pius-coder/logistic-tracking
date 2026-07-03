@@ -12,3 +12,4 @@ export { adminUpdateJourneyEta } from "./server/adminUpdateEta";
 export { publicGetJourney } from "./server/publicGetJourney";
 export { publicLookupJourney } from "./server/publicLookup";
 export { geocodeJourneyPlace } from "./server/geocodeJourneyPlace";
+export { journeyTransportCatalog } from "./server/transportCatalog";

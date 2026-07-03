@@ -3,15 +3,9 @@ import {
   PackageSearch,
   ShieldCheck,
 } from "lucide-react";
+import type { HeroContent } from "./types";
 
-const HERO_STATS = [
-  { value: "150+", label: "Pays desservis" },
-  { value: "50K+", label: "Expéditions mensuelles" },
-  { value: "99,8 %", label: "Livraisons à l’heure" },
-  { value: "15+", label: "Années d’expertise" },
-] as const;
-
-export function Hero() {
+export function Hero({ content }: { content: HeroContent }) {
   return (
     <section
       id="hero"
@@ -28,11 +22,11 @@ export function Hero() {
       <picture className="absolute inset-0 -z-30 block">
         <source
           media="(min-width: 810px)"
-          srcSet="/images/hero-logistics.png"
+          srcSet={content.desktopImage}
         />
 
         <img
-          src="/images/hero-mobile-logistics.png"
+          src={content.mobileImage}
           alt=""
           draggable={false}
           className="
@@ -130,7 +124,7 @@ export function Hero() {
               "
             />
 
-            Réseau logistique international
+            {content.badge}
           </div>
 
           {/* Titre */}
@@ -146,7 +140,7 @@ export function Hero() {
               min-[1200px]:text-[82px]
             "
           >
-            Une logistique mondiale,
+            {content.title}
             <span
               className="
                 mt-1 block font-instrument
@@ -154,7 +148,7 @@ export function Hero() {
                 text-white/66
               "
             >
-              maîtrisée de bout en bout.
+              {content.accent}
             </span>
           </h1>
 
@@ -169,9 +163,7 @@ export function Hero() {
               min-[1200px]:text-[19px]
             "
           >
-            Du fret international à la livraison du dernier kilomètre, nous
-            connectons vos marchandises à plus de 150 pays avec visibilité,
-            précision et fiabilité opérationnelle.
+            {content.description}
           </p>
 
           {/* Formulaire de tracking */}
@@ -238,7 +230,7 @@ export function Hero() {
                   required
                   autoComplete="off"
                   spellCheck={false}
-                  placeholder="Entrez votre numéro de suivi"
+                  placeholder={content.trackingPlaceholder}
                   className="
                     min-w-0 flex-1 bg-transparent
                     font-display text-[14px] font-medium
@@ -276,7 +268,7 @@ export function Hero() {
                   active:translate-y-0
                 "
               >
-                Suivre mon colis
+                {content.trackingButton}
 
                 <ArrowRight
                   className="
@@ -321,7 +313,7 @@ export function Hero() {
               min-[810px]:grid-cols-4
             "
           >
-            {/* {HERO_STATS.map((stat, index) => (
+            {content.stats.map((stat, index) => (
               <div
                 key={stat.label}
                 className={`
@@ -369,7 +361,7 @@ export function Hero() {
                   {stat.label}
                 </span>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
       </div>

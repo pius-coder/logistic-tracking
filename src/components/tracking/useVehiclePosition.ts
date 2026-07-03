@@ -67,10 +67,10 @@ export function useVehiclePosition(
   steps: VehicleStep[],
   legs: RouteLeg[] = [],
 ): VehicleState | null {
-  const [, setTick] = useState(0);
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
   useEffect(() => {
-    const id = setInterval(() => setTick((t) => t + 1), 1000);
+    const id = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -148,8 +148,7 @@ export function useVehiclePosition(
     }
 
     // Moving
-    const now = Date.now();
-    const elapsedMs = now - startedAt.getTime();
+    const elapsedMs = nowMs - startedAt.getTime();
     const progress = Math.min(1, elapsedMs / totalMs);
     const remainingMs = Math.max(0, totalMs - elapsedMs);
 
@@ -171,7 +170,7 @@ export function useVehiclePosition(
       fromName: fromStep.locationName,
       toName: toStep.locationName,
     };
-  }, [steps, legs]);
+  }, [steps, legs, nowMs]);
 }
 
 export function formatDuration(ms: number): string {

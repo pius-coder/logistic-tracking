@@ -403,6 +403,8 @@ export const ModelName = {
   AppSettings: 'AppSettings',
   SiteContent: 'SiteContent',
   BlogPost: 'BlogPost',
+  Product: 'Product',
+  ProductTestimonial: 'ProductTestimonial',
   AdminAccessKey: 'AdminAccessKey'
 } as const
 
@@ -419,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "auraUser" | "auraPasswordCredential" | "auraSession" | "auraNotification" | "auraOutboxEvent" | "auraJobRun" | "auraAuditLog" | "auraFile" | "country" | "request" | "trajectoryStep" | "requestStatusEvent" | "jcNotification" | "journey" | "journeyStop" | "journeyEvent" | "appSettings" | "siteContent" | "blogPost" | "adminAccessKey"
+    modelProps: "auraUser" | "auraPasswordCredential" | "auraSession" | "auraNotification" | "auraOutboxEvent" | "auraJobRun" | "auraAuditLog" | "auraFile" | "country" | "request" | "trajectoryStep" | "requestStatusEvent" | "jcNotification" | "journey" | "journeyStop" | "journeyEvent" | "appSettings" | "siteContent" | "blogPost" | "product" | "productTestimonial" | "adminAccessKey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1829,6 +1831,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Product: {
+      payload: Prisma.$ProductPayload<ExtArgs>
+      fields: Prisma.ProductFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        findMany: {
+          args: Prisma.ProductFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>[]
+        }
+        create: {
+          args: Prisma.ProductCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        createMany: {
+          args: Prisma.ProductCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        update: {
+          args: Prisma.ProductUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProduct>
+        }
+        groupBy: {
+          args: Prisma.ProductGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductTestimonial: {
+      payload: Prisma.$ProductTestimonialPayload<ExtArgs>
+      fields: Prisma.ProductTestimonialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductTestimonialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductTestimonialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductTestimonialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductTestimonialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        findMany: {
+          args: Prisma.ProductTestimonialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>[]
+        }
+        create: {
+          args: Prisma.ProductTestimonialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        createMany: {
+          args: Prisma.ProductTestimonialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductTestimonialCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductTestimonialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        update: {
+          args: Prisma.ProductTestimonialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductTestimonialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductTestimonialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductTestimonialUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductTestimonialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductTestimonialPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductTestimonialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductTestimonial>
+        }
+        groupBy: {
+          args: Prisma.ProductTestimonialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductTestimonialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductTestimonialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductTestimonialCountAggregateOutputType> | number
+        }
+      }
+    }
     AdminAccessKey: {
       payload: Prisma.$AdminAccessKeyPayload<ExtArgs>
       fields: Prisma.AdminAccessKeyFieldRefs
@@ -1951,6 +2101,7 @@ export const AuraUserScalarFieldEnum = {
   sessionVersion: 'sessionVersion',
   username: 'username',
   email: 'email',
+  phone: 'phone',
   displayName: 'displayName',
   businessName: 'businessName',
   isAdmin: 'isAdmin',
@@ -2284,6 +2435,43 @@ export const BlogPostScalarFieldEnum = {
 } as const
 
 export type BlogPostScalarFieldEnum = (typeof BlogPostScalarFieldEnum)[keyof typeof BlogPostScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  slug: 'slug',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  fullDescription: 'fullDescription',
+  imageUrl: 'imageUrl',
+  gallery: 'gallery',
+  priceXaf: 'priceXaf',
+  likes: 'likes',
+  features: 'features',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
+  publishedAt: 'publishedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductTestimonialScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  productId: 'productId',
+  name: 'name',
+  advice: 'advice',
+  star: 'star',
+  showOnLanding: 'showOnLanding',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder'
+} as const
+
+export type ProductTestimonialScalarFieldEnum = (typeof ProductTestimonialScalarFieldEnum)[keyof typeof ProductTestimonialScalarFieldEnum]
 
 
 export const AdminAccessKeyScalarFieldEnum = {
@@ -2755,6 +2943,8 @@ export type GlobalOmitConfig = {
   appSettings?: Prisma.AppSettingsOmit
   siteContent?: Prisma.SiteContentOmit
   blogPost?: Prisma.BlogPostOmit
+  product?: Prisma.ProductOmit
+  productTestimonial?: Prisma.ProductTestimonialOmit
   adminAccessKey?: Prisma.AdminAccessKeyOmit
 }
 

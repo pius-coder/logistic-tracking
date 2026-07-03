@@ -49,6 +49,14 @@ export const adminStartJourney = defineOperationFn("journey.adminStart")
           problemMessage: null,
         },
       });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: {
+          status: "EN_COURS",
+          latestStatusMessage: message,
+          problemType: null,
+        },
+      });
 
       await tx.journeyEvent.create({
         data: {

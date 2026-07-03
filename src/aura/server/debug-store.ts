@@ -23,6 +23,15 @@ function hashDigest(err: unknown): string {
   return `aura_${counter}_${Date.now().toString(36)}`;
 }
 
+function errorMeta(err: unknown) {
+  if (!err || typeof err !== "object") return {};
+  const record = err as { code?: unknown; status?: unknown };
+  return {
+    code: typeof record.code === "string" ? record.code : undefined,
+    status: typeof record.status === "number" ? record.status : undefined,
+  };
+}
+
 export function captureError(opts: {
   error: unknown;
   operation?: string;
@@ -30,12 +39,7 @@ export function captureError(opts: {
 }): string {
   const err = opts.error;
   const digest = hashDigest(err);
-  const auraCode =
-    typeof (err as any)?.code === "string" ? (err as any).code : undefined;
-  const auraStatus =
-    typeof (err as any)?.status === "number"
-      ? (err as any).status
-      : undefined;
+  const { code: auraCode, status: auraStatus } = errorMeta(err);
 
   const entry: StoredError = {
     digest,

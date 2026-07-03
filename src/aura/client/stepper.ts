@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useForm,
@@ -64,9 +64,8 @@ export function useStepperForm<
   TData = unknown,
 >(options: UseStepperFormOptions<TValues, TData>) {
   const { operationName, stepperKey, steps, mutation: mutationOptions } = options;
-  const storeRef = useRef(createStepperStore<TValues>(stepperKey));
-  const store = storeRef.current();
-  const [hydrated, setHydrated] = useState(false);
+  const [useStepperStore] = useState(() => createStepperStore<TValues>(stepperKey));
+  const store = useStepperStore();
 
   const currentStep = store.step;
   const currentStepDef = steps[currentStep];
@@ -126,10 +125,6 @@ export function useStepperForm<
     mutation.reset();
   }, [store, form, mutation]);
 
-  // Hydration guard: ensure localStorage has been read before rendering
-  // to avoid hydration mismatch between server and client.
-  const isHydrated = typeof window !== "undefined" && hydrated;
-
   return {
     form,
     mutation,
@@ -143,7 +138,7 @@ export function useStepperForm<
     prevStep,
     reset,
     handleSubmit: form.handleSubmit(nextStep),
-    hydrated: isHydrated,
+    hydrated: typeof window !== "undefined",
   };
 }
 

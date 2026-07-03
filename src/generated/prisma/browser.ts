@@ -113,6 +113,16 @@ export type SiteContent = Prisma.SiteContentModel
  */
 export type BlogPost = Prisma.BlogPostModel
 /**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ProductTestimonial
+ * 
+ */
+export type ProductTestimonial = Prisma.ProductTestimonialModel
+/**
  * Model AdminAccessKey
  * 
  */

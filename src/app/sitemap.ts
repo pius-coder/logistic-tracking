@@ -13,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const blogPages: MetadataRoute.Sitemap = [];
+  const productPages: MetadataRoute.Sitemap = [];
 
   try {
     const data = await callAuraServer<{ posts: Array<{ slug: string; publishedAt: string }> }>({
@@ -20,11 +21,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       source: "rsc",
     });
     if (data?.posts) {
-      blogPages.push(...data.posts.map((p: any) => ({
-        url: `${BASE_URL}/blog/${p.slug}`,
-        lastModified: new Date(p.publishedAt || Date.now()),
+      blogPages.push(...data.posts.map((post) => ({
+        url: `${BASE_URL}/blog/${post.slug}`,
+        lastModified: new Date(post.publishedAt || Date.now()),
         changeFrequency: "monthly" as const,
         priority: 0.6,
+      })));
+    }
+  } catch {}
+
+  try {
+    const data = await callAuraServer<{ products: Array<{ slug: string; publishedAt: string | null }> }>({
+      operationName: "catalog.products",
+      source: "rsc",
+    });
+    if (data?.products) {
+      productPages.push(...data.products.map((product) => ({
+        url: `${BASE_URL}/produits/${product.slug}`,
+        lastModified: new Date(product.publishedAt || Date.now()),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
       })));
     }
   } catch {}
@@ -32,5 +48,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticPages,
     ...blogPages,
+    ...productPages,
   ];
 }

@@ -15,6 +15,7 @@ export const adminDashboard = defineOperationFn("admin.dashboard")
       activeRequests,
       completedRequests,
       totalUsers,
+      totalProducts,
       totalCountries,
       recentRequests,
     ] = await Promise.all([
@@ -23,6 +24,7 @@ export const adminDashboard = defineOperationFn("admin.dashboard")
       ctx.db.request.count({ where: { status: "EN_COURS" } }),
       ctx.db.request.count({ where: { status: "TERMINE" } }),
       ctx.db.auraUser.count(),
+      ctx.db.product.count(),
       ctx.db.country.count(),
       ctx.db.request.findMany({
         orderBy: { createdAt: "desc" },
@@ -41,7 +43,7 @@ export const adminDashboard = defineOperationFn("admin.dashboard")
         activeRequests,
         completedRequests,
         totalUsers,
-        totalProducts: 0,
+        totalProducts,
         totalCategories: 0,
         totalCountries,
         monthlyRevenue: 0,

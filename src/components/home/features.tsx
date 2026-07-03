@@ -17,149 +17,24 @@ import {
   Truck,
   Warehouse,
 } from "lucide-react";
+import type { FeaturesContent, LandingTestimonial } from "./types";
 
-const STATS = [
-  { value: "150+", label: "Pays desservis", icon: Globe },
-  { value: "50K+", label: "Expéditions / mois", icon: Package },
-  { value: "99,8%", label: "Livraisons à l'heure", icon: Clock },
-  { value: "15+", label: "Années d'excellence", icon: Award },
-] as const;
+const ICONS: Record<string, ElementType> = {
+  award: Award,
+  clock: Clock,
+  globe: Globe,
+  package: Package,
+  paw: PawPrint,
+  plane: Plane,
+  shield: Shield,
+  ship: Ship,
+  truck: Truck,
+  warehouse: Warehouse,
+};
 
-const SERVICES = [
-  {
-    title: "Fret aérien",
-    description:
-      "Solutions de fret aérien mondial urgent avec options le jour même, le lendemain et services programmés vers plus de 500 aéroports dans le monde.",
-    icon: Plane,
-    features: [
-      "Options express et prioritaires",
-      "Services d'affrètement disponibles",
-      "Cargaison à température contrôlée",
-      "Manutention de marchandises dangereuses",
-    ],
-  },
-  {
-    title: "Fret maritime",
-    description:
-      "Expédition en conteneur complet et en groupage avec des itinéraires optimisés sur toutes les grandes routes commerciales.",
-    icon: Ship,
-    features: [
-      "Solutions FCL et LCL",
-      "Services de conteneurs réfrigérés",
-      "Port-à-port et porte-à-porte",
-      "Dédouanement inclus",
-    ],
-  },
-  {
-    title: "Transport terrestre",
-    description:
-      "Services complets de transport routier et ferroviaire, incluant le camion complet, les chargements partiels et le transport intermodal.",
-    icon: Truck,
-    features: [
-      "Services FTL et LTL",
-      "Transport transfrontalier",
-      "Flotte suivie par GPS",
-      "Programmé et à la demande",
-    ],
-  },
-  {
-    title: "Messagerie express",
-    description:
-      "Livraison ultra-rapide de colis et de documents avec des délais garantis pour les envois les plus urgents.",
-    icon: Package,
-    features: [
-      "Livraison le jour même",
-      "Colis et documents express",
-      "Notifications en temps réel",
-      "Signature à la livraison",
-    ],
-  },
-  {
-    title: "Entreposage et distribution",
-    description:
-      "Installations de stockage modernes avec gestion des stocks, préparation de commandes et distribution depuis les principaux hubs.",
-    icon: Warehouse,
-    features: [
-      "Stockage climatisé",
-      "Gestion des stocks",
-      "Préparation, emballage et expédition",
-      "Traitement des retours",
-    ],
-  },
-  {
-    title: "Cargaison spécialisée",
-    description:
-      "Manutention experte pour les marchandises surdimensionnées, fragiles, de grande valeur et réglementées.",
-    icon: Shield,
-    features: [
-      "Cargaison lourde et projets",
-      "Œuvres d'art et antiquités",
-      "Transport pharmaceutique",
-      "Logistique militaire et défense",
-    ],
-  },
-  {
-    title: "Transport d'animaux",
-    description:
-      "Transport sûr, humain et sans stress pour les animaux domestiques, le bétail, les espèces exotiques et les animaux de laboratoire.",
-    icon: PawPrint,
-    features: [
-      "Transport national et international",
-      "Bétail et équidés",
-      "Certification IATA LAR",
-      "Supervision vétérinaire",
-    ],
-  },
-] as const;
-
-const TRACKING_STEPS = [
-  {
-    label: "Commande confirmée",
-    time: "15 janv. · 10:30",
-    done: true,
-  },
-  {
-    label: "Colis ramassé",
-    time: "15 janv. · 14:15",
-    done: true,
-  },
-  {
-    label: "En transit — I-80",
-    time: "16 janv. · 08:00",
-    done: true,
-  },
-  {
-    label: "Dédouanement",
-    time: "Estimé le 18 janv.",
-    done: false,
-  },
-  {
-    label: "Livraison",
-    time: "Estimé le 19 janv.",
-    done: false,
-  },
-] as const;
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "JC Import Express a transformé notre chaîne d'approvisionnement. Le suivi en temps réel et la communication proactive ont réduit nos problèmes de livraison de plus de 60 %.",
-    name: "Sarah Mitchell",
-    title: "VP Supply Chain, TechFlow Inc.",
-  },
-  {
-    quote:
-      "Du dédouanement à la livraison du dernier kilomètre, JC Import Express gère tout de manière transparente. Notre colonne vertébrale logistique depuis cinq ans.",
-    name: "James Okonkwo",
-    title: "CEO, AfriTrade Exports",
-  },
-  {
-    quote:
-      "Le transport pharmaceutique à température contrôlée est le meilleur de sa catégorie. Zéro perte sur plus de 3 000 expéditions.",
-    name: "Elena Vasquez",
-    title: "Directrice Logistique, MedPharma Global",
-  },
-] as const;
+function iconFor(key: string | undefined, fallback: ElementType): ElementType {
+  return key ? ICONS[key] ?? fallback : fallback;
+}
 
 type ServiceCardProps = {
   title: string;
@@ -415,7 +290,7 @@ function StatCard({
   );
 }
 
-function TrackingSection() {
+function TrackingSection({ steps }: { steps: FeaturesContent["trackingSteps"] }) {
   return (
     <div
       className="
@@ -459,171 +334,166 @@ function TrackingSection() {
         "
       />
 
-<div className="relative z-10 flex w-full flex-col min-[810px]:w-1/2">
-  <div className="flex flex-col items-start">
-    <SectionLabel>Visibilité en temps réel</SectionLabel>
+      <div className="relative z-10 flex w-full flex-col min-[810px]:w-1/2">
+        <div className="flex flex-col items-start">
+          <SectionLabel>Visibilité en temps réel</SectionLabel>
 
-    <h3 className="mt-6 max-w-[520px] font-display text-[32px] font-bold leading-[1.02] tracking-[-0.052em] text-[#081728] min-[810px]:text-[38px] min-[1200px]:text-[42px]">
-      Suivez chaque mouvement de votre expédition.
-    </h3>
+          <h3 className="mt-6 max-w-[520px] font-display text-[32px] font-bold leading-[1.02] tracking-[-0.052em] text-[#081728] min-[810px]:text-[38px] min-[1200px]:text-[42px]">
+            Suivez chaque mouvement de votre expédition.
+          </h3>
 
-    <p className="mt-5 max-w-[510px] font-display text-[14px] leading-[1.72] tracking-[-0.012em] text-[#334155]/65 min-[810px]:text-[15px]">
-      Consultez la position actuelle de votre colis, les étapes déjà franchies
-      et l&apos;estimation de livraison depuis une interface unique.
-    </p>
-  </div>
-
-  {/* Recherche */}
-  <div className="mt-8 rounded-[24px] border border-black/[0.075] bg-[#eeede8]/80 p-2 ring-1 ring-white/80 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_16px_35px_-28px_rgba(15,23,42,0.32),inset_0_1px_0_rgba(255,255,255,0.9)]">
-    <div className="flex flex-col gap-2 min-[520px]:flex-row">
-      <label className="group flex min-h-[54px] flex-1 items-center gap-3 rounded-[17px] border border-black/[0.075] bg-white px-4 ring-1 ring-white/90 shadow-[0_1px_2px_rgba(15,23,42,0.045),0_8px_18px_-16px_rgba(15,23,42,0.28),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(15,23,42,0.035)] transition-[border-color,box-shadow] duration-200 focus-within:border-[#0a192f]/25 focus-within:shadow-[0_1px_2px_rgba(15,23,42,0.05),0_0_0_3px_rgba(10,25,47,0.07),inset_0_1px_0_rgba(255,255,255,1)]">
-        <Search
-          className="size-[18px] shrink-0 text-[#0a192f]/35 transition-colors duration-200 group-focus-within:text-[#0a192f]/65"
-          strokeWidth={1.8}
-          aria-hidden="true"
-        />
-
-        <span className="sr-only">Identifiant de suivi</span>
-
-        <input
-          type="text"
-          inputMode="text"
-          autoComplete="off"
-          placeholder="Ex. AT-8842-X9"
-          className="h-full min-w-0 flex-1 bg-transparent font-display text-[14px] font-medium tracking-[-0.01em] text-[#0a192f] outline-none placeholder:font-normal placeholder:text-[#0a192f]/28"
-        />
-      </label>
-
-      <button
-        type="button"
-        className="group flex min-h-[54px] shrink-0 items-center justify-center gap-2.5 rounded-[17px] border border-[#061323] bg-[#081728] px-6 font-display text-[14px] font-semibold tracking-[-0.015em] text-white ring-1 ring-white/10 shadow-[0_1px_2px_rgba(0,0,0,0.24),0_13px_25px_-16px_rgba(8,23,40,0.72),inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(0,0,0,0.3)] transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:bg-[#102640] hover:shadow-[0_2px_4px_rgba(0,0,0,0.24),0_18px_30px_-17px_rgba(8,23,40,0.8),inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(0,0,0,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0a192f]/30 focus-visible:ring-offset-2"
-      >
-        <MapPin
-          className="size-[17px] transition-transform duration-200 group-hover:-translate-y-px"
-          strokeWidth={1.9}
-          aria-hidden="true"
-        />
-        Suivre
-      </button>
-    </div>
-  </div>
-
-  {/* Résumé du colis */}
-  <div className="mt-5 overflow-hidden rounded-[26px] border border-black/[0.075] bg-[#f8f7f3] ring-1 ring-white/80 shadow-[0_0_0_1px_rgba(255,255,255,0.42),0_1px_2px_rgba(15,23,42,0.045),0_18px_42px_-30px_rgba(15,23,42,0.32),inset_0_1px_0_rgba(255,255,255,0.96),inset_0_-1px_0_rgba(15,23,42,0.04)]">
-    <div className="flex flex-col gap-4 border-b border-black/[0.065] px-5 py-5 min-[520px]:flex-row min-[520px]:items-center min-[520px]:justify-between">
-      <div className="flex items-center gap-3.5">
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-[15px] border border-black/[0.06] bg-white text-[#0a192f] ring-1 ring-white shadow-[0_1px_2px_rgba(15,23,42,0.05),0_8px_18px_-13px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,1)]">
-          <Package className="size-5" strokeWidth={1.6} aria-hidden="true" />
+          <p className="mt-5 max-w-[510px] font-display text-[14px] leading-[1.72] tracking-[-0.012em] text-[#334155]/65 min-[810px]:text-[15px]">
+            Consultez la position actuelle de votre colis, les étapes déjà franchies
+            et l&apos;estimation de livraison depuis une interface unique.
+          </p>
         </div>
 
-        <div className="flex flex-col gap-0.5">
-          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.13em] text-[#0a192f]/38">
-            Expédition
-          </span>
+        {/* Recherche */}
+        <div className="mt-8 rounded-[24px] border border-black/[0.075] bg-[#eeede8]/80 p-2 ring-1 ring-white/80 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_16px_35px_-28px_rgba(15,23,42,0.32),inset_0_1px_0_rgba(255,255,255,0.9)]">
+          <div className="flex flex-col gap-2 min-[520px]:flex-row">
+            <label className="group flex min-h-[54px] flex-1 items-center gap-3 rounded-[17px] border border-black/[0.075] bg-white px-4 ring-1 ring-white/90 shadow-[0_1px_2px_rgba(15,23,42,0.045),0_8px_18px_-16px_rgba(15,23,42,0.28),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(15,23,42,0.035)] transition-[border-color,box-shadow] duration-200 focus-within:border-[#0a192f]/25 focus-within:shadow-[0_1px_2px_rgba(15,23,42,0.05),0_0_0_3px_rgba(10,25,47,0.07),inset_0_1px_0_rgba(255,255,255,1)]">
+              <Search
+                className="size-[18px] shrink-0 text-[#0a192f]/35 transition-colors duration-200 group-focus-within:text-[#0a192f]/65"
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
 
-          <span className="font-display text-[14px] font-bold tracking-[-0.018em] text-[#0a192f]">
-            AT-8842-X9
-          </span>
-        </div>
-      </div>
+              <span className="sr-only">Identifiant de suivi</span>
 
-      <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#235944]/10 bg-[#e8f2ec] px-3 py-1.5 font-display text-[11px] font-bold uppercase tracking-[0.08em] text-[#235944] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
-        <span className="size-1.5 rounded-full bg-[#2f7658] shadow-[0_0_0_3px_rgba(47,118,88,0.10)]" />
-        En transit
-      </span>
-    </div>
+              <input
+                type="text"
+                inputMode="text"
+                autoComplete="off"
+                placeholder="Ex. AT-8842-X9"
+                className="h-full min-w-0 flex-1 bg-transparent font-display text-[14px] font-medium tracking-[-0.01em] text-[#0a192f] outline-none placeholder:font-normal placeholder:text-[#0a192f]/28"
+              />
+            </label>
 
-    {/* Timeline */}
-    <div className="px-5 py-6">
-      <div className="flex flex-col">
-        {TRACKING_STEPS.map((step, index) => {
-          const isLast = index === TRACKING_STEPS.length - 1;
-          const isCurrent =
-            step.done &&
-            !TRACKING_STEPS[index + 1]?.done;
-
-          return (
-            <div
-              key={step.label}
-              className={`relative flex gap-4 ${
-                !isLast ? "pb-6" : ""
-              }`}
+            <button
+              type="button"
+              className="group flex min-h-[54px] shrink-0 items-center justify-center gap-2.5 rounded-[17px] border border-[#061323] bg-[#081728] px-6 font-display text-[14px] font-semibold tracking-[-0.015em] text-white ring-1 ring-white/10 shadow-[0_1px_2px_rgba(0,0,0,0.24),0_13px_25px_-16px_rgba(8,23,40,0.72),inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(0,0,0,0.3)] transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:bg-[#102640] hover:shadow-[0_2px_4px_rgba(0,0,0,0.24),0_18px_30px_-17px_rgba(8,23,40,0.8),inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(0,0,0,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0a192f]/30 focus-visible:ring-offset-2"
             >
-              <div className="relative flex w-5 shrink-0 justify-center">
-                {!isLast ? (
-                  <span
-                    aria-hidden="true"
-                    className={`absolute left-1/2 top-[17px] h-[calc(100%+7px)] w-px -translate-x-1/2 ${
-                      step.done
-                        ? "bg-[#0a192f]/20"
-                        : "bg-black/[0.085]"
-                    }`}
-                  />
-                ) : null}
+              <MapPin
+                className="size-[17px] transition-transform duration-200 group-hover:-translate-y-px"
+                strokeWidth={1.9}
+                aria-hidden="true"
+              />
+              Suivre
+            </button>
+          </div>
+        </div>
 
-                <span
-                  aria-hidden="true"
-                  className={`relative z-10 mt-[3px] flex size-[13px] items-center justify-center rounded-full ${
-                    step.done
-                      ? isCurrent
-                        ? "bg-[#0a192f] shadow-[0_0_0_4px_rgba(10,25,47,0.09),0_2px_5px_rgba(10,25,47,0.22)]"
-                        : "bg-[#0a192f] shadow-[0_0_0_3px_rgba(10,25,47,0.07)]"
-                      : "border-2 border-black/[0.12] bg-[#f8f7f3]"
-                  }`}
-                >
-                  {step.done && !isCurrent ? (
-                    <span className="size-[3px] rounded-full bg-white/80" />
-                  ) : null}
-                </span>
+        {/* Résumé du colis */}
+        <div className="mt-5 overflow-hidden rounded-[26px] border border-black/[0.075] bg-[#f8f7f3] ring-1 ring-white/80 shadow-[0_0_0_1px_rgba(255,255,255,0.42),0_1px_2px_rgba(15,23,42,0.045),0_18px_42px_-30px_rgba(15,23,42,0.32),inset_0_1px_0_rgba(255,255,255,0.96),inset_0_-1px_0_rgba(15,23,42,0.04)]">
+          <div className="flex flex-col gap-4 border-b border-black/[0.065] px-5 py-5 min-[520px]:flex-row min-[520px]:items-center min-[520px]:justify-between">
+            <div className="flex items-center gap-3.5">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-[15px] border border-black/[0.06] bg-white text-[#0a192f] ring-1 ring-white shadow-[0_1px_2px_rgba(15,23,42,0.05),0_8px_18px_-13px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,1)]">
+                <Package className="size-5" strokeWidth={1.6} aria-hidden="true" />
               </div>
 
-              <div className="flex min-w-0 flex-1 items-start justify-between gap-4">
-                <div className="flex min-w-0 flex-col gap-1">
-                  <span
-                    className={`font-display text-[13px] leading-[18px] tracking-[-0.012em] ${
-                      step.done
-                        ? "font-semibold text-[#0a192f]"
-                        : "font-medium text-[#0a192f]/45"
-                    }`}
-                  >
-                    {step.label}
-                  </span>
+              <div className="flex flex-col gap-0.5">
+                <span className="font-display text-[11px] font-semibold uppercase tracking-[0.13em] text-[#0a192f]/38">
+                  Expédition
+                </span>
 
-                  {isCurrent ? (
-                    <span className="font-display text-[11px] leading-[15px] text-[#0a192f]/42">
-                      Mise à jour il y a 12 minutes
-                    </span>
-                  ) : null}
-                </div>
-
-                <span
-                  className={`shrink-0 pt-px text-right font-display text-[11px] leading-[15px] ${
-                    step.done
-                      ? "text-[#0a192f]/38"
-                      : "text-[#0a192f]/30"
-                  }`}
-                >
-                  {step.time}
+                <span className="font-display text-[14px] font-bold tracking-[-0.018em] text-[#0a192f]">
+                  AT-8842-X9
                 </span>
               </div>
             </div>
-          );
-        })}
+
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#235944]/10 bg-[#e8f2ec] px-3 py-1.5 font-display text-[11px] font-bold uppercase tracking-[0.08em] text-[#235944] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
+              <span className="size-1.5 rounded-full bg-[#2f7658] shadow-[0_0_0_3px_rgba(47,118,88,0.10)]" />
+              En transit
+            </span>
+          </div>
+
+          {/* Timeline */}
+          <div className="px-5 py-6">
+            <div className="flex flex-col">
+              {steps.map((step, index) => {
+                const isLast = index === steps.length - 1;
+                const isCurrent =
+                  step.done &&
+                  !steps[index + 1]?.done;
+
+                return (
+                  <div
+                    key={step.label}
+                    className={`relative flex gap-4 ${!isLast ? "pb-6" : ""
+                      }`}
+                  >
+                    <div className="relative flex w-5 shrink-0 justify-center">
+                      {!isLast ? (
+                        <span
+                          aria-hidden="true"
+                          className={`absolute left-1/2 top-[17px] h-[calc(100%+7px)] w-px -translate-x-1/2 ${step.done
+                              ? "bg-[#0a192f]/20"
+                              : "bg-black/[0.085]"
+                            }`}
+                        />
+                      ) : null}
+
+                      <span
+                        aria-hidden="true"
+                        className={`relative z-10 mt-[3px] flex size-[13px] items-center justify-center rounded-full ${step.done
+                            ? isCurrent
+                              ? "bg-[#0a192f] shadow-[0_0_0_4px_rgba(10,25,47,0.09),0_2px_5px_rgba(10,25,47,0.22)]"
+                              : "bg-[#0a192f] shadow-[0_0_0_3px_rgba(10,25,47,0.07)]"
+                            : "border-2 border-black/[0.12] bg-[#f8f7f3]"
+                          }`}
+                      >
+                        {step.done && !isCurrent ? (
+                          <span className="size-[3px] rounded-full bg-white/80" />
+                        ) : null}
+                      </span>
+                    </div>
+
+                    <div className="flex min-w-0 flex-1 items-start justify-between gap-4">
+                      <div className="flex min-w-0 flex-col gap-1">
+                        <span
+                          className={`font-display text-[13px] leading-[18px] tracking-[-0.012em] ${step.done
+                              ? "font-semibold text-[#0a192f]"
+                              : "font-medium text-[#0a192f]/45"
+                            }`}
+                        >
+                          {step.label}
+                        </span>
+
+                        {isCurrent ? (
+                          <span className="font-display text-[11px] leading-[15px] text-[#0a192f]/42">
+                            Mise à jour il y a 12 minutes
+                          </span>
+                        ) : null}
+                      </div>
+
+                      <span
+                        className={`shrink-0 pt-px text-right font-display text-[11px] leading-[15px] ${step.done
+                            ? "text-[#0a192f]/38"
+                            : "text-[#0a192f]/30"
+                          }`}
+                      >
+                        {step.time}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="flex items-center justify-between gap-4 border-t border-black/[0.06] bg-white/45 px-5 py-4">
+            <span className="font-display text-[11px] font-medium text-[#0a192f]/38">
+              Dernière synchronisation
+            </span>
+
+            <span className="font-display text-[11px] font-semibold text-[#0a192f]/55">
+              Aujourd&apos;hui · 14:42
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-
-    {/* Footer */}
-    <div className="flex items-center justify-between gap-4 border-t border-black/[0.06] bg-white/45 px-5 py-4">
-      <span className="font-display text-[11px] font-medium text-[#0a192f]/38">
-        Dernière synchronisation
-      </span>
-
-      <span className="font-display text-[11px] font-semibold text-[#0a192f]/55">
-        Aujourd&apos;hui · 14:42
-      </span>
-    </div>
-  </div>
-</div>
       <div
         className="
           relative z-10 hidden
@@ -682,13 +552,13 @@ function TrackingSection() {
 }
 
 function TestimonialCard({
-  quote,
+  advice,
   name,
-  title,
+  star,
 }: {
-  quote: string;
+  advice: string;
   name: string;
-  title: string;
+  star: number;
 }) {
   const initials = name
     .split(" ")
@@ -746,8 +616,8 @@ function TestimonialCard({
             {Array.from({ length: 5 }).map((_, index) => (
               <Star
                 key={index}
-                className="size-[15px] fill-[#ad8127] text-[#ad8127]"
-                strokeWidth={0}
+                className={`size-[15px] ${index < star ? "fill-[#ad8127] text-[#ad8127]" : "text-[#0a192f]/20"}`}
+                strokeWidth={index < star ? 0 : 1.5}
                 aria-hidden="true"
               />
             ))}
@@ -772,7 +642,7 @@ function TestimonialCard({
             min-[810px]:text-[16px]
           "
         >
-          {quote}
+          {advice}
         </blockquote>
 
         <div
@@ -815,7 +685,7 @@ function TestimonialCard({
                 text-[#0a192f]/45
               "
             >
-              {title}
+              Avis client vérifié
             </span>
           </div>
         </div>
@@ -949,7 +819,7 @@ function ContactCta() {
                 hover:text-white
               "
             >
-              +1 (412) 227-3484
+              +86 130 5916 2331
             </a>
 
             <span
@@ -1028,7 +898,13 @@ function ContactCta() {
     </div>
   );
 }
-export function Features() {
+export function Features({
+  content,
+  testimonials,
+}: {
+  content: FeaturesContent;
+  testimonials: LandingTestimonial[];
+}) {
   return (
     <section
       id="services"
@@ -1079,7 +955,7 @@ export function Features() {
             min-[1200px]:max-w-[840px]
           "
         >
-          <SectionLabel>Ce que nous offrons</SectionLabel>
+          <SectionLabel>{content.eyebrow}</SectionLabel>
 
           <h2
             className="
@@ -1090,9 +966,9 @@ export function Features() {
               min-[1200px]:text-[66px]
             "
           >
-            Des solutions logistiques
+            {content.title}
             <span className="block text-[#0a192f]/48">
-              complètes et fiables
+              {content.accent}
             </span>
           </h2>
 
@@ -1105,9 +981,7 @@ export function Features() {
               min-[1200px]:text-[20px]
             "
           >
-            Des solutions de chaîne d&apos;approvisionnement de bout en bout,
-            conçues autour de votre activité, de vos itinéraires et de vos
-            exigences opérationnelles.
+            {content.description}
           </p>
         </header>
 
@@ -1120,8 +994,8 @@ export function Features() {
             min-[810px]:gap-5
           "
         >
-          {STATS.map((stat) => (
-            <StatCard key={stat.label} {...stat} />
+          {content.stats.map((stat) => (
+            <StatCard key={stat.label} {...stat} icon={iconFor(stat.icon, Globe)} />
           ))}
         </div>
 
@@ -1134,12 +1008,16 @@ export function Features() {
             min-[1200px]:grid-cols-3
           "
         >
-          {SERVICES.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+          {content.services.map((service) => (
+            <ServiceCard
+              key={service.title}
+              {...service}
+              icon={iconFor(service.icon, Package)}
+            />
           ))}
         </div>
 
-        <TrackingSection />
+        <TrackingSection steps={content.trackingSteps} />
 
         <div
           className="
@@ -1150,7 +1028,7 @@ export function Features() {
           "
         >
           <div className="flex max-w-[620px] flex-col items-center gap-4 text-center">
-            <SectionLabel>Témoignages</SectionLabel>
+            <SectionLabel>{content.testimonialEyebrow}</SectionLabel>
 
             <h3
               className="
@@ -1160,7 +1038,7 @@ export function Features() {
                 min-[810px]:text-[40px]
               "
             >
-              La confiance se mesure dans les résultats.
+              {content.testimonialTitle}
             </h3>
 
             <p
@@ -1171,8 +1049,7 @@ export function Features() {
                 min-[810px]:text-[16px]
               "
             >
-              Plus de 500 entreprises s&apos;appuient sur notre réseau pour
-              sécuriser leurs opérations logistiques.
+              {content.testimonialDescription}
             </p>
           </div>
 
@@ -1182,8 +1059,8 @@ export function Features() {
               min-[810px]:grid-cols-3
             "
           >
-            {TESTIMONIALS.map((testimonial) => (
-              <TestimonialCard key={testimonial.name} {...testimonial} />
+            {testimonials.map((testimonial) => (
+              <TestimonialCard key={testimonial.id} {...testimonial} />
             ))}
           </div>
         </div>
@@ -1191,4 +1068,5 @@ export function Features() {
         <ContactCta />
       </div>
     </section>
-  );}
+  );
+}

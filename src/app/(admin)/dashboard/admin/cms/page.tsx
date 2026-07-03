@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { buttonVariants } from "@/components/ui/button";
 import { Save, Send, Eye } from "lucide-react";
 import Link from "next/link";
 import type { SaveSiteContentInput, PublishAllSiteContentInput } from "@/features/admin/shared/schemas";
@@ -25,46 +26,105 @@ interface SiteContentItem {
 }
 
 const SECTION_LABELS: Record<string, string> = {
-  hero: "Hero (Bannière)",
-  parcours: "Parcours client",
-  transit: "Section Transit",
-  sections: "Titres de section",
+  metadata: "SEO",
+  header: "Header",
+  hero: "Hero",
+  products: "Produits",
+  features: "Services",
+  benefits: "À propos",
+  faq: "FAQ",
+  pricing: "Contact",
+  blog: "Blog",
 };
 
 const SECTION_KEYS: Record<string, { key: string; label: string; rows?: number }[]> = {
+  metadata: [
+    { key: "homeTitle", label: "Titre SEO accueil" },
+    { key: "homeDescription", label: "Description SEO accueil", rows: 3 },
+    { key: "blogTitle", label: "Titre SEO blog" },
+    { key: "blogDescription", label: "Description SEO blog", rows: 3 },
+  ],
+  header: [
+    { key: "brandName", label: "Nom de marque" },
+    { key: "phone", label: "Téléphone" },
+    { key: "navLinks", label: "Navigation (JSON)", rows: 8 },
+  ],
   hero: [
+    { key: "badge", label: "Badge" },
     { key: "title", label: "Titre principal" },
-    { key: "subtitle", label: "Sous-titre", rows: 3 },
-    { key: "ctaCatalog", label: "Bouton Catalogue" },
-    { key: "ctaRequests", label: "Bouton Demandes" },
-    { key: "ctaTransit", label: "Bouton Transit" },
+    { key: "accent", label: "Titre secondaire" },
+    { key: "description", label: "Description", rows: 3 },
+    { key: "desktopImage", label: "Image desktop" },
+    { key: "mobileImage", label: "Image mobile" },
+    { key: "trackingPlaceholder", label: "Placeholder suivi" },
+    { key: "trackingButton", label: "Bouton suivi" },
+    { key: "stats", label: "Statistiques (JSON)", rows: 8 },
   ],
-  parcours: [
-    { key: "title", label: "Titre du bloc" },
-    { key: "step1", label: "Étape 1" },
-    { key: "step2", label: "Étape 2" },
-    { key: "step3", label: "Étape 3" },
-    { key: "step4", label: "Étape 4" },
-  ],
-  transit: [
+  products: [
+    { key: "eyebrow", label: "Eyebrow" },
     { key: "title", label: "Titre" },
-    { key: "description", label: "Description", rows: 4 },
-    { key: "feature1", label: "Feature 1" },
-    { key: "feature2", label: "Feature 2" },
-    { key: "feature3", label: "Feature 3" },
-    { key: "feature4", label: "Feature 4" },
-    { key: "cta", label: "Bouton CTA" },
+    { key: "accent", label: "Accent" },
+    { key: "description", label: "Description", rows: 3 },
   ],
-  sections: [
-    { key: "categoriesTitle", label: "Titre catégories" },
-    { key: "productsTitle", label: "Titre produits" },
-    { key: "countriesTitle", label: "Titre pays" },
+  features: [
+    { key: "eyebrow", label: "Eyebrow" },
+    { key: "title", label: "Titre" },
+    { key: "accent", label: "Accent" },
+    { key: "description", label: "Description", rows: 4 },
+    { key: "stats", label: "Statistiques (JSON)", rows: 8 },
+    { key: "services", label: "Services (JSON)", rows: 12 },
+    { key: "trackingSteps", label: "Étapes suivi (JSON)", rows: 8 },
+    { key: "testimonialEyebrow", label: "Eyebrow témoignages" },
+    { key: "testimonialTitle", label: "Titre témoignages" },
+    { key: "testimonialDescription", label: "Description témoignages", rows: 3 },
+  ],
+  benefits: [
+    { key: "eyebrow", label: "Eyebrow" },
+    { key: "title", label: "Titre" },
+    { key: "accent", label: "Accent" },
+    { key: "description", label: "Description", rows: 3 },
+    { key: "items", label: "Valeurs (JSON)", rows: 10 },
+  ],
+  faq: [
+    { key: "eyebrow", label: "Eyebrow" },
+    { key: "title", label: "Titre" },
+    { key: "description", label: "Description", rows: 3 },
+    { key: "items", label: "Questions (JSON)", rows: 12 },
+  ],
+  pricing: [
+    { key: "eyebrow", label: "Eyebrow" },
+    { key: "title", label: "Titre" },
+    { key: "description", label: "Description", rows: 3 },
+    { key: "panelTitle", label: "Titre panneau" },
+    { key: "panelDescription", label: "Description panneau", rows: 3 },
+    { key: "addressLabel", label: "Label adresse" },
+    { key: "address", label: "Adresse" },
+    { key: "phoneLabel", label: "Label téléphone" },
+    { key: "phone", label: "Téléphone" },
+    { key: "emailLabel", label: "Label email" },
+    { key: "email", label: "Email" },
+    { key: "availabilityTitle", label: "Titre disponibilité" },
+    { key: "availabilityBody", label: "Texte disponibilité", rows: 2 },
+    { key: "formEyebrow", label: "Eyebrow formulaire" },
+    { key: "formTitle", label: "Titre formulaire" },
+    { key: "formDescription", label: "Description formulaire", rows: 3 },
+    { key: "privacy", label: "Texte confidentialité", rows: 2 },
+  ],
+  blog: [
+    { key: "eyebrow", label: "Eyebrow aperçu" },
+    { key: "title", label: "Titre aperçu" },
+    { key: "accent", label: "Accent aperçu" },
+    { key: "description", label: "Description aperçu", rows: 3 },
+    { key: "cta", label: "Bouton aperçu" },
+    { key: "listEyebrow", label: "Eyebrow page blog" },
+    { key: "listTitle", label: "Titre page blog" },
+    { key: "listDescription", label: "Description page blog", rows: 3 },
   ],
 };
 
 export default function AdminCmsPage() {
-  const { data, isLoading } = useAuraQuery("admin.listSiteContent", {});
-  const sections: Record<string, SiteContentItem[]> = (data as any)?.sections || {};
+  const { data, isLoading } = useAuraQuery<{ sections: Record<string, SiteContentItem[]> }>("admin.listSiteContent", {});
+  const sections = useMemo(() => data?.sections ?? {}, [data?.sections]);
 
   const saveMutation = useAuraMutation<SaveSiteContentInput, { success: true }>("admin.saveSiteContent", {
     invalidate: ["admin.listSiteContent", "catalog.homeData"],
@@ -98,7 +158,7 @@ export default function AdminCmsPage() {
   }, [drafts, sections]);
 
   const handleSave = () => {
-    const items: any[] = [];
+    const items: SaveSiteContentInput["items"] = [];
     for (const [section, keys] of Object.entries(drafts)) {
       for (const [key, draftContent] of Object.entries(keys)) {
         items.push({ section, key, draftContent });
@@ -129,7 +189,7 @@ export default function AdminCmsPage() {
           <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">CMS · Contenu du site</h1>
         </div>
         <div className="flex gap-2">
-          <Link href="/?preview=true" target="_blank" className={ButtonVariants({ variant: "outline", size: "sm" })}>
+          <Link href="/?preview=true" target="_blank" className={buttonVariants({ variant: "outline", size: "sm" })}>
             <Eye className="h-4 w-4 mr-1" /> Prévisualiser
           </Link>
           <Button size="sm" onClick={handleSave} disabled={!hasChanges || saveMutation.isPending}>
@@ -211,10 +271,4 @@ export default function AdminCmsPage() {
       </Tabs>
     </main>
   );
-}
-
-function ButtonVariants({ variant, size }: { variant?: string; size?: string }) {
-  return `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${
-    variant === "outline" ? "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" : "bg-primary text-primary-foreground shadow hover:bg-primary/90"
-  } ${size === "sm" ? "h-6 rounded-md px-3 text-xs" : "h-9 px-4 py-2"}`;
 }

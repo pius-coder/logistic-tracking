@@ -1,5 +1,6 @@
 import "server-only";
 import { defineOperationFn } from "@/aura/server/operation";
+import type { BlogPostWhereInput } from "@/generated/prisma/models/BlogPost";
 import { z } from "zod";
 
 export const blogPosts = defineOperationFn("blog.posts")
@@ -8,7 +9,7 @@ export const blogPosts = defineOperationFn("blog.posts")
   .entities(["BlogPost"])
   .public()
   .handler(async ({ ctx, params }) => {
-    const where: any = { published: true };
+    const where: BlogPostWhereInput = { published: true };
     if (params?.type) where.type = params.type;
     const posts = await ctx.db.blogPost.findMany({
       where,

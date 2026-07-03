@@ -1,5 +1,6 @@
 import "server-only";
 import { defineOperationFn } from "@/aura/server/operation";
+import type { BlogPostWhereInput } from "@/generated/prisma/models/BlogPost";
 import { z } from "zod";
 import { requireAdmin } from "./common";
 
@@ -14,7 +15,7 @@ export const adminBlogPosts = defineOperationFn("admin.blogPosts")
   .use(requireAdmin())
   .auth()
   .handler(async ({ ctx, params }) => {
-    const where: any = {};
+    const where: BlogPostWhereInput = {};
     if (params.search) {
       where.OR = [
         { title: { contains: params.search, mode: "insensitive" } },

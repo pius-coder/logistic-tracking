@@ -82,6 +82,7 @@ model AuraUser {
   // Auth fields
   username            String                   @unique
   email               String?                  @unique
+  phone               String?
   displayName         String?
   businessName        String?
   isAdmin             Boolean                  @default(false)
@@ -99,6 +100,8 @@ model AuraUser {
   // JC Import Express relations
   requests            Request[]                @relation("RequestCustomer")
   jcNotifications     JcNotification[]
+
+  @@index([phone])
 }
 
 model AuraPasswordCredential {
@@ -482,6 +485,45 @@ model BlogPost {
   tags          String        @default("")
   metaTitle     String        @default("")
   metaDesc      String        @default("")
+}
+
+model Product {
+  id               String               @id @default(cuid())
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  slug             String               @unique
+  name             String
+  shortDescription String               @default("")
+  fullDescription  String               @default("")
+  imageUrl         String               @default("")
+  gallery          String[]             @default([])
+  priceXaf         Int                  @default(0)
+  likes            Int                  @default(0)
+  features         String[]             @default([])
+  isPublished      Boolean              @default(false)
+  sortOrder        Int                  @default(0)
+  publishedAt      DateTime?
+  testimonials     ProductTestimonial[]
+
+  @@index([isPublished, sortOrder])
+  @@index([publishedAt])
+}
+
+model ProductTestimonial {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  productId     String?
+  product       Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name          String
+  advice        String
+  star          Int       @default(5)
+  showOnLanding Boolean   @default(false)
+  isPublished   Boolean   @default(true)
+  sortOrder     Int       @default(0)
+
+  @@index([productId, isPublished, sortOrder])
+  @@index([showOnLanding, isPublished, sortOrder])
 }
 
 model AdminAccessKey {

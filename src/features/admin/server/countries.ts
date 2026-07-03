@@ -1,6 +1,7 @@
 import "server-only";
 
 import { defineOperationFn } from "@/aura/server/operation";
+import type { CountryWhereInput } from "@/generated/prisma/models/Country";
 import { z } from "zod";
 import { requireAdmin } from "./common";
 
@@ -15,7 +16,7 @@ export const adminCountries = defineOperationFn("admin.countries")
   .use(requireAdmin())
   .auth()
   .handler(async ({ ctx, params }) => {
-    const where: any = {};
+    const where: CountryWhereInput = {};
     if (params.search) {
       where.OR = [
         { name: { contains: params.search, mode: "insensitive" } },

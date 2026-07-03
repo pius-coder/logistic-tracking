@@ -1,6 +1,7 @@
 import "server-only";
 
 import { defineOperationFn } from "@/aura/server/operation";
+import type { AuraUserWhereInput } from "@/generated/prisma/models/AuraUser";
 import { z } from "zod";
 import { requireAdmin } from "./common";
 
@@ -15,11 +16,12 @@ export const adminUsers = defineOperationFn("admin.users")
   .use(requireAdmin())
   .auth()
   .handler(async ({ ctx, params }) => {
-    const where: any = { deletedAt: null };
+    const where: AuraUserWhereInput = { deletedAt: null };
     if (params.search) {
       where.OR = [
         { displayName: { contains: params.search, mode: "insensitive" } },
         { businessName: { contains: params.search, mode: "insensitive" } },
+        { phone: { contains: params.search, mode: "insensitive" } },
         { username: { contains: params.search, mode: "insensitive" } },
       ];
     }

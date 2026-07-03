@@ -192,7 +192,10 @@ export const s3Driver: AuraStorageDriver = {
     } catch (putErr: unknown) {
       const msg = putErr instanceof Error ? putErr.message : String(putErr);
       // Try to extract raw response body for diagnosis
-      const raw = (putErr as any)?.$response?.body;
+      const raw =
+        putErr && typeof putErr === "object"
+          ? (putErr as { $response?: { body?: { transformToString?: () => Promise<string> } } }).$response?.body
+          : undefined;
       let rawBody = "";
       if (raw?.transformToString) {
         try { rawBody = await raw.transformToString(); } catch { /* ignore */ }

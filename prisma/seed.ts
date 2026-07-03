@@ -441,6 +441,170 @@ Vous souhaitez importer l'un de ces produits ? JC Import Express vous aide à tr
   },
 ];
 
+const SITE_CONTENT = [
+  { section: "metadata", key: "homeTitle", value: "JC Import Express | Suivi de Colis International — Tracking en Temps Réel" },
+  { section: "metadata", key: "homeDescription", value: "Suivez vos colis et marchandises en temps réel. Tracking international par avion, bateau et camion. Notification WhatsApp à chaque étape." },
+  { section: "metadata", key: "blogTitle", value: "Blog | JC Import Express — Guide Import-Export Afrique" },
+  { section: "metadata", key: "blogDescription", value: "Conseils, guides et astuces pour importer vos produits en Afrique. Fret maritime, fret aérien, douane, et tout ce qu'il faut savoir." },
+  { section: "header", key: "brandName", value: "JC Import Express" },
+  { section: "header", key: "phone", value: "+86 130 5916 2331 " },
+  {
+    section: "header", key: "navLinks", value: JSON.stringify([
+      { label: "Accueil", href: "#hero" },
+      { label: "Services", href: "#services" },
+      { label: "À propos", href: "#about" },
+      { label: "FAQ", href: "#faq" },
+      { label: "Contact", href: "#contact" },
+    ])
+  },
+  { section: "hero", key: "badge", value: "Réseau logistique international" },
+  { section: "hero", key: "title", value: "Une logistique mondiale," },
+  { section: "hero", key: "accent", value: "maîtrisée de bout en bout." },
+  { section: "hero", key: "description", value: "Du fret international à la livraison du dernier kilomètre, nous connectons vos marchandises à plus de 150 pays avec visibilité, précision et fiabilité opérationnelle." },
+  { section: "hero", key: "desktopImage", value: "/images/hero-logistics.png" },
+  { section: "hero", key: "mobileImage", value: "/images/hero-mobile-logistics.png" },
+  { section: "hero", key: "trackingPlaceholder", value: "Entrez votre numéro de suivi" },
+  { section: "hero", key: "trackingButton", value: "Suivre mon colis" },
+  {
+    section: "hero", key: "stats", value: JSON.stringify([
+      { value: "150+", label: "Pays desservis" },
+      { value: "50K+", label: "Expéditions mensuelles" },
+      { value: "99,8 %", label: "Livraisons à l’heure" },
+      { value: "15+", label: "Années d’expertise" },
+    ])
+  },
+  { section: "products", key: "eyebrow", value: "Nos Produits" },
+  { section: "products", key: "title", value: "Solutions logistiques adaptées à" },
+  { section: "products", key: "accent", value: "vos besoins" },
+  { section: "products", key: "description", value: "Des tarifs transparents et compétitifs pour toutes vos expéditions, du petit colis au conteneur complet." },
+  { section: "features", key: "eyebrow", value: "Ce que nous offrons" },
+  { section: "features", key: "title", value: "Des solutions logistiques" },
+  { section: "features", key: "accent", value: "complètes et fiables" },
+  { section: "features", key: "description", value: "Des solutions de chaîne d’approvisionnement de bout en bout, conçues autour de votre activité, de vos itinéraires et de vos exigences opérationnelles." },
+  {
+    section: "features", key: "stats", value: JSON.stringify([
+      { value: "150+", label: "Pays desservis", icon: "globe" },
+      { value: "50K+", label: "Expéditions / mois", icon: "package" },
+      { value: "99,8%", label: "Livraisons à l'heure", icon: "clock" },
+      { value: "15+", label: "Années d'excellence", icon: "award" },
+    ])
+  },
+  {
+    section: "features", key: "services", value: JSON.stringify([
+      { title: "Fret aérien", description: "Solutions de fret aérien urgent avec suivi et options prioritaires.", icon: "plane", features: ["Options express et prioritaires", "Cargaison à température contrôlée", "Suivi en temps réel"] },
+      { title: "Fret maritime", description: "Expédition en conteneur complet ou groupage sur les grandes routes commerciales.", icon: "ship", features: ["Solutions FCL et LCL", "Port-à-port et porte-à-porte", "Dédouanement inclus"] },
+      { title: "Transport terrestre", description: "Transport routier intermodal pour palettes, colis et marchandises professionnelles.", icon: "truck", features: ["Flotte suivie par GPS", "Services programmés", "Livraison porte-à-porte"] },
+    ])
+  },
+  {
+    section: "features", key: "trackingSteps", value: JSON.stringify([
+      { label: "Commande confirmée", time: "15 janv. · 10:30", done: true },
+      { label: "Colis ramassé", time: "15 janv. · 14:15", done: true },
+      { label: "En transit", time: "16 janv. · 08:00", done: true },
+      { label: "Dédouanement", time: "Estimé le 18 janv.", done: false },
+      { label: "Livraison", time: "Estimé le 19 janv.", done: false },
+    ])
+  },
+  { section: "features", key: "testimonialEyebrow", value: "Témoignages" },
+  { section: "features", key: "testimonialTitle", value: "La confiance se mesure dans les résultats." },
+  { section: "features", key: "testimonialDescription", value: "Des entreprises s’appuient sur notre réseau pour sécuriser leurs opérations logistiques." },
+  { section: "benefits", key: "eyebrow", value: "À propos de JC Import Express" },
+  { section: "benefits", key: "title", value: "Votre partenaire de confiance en" },
+  { section: "benefits", key: "accent", value: "solutions logistiques mondiales." },
+  { section: "benefits", key: "description", value: "Fondée en 2010, JC Import Express est devenue un partenaire logistique fiable pour les expéditions internationales." },
+  {
+    section: "benefits", key: "items", value: JSON.stringify([
+      { title: "Notre mission", description: "Redéfinir la logistique avec innovation et fiabilité.", icon: "mission" },
+      { title: "Notre vision", description: "Devenir le partenaire logistique le plus fiable pour vos imports.", icon: "vision" },
+      { title: "Dédouanement intégré", description: "Notre équipe gère vos documents et formalités douanières.", icon: "customs" },
+    ])
+  },
+  { section: "faq", key: "eyebrow", value: "FAQ" },
+  { section: "faq", key: "title", value: "Questions fréquentes" },
+  { section: "faq", key: "description", value: "Les réponses essentielles pour comprendre simplement nos services logistiques." },
+  {
+    section: "faq", key: "items", value: JSON.stringify([
+      { question: "Comment puis-je suivre mon expédition ?", answer: "Entrez votre numéro de suivi sur la page d'accueil pour obtenir les mises à jour disponibles." },
+      { question: "Quels types de cargaison traitez-vous ?", answer: "Nous traitons les colis, palettes, conteneurs, marchandises générales et dossiers de dédouanement." },
+      { question: "Proposez-vous le dédouanement international ?", answer: "Oui, notre équipe accompagne la préparation documentaire et le suivi des formalités douanières." },
+    ])
+  },
+  { section: "pricing", key: "eyebrow", value: "Contact" },
+  { section: "pricing", key: "title", value: "Obtenez un devis" },
+  { section: "pricing", key: "description", value: "Notre équipe conçoit une solution adaptée à votre expédition." },
+  { section: "pricing", key: "panelTitle", value: "Échangez directement avec notre équipe logistique." },
+  { section: "pricing", key: "panelDescription", value: "Nous analysons votre itinéraire, vos délais et vos contraintes afin de vous proposer une réponse exploitable." },
+  { section: "pricing", key: "addressLabel", value: "Siège social" },
+  { section: "pricing", key: "address", value: "Wyoming, États-Unis" },
+  { section: "pricing", key: "phoneLabel", value: "Téléphone" },
+  { section: "pricing", key: "phone", value: "+86 130 5916 2331 " },
+  { section: "pricing", key: "emailLabel", value: "Email" },
+  { section: "pricing", key: "email", value: "support@nexttracelogistics.com" },
+  { section: "pricing", key: "availabilityTitle", value: "Disponibilité" },
+  { section: "pricing", key: "availabilityBody", value: "Lundi au vendredi : 8h–20h HNE · Support de suivi : 24h/24, 7j/7" },
+  { section: "pricing", key: "formEyebrow", value: "Demande personnalisée" },
+  { section: "pricing", key: "formTitle", value: "Parlez-nous de votre expédition." },
+  { section: "pricing", key: "formDescription", value: "Renseignez les informations essentielles pour préparer une proposition adaptée." },
+  { section: "pricing", key: "privacy", value: "Vos informations sont utilisées uniquement pour traiter votre demande de devis." },
+  { section: "blog", key: "eyebrow", value: "Actualités & Conseils" },
+  { section: "blog", key: "title", value: "Dernières" },
+  { section: "blog", key: "accent", value: "publications" },
+  { section: "blog", key: "description", value: "Suivez nos actualités, guides et conseils pour optimiser vos expéditions internationales." },
+  { section: "blog", key: "cta", value: "Voir tous les articles" },
+  { section: "blog", key: "listEyebrow", value: "Blog" },
+  { section: "blog", key: "listTitle", value: "Guide Import-Export Afrique" },
+  { section: "blog", key: "listDescription", value: "Conseils pratiques, guides étape par étape et astuces pour importer vos produits en Afrique en toute sérénité." },
+];
+
+const PRODUCT_SEEDS = [
+  {
+    slug: "conteneur-maritime-20-pieds",
+    name: "Conteneur Maritime 20 pieds",
+    shortDescription: "Conteneur standard dry van pour fret maritime. Capacité de 33 m³, charge utile jusqu'à 28 tonnes.",
+    fullDescription: "Parfait pour vos expéditions de taille moyenne, ce conteneur maritime de 20 pieds est une solution standard du transport international.\n\nIl convient aux marchandises sèches : meubles, vêtements, produits manufacturés, machines et biens de consommation.",
+    imageUrl: "/images/shipping-containers.jpg",
+    gallery: ["/images/shipping-containers.jpg", "/images/warehouse.jpg", "/images/ocean-freight.jpg"],
+    priceXaf: 3_600_000,
+    likes: 47,
+    features: ["Capacité intérieure : 33 m³", "Charge utile max : 28 000 kg", "Acier Corten anti-corrosion", "Certifié CSC"],
+    sortOrder: 1,
+    testimonials: [
+      { name: "Amadou Diallo", advice: "Conteneur reçu en parfait état, conforme à la description.", star: 5, showOnLanding: true, sortOrder: 1 },
+      { name: "Fatima Ndiaye", advice: "Excellent rapport qualité-prix pour l'export vers l'Afrique de l'Ouest.", star: 5, showOnLanding: false, sortOrder: 2 },
+    ],
+  },
+  {
+    slug: "fret-aerien-express-100kg",
+    name: "Fret Aérien Express (100 kg)",
+    shortDescription: "Service de fret aérien prioritaire pour colis standard. Délai de 3 à 5 jours ouvrés.",
+    fullDescription: "Notre service de fret aérien express est adapté aux envois urgents vers l'Afrique.\n\nIl couvre jusqu'à 100 kg de marchandises avec suivi en temps réel et manutention sécurisée.",
+    imageUrl: "/images/air-freight.jpg",
+    gallery: ["/images/air-freight.jpg", "/images/tracking-map.jpg", "/images/warehouse.jpg"],
+    priceXaf: 900_000,
+    likes: 62,
+    features: ["Poids max : 100 kg", "Délai : 3 à 5 jours ouvrés", "Suivi 24h/24", "Dédouanement accéléré inclus"],
+    sortOrder: 2,
+    testimonials: [
+      { name: "Sophie Leblanc", advice: "Livraison ultra-rapide, mon colis est arrivé à Douala en 4 jours.", star: 5, showOnLanding: true, sortOrder: 3 },
+    ],
+  },
+  {
+    slug: "service-dedouanement-complet",
+    name: "Service Dédouanement Complet",
+    shortDescription: "Accompagnement douanier complet pour vos marchandises : documents, conformité et suivi.",
+    fullDescription: "Notre service de dédouanement complet vous accompagne de la préparation des documents à la libération des marchandises.\n\nIl couvre la classification tarifaire, les déclarations, les calculs de droits et les échanges avec les autorités.",
+    imageUrl: "/images/tracking-map.jpg",
+    gallery: ["/images/tracking-map.jpg", "/images/warehouse.jpg", "/images/shipping-containers.jpg"],
+    priceXaf: 250_000,
+    likes: 54,
+    features: ["Classification tarifaire", "Préparation des documents", "Interface avec les autorités", "Assistance prioritaire"],
+    sortOrder: 3,
+    testimonials: [
+      { name: "Hélène Zadi", advice: "Notre conteneur a été libéré rapidement grâce à leur expertise.", star: 5, showOnLanding: true, sortOrder: 4 },
+    ],
+  },
+];
+
 async function seedBlogPosts() {
   for (const post of BLOG_POSTS) {
     await prisma.blogPost.upsert({
@@ -450,6 +614,57 @@ async function seedBlogPosts() {
     });
   }
   console.log(`[seed] ${BLOG_POSTS.length} blog posts`);
+}
+
+async function seedSiteContent() {
+  for (const item of SITE_CONTENT) {
+    await prisma.siteContent.upsert({
+      where: { section_key_locale: { section: item.section, key: item.key, locale: "fr" } },
+      update: {
+        value: item.value,
+        draftContent: item.value,
+        publishedContent: item.value,
+        isPublished: true,
+        publishedAt: new Date(),
+      },
+      create: {
+        section: item.section,
+        key: item.key,
+        value: item.value,
+        draftContent: item.value,
+        publishedContent: item.value,
+        isPublished: true,
+        publishedAt: new Date(),
+        locale: "fr",
+      },
+    });
+  }
+  console.log(`[seed] ${SITE_CONTENT.length} site content items`);
+}
+
+async function seedProductsAndTestimonials() {
+  for (const productSeed of PRODUCT_SEEDS) {
+    const { testimonials, ...product } = productSeed;
+    const savedProduct = await prisma.product.upsert({
+      where: { slug: product.slug },
+      update: { ...product, isPublished: true, publishedAt: new Date() },
+      create: { ...product, isPublished: true, publishedAt: new Date() },
+    });
+
+    for (const testimonial of testimonials) {
+      await prisma.productTestimonial.upsert({
+        where: { id: `${savedProduct.id}-${testimonial.sortOrder}` },
+        update: { ...testimonial, productId: savedProduct.id, isPublished: true },
+        create: {
+          id: `${savedProduct.id}-${testimonial.sortOrder}`,
+          ...testimonial,
+          productId: savedProduct.id,
+          isPublished: true,
+        },
+      });
+    }
+  }
+  console.log(`[seed] ${PRODUCT_SEEDS.length} products`);
 }
 
 async function seedAppSettings() {
@@ -467,6 +682,8 @@ async function main() {
   await seedAdminUser();
   await seedAdminAccessKey();
   await seedAppSettings();
+  await seedSiteContent();
+  await seedProductsAndTestimonials();
   await seedBlogPosts();
   console.log("[seed] Done.");
 }
