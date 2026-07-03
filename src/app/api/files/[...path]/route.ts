@@ -14,8 +14,8 @@ export async function GET(
   // Prevent path traversal.
   // `turbopackIgnore` tells the Next file-tracer to NOT follow these paths
   // — they are runtime-only, resolved from process.cwd() at request time.
-  const base = join(/* turbopackIgnore: true */ process.cwd(), STORAGE_PATH);
-  const filePath = join(/* turbopackIgnore: true */ base, key);
+  const base = join(/*turbopackIgnore: true*/ process.cwd(), STORAGE_PATH);
+  const filePath = join(/*turbopackIgnore: true*/ base, key);
   if (!filePath.startsWith(base + "/") && filePath !== base) {
     return NextResponse.json({ ok: false, error: "Invalid path" }, { status: 400 });
   }
