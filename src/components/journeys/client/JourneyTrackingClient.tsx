@@ -31,9 +31,9 @@ import {
 const STATUS_LABELS: Record<JourneyDto["status"], string> = {
   BROUILLON: "Préparation",
   PLANIFIE: "Voyage planifié",
-  EN_COURS: "Navigation active",
-  EN_PAUSE: "Voyage en pause",
-  PROBLEME: "Incident en cours",
+  EN_COURS: "En cours",
+  EN_PAUSE: "En pause",
+  PROBLEME: "Incident",
   TERMINE: "Voyage terminé",
   ANNULE: "Voyage annulé",
 };
@@ -103,8 +103,8 @@ export function JourneyTrackingClient({
             Suivi indisponible
           </h1>
           <p className="mt-3 font-display text-[13px] leading-[1.65] text-[#0a192f]/45">
-            Ce voyage n&apos;existe pas, n&apos;est pas encore publié ou le lien a
-            expiré.
+            Ce voyage n&apos;existe pas, n&apos;est pas encore publié ou le lien
+            a expiré.
           </p>
         </div>
       </div>
@@ -159,7 +159,9 @@ export function JourneyTrackingClient({
               strokeWidth={1.8}
               aria-hidden="true"
             />
-            <span>{isDrawerOpen ? "Masquer les détails" : "Afficher le suivi"}</span>
+            <span>
+              {isDrawerOpen ? "Masquer les détails" : "Afficher le suivi"}
+            </span>
           </button>
         </div>
 
@@ -187,7 +189,10 @@ export function JourneyTrackingClient({
                   {/* Left: transport icon + identity */}
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-black/[0.06] bg-[#e8edf2] text-[#102b49] shadow-sm">
-                      <TransportIcon className="size-[18px]" strokeWidth={1.7} />
+                      <TransportIcon
+                        className="size-[18px]"
+                        strokeWidth={1.7}
+                      />
                     </span>
 
                     <div className="min-w-0">
@@ -215,10 +220,12 @@ export function JourneyTrackingClient({
                   <div className="flex items-center gap-3 shrink-0">
                     <div className="text-right hidden sm:block">
                       <p className="font-display text-[11px] font-semibold text-[#0a192f]/80">
-                        {currentStop?.placeName ?? stops[0]?.placeName ?? "—"} → {nextStop?.placeName ?? finalStop?.placeName ?? "—"}
+                        {currentStop?.placeName ?? stops[0]?.placeName ?? "—"} →{" "}
+                        {nextStop?.placeName ?? finalStop?.placeName ?? "—"}
                       </p>
                       <p className="text-[10px] text-[#0a192f]/40">
-                        {progress.completedCount}/{stops.length} étapes ({progress.progressPercent}%)
+                        {progress.completedCount}/{stops.length} étapes (
+                        {progress.progressPercent}%)
                       </p>
                     </div>
 
@@ -308,7 +315,6 @@ export function JourneyTrackingClient({
                   </div>
                 ) : null}
 
-
                 {/* ── Tab: Escales ── */}
                 {activeTab === "escales" ? (
                   <div role="tabpanel" className="space-y-4">
@@ -331,7 +337,10 @@ export function JourneyTrackingClient({
                         const reached = Boolean(stop.reachedAt);
                         const isNext = nextStop?.id === stop.id;
                         return (
-                          <div key={stop.id} className="relative flex items-start gap-4">
+                          <div
+                            key={stop.id}
+                            className="relative flex items-start gap-4"
+                          >
                             {/* Timeline dot */}
                             <span
                               className={cx(
@@ -340,11 +349,14 @@ export function JourneyTrackingClient({
                                   ? "bg-[#388063] text-white"
                                   : isNext
                                     ? "bg-[#C39145] text-white"
-                                    : "bg-[#d9dad7] text-[#0a192f]/48"
+                                    : "bg-[#d9dad7] text-[#0a192f]/48",
                               )}
                             >
                               {reached ? (
-                                <CheckCircle2 className="size-3" strokeWidth={2.5} />
+                                <CheckCircle2
+                                  className="size-3"
+                                  strokeWidth={2.5}
+                                />
                               ) : (
                                 index + 1
                               )}
@@ -439,7 +451,10 @@ export function JourneyTrackingClient({
                       <StatCard
                         icon={Clock3}
                         label="ETA finale"
-                        value={formatDate(finalStop?.estimatedArrivalAt ?? null, false)}
+                        value={formatDate(
+                          finalStop?.estimatedArrivalAt ?? null,
+                          false,
+                        )}
                         accent="green"
                       />
                     </div>

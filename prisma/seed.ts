@@ -1,9 +1,6 @@
 import "dotenv/config";
 import {
   PrismaClient,
-  TransportMode,
-  RequestStatus,
-  TrajectoryStepType,
   BlogPostType,
 } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -33,159 +30,55 @@ type CountrySeed = {
   isHub?: boolean;
 };
 
-type RestCountryCurrency = {
-  code?: string;
-  name?: string;
-  symbol?: string;
-};
 
-type RestCountry = {
-  names?: {
-    common?: string;
-    official?: string;
-    translations?: {
-      fra?: {
-        common?: string;
-        official?: string;
-      };
-    };
-  };
-  codes?: {
-    alpha_2: string;
-  };
-  calling_codes?: string[];
-  currencies?: RestCountryCurrency[];
-  continents?: string[];
-  classification?: {
-    sovereign?: boolean;
-  };
-};
-
-const countryOverrides: Record<string, Partial<CountrySeed>> = {
-  CI: { isFeatured: true },
-  SN: { isFeatured: true },
-  ML: { isFeatured: true },
-  NG: { isFeatured: true },
-
-  CN: { isHub: true },
-  AE: { isHub: true },
-  FR: { isHub: true },
-  DE: { isHub: true },
-  IT: { isHub: true },
-  US: { isHub: true },
-};
-
-const manualExchangeRates: Record<string, number> = {
-  XOF: 605,
-  XAF: 605,
-  NGN: 1450,
-  GHS: 15.2,
-  CDF: 2850,
-  MAD: 10.1,
-  CNY: 7.2,
-  AED: 3.67,
-  EUR: 0.92,
-  USD: 1,
-};
-
-function slugify(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/['’]/g, "")
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function getDialingCode(callingCodes?: RestCountry["calling_codes"]): string | null {
-  if (!callingCodes?.length) return null;
-
-  return `+${callingCodes[0]}`;
-}
-
-function getCurrency(currencies?: RestCountry["currencies"]): {
-  currencyCode: string | null;
-  currencyName: string | null;
-  currencySymbol: string | null;
-} {
-  if (!currencies?.length) {
-    return {
-      currencyCode: null,
-      currencyName: null,
-      currencySymbol: null,
-    };
-  }
-
-  const currency = currencies[0];
-
-  return {
-    currencyCode: currency.code ?? null,
-    currencyName: currency.name ?? null,
-    currencySymbol: currency.symbol ?? null,
-  };
-}
 
 async function getSeedCountriesData(): Promise<CountrySeed[]> {
-  console.log("[seed]   → Fetching https://api.restcountries.com/countries/v5 ...");
-  const response = await fetch("https://api.restcountries.com/countries/v5", {
-    headers: {
-      Authorization: `Bearer ${process.env.REST_COUNTRIES_API_KEY ?? "rc_live_demo"}`,
-    },
-  });
-  console.log(`[seed]   → Response status: ${response.status} ${response.statusText}`);
+  try {
+    const res = await fetch("https://restcountries.com/v5/all?fields=name,cca2,idd,currencies,continents");
+    const data: {
+      name: { common: string };
+      cca2: string;
+      idd: { root?: string; suffixes?: string[] };
+      currencies?: Record<string, { name: string; symbol?: string }>;
+      continents: string[];
+    }[] = await res.json();
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch countries: ${response.status}`);
+    const map: CountrySeed[] = [];
+
+    for (const c of data) {
+      const currencyCode = c.currencies ? Object.keys(c.currencies)[0] ?? null : null;
+      const currency = currencyCode ? c.currencies![currencyCode] : null;
+      const dialing = c.idd.root && c.idd.suffixes
+        ? c.idd.root + c.idd.suffixes[0]
+        : null;
+
+      const slug = c.name.common
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+      map.push({
+        name: c.name.common,
+        slug,
+        iso2: c.cca2,
+        dialingCode: dialing,
+        currencyCode,
+        currencyName: currency?.name ?? null,
+        currencySymbol: currency?.symbol ?? null,
+        usdExchangeRate: null,
+        continent: c.continents?.[0] ?? null,
+      });
+    }
+
+    map.sort((a, b) => a.name.localeCompare(b.name));
+    map[0] = { ...map[0], isFeatured: true, isHub: true };
+    return map;
+  } catch {
+    throw new Error("Failed to fetch country data from REST Countries API");
   }
-
-  console.log("[seed]   → Parsing JSON...");
-  const payload = (await response.json()) as { data?: { objects?: unknown[] } };
-  console.log("[seed]   → JSON parsed OK");
-  const countriesResponse = payload.data?.objects;
-
-  if (!Array.isArray(countriesResponse)) {
-    console.log(JSON.stringify(payload));
-    throw new Error("[seed] Invalid countries response: expected data.objects array");
-  }
-
-  const countries = countriesResponse as RestCountry[];
-
-  return countries
-    .filter((country) => country?.codes?.alpha_2 && country.classification?.sovereign !== false)
-    .map((country): CountrySeed => {
-      const iso2 = country.codes!.alpha_2;
-
-      const name =
-        country.names?.translations?.fra?.common ??
-        country.names?.common ??
-        country.names?.official ??
-        iso2;
-
-      const currency = getCurrency(country.currencies);
-
-      return {
-        name,
-        slug: slugify(name),
-        iso2,
-        dialingCode: getDialingCode(country.calling_codes),
-        currencyCode: currency.currencyCode,
-        currencyName: currency.currencyName,
-        currencySymbol: currency.currencySymbol,
-        usdExchangeRate: currency.currencyCode
-          ? (manualExchangeRates[currency.currencyCode] ?? null)
-          : null,
-        continent: country.continents?.[0] ?? null,
-        ...countryOverrides[iso2],
-      };
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-console.log("[seed] Fetching countries from REST Countries API...");
 const seedCountriesData = await getSeedCountriesData();
-console.log(`[seed] Fetched ${seedCountriesData.length} countries from API`);
 
 function sanitizeCountry(c: CountrySeed) {
   return {
@@ -255,166 +148,6 @@ async function seedAdminUser() {
     },
   });
   console.log(`[seed] Admin user created: ${user.id}`);
-}
-
-async function seedRequests(clientId: string) {
-  const coteIvoire = await prisma.country.findUnique({
-    where: { slug: "cote-divoire" },
-  });
-  const chine = await prisma.country.findUnique({ where: { slug: "chine" } });
-
-  if (!coteIvoire || !chine) {
-    console.log("[seed] Skipping requests - missing countries");
-    return;
-  }
-
-  async function upsertRequest(
-    requestNumber: string,
-    data: Parameters<typeof prisma.request.create>[0]["data"],
-  ) {
-    const existing = await prisma.request.findUnique({
-      where: { requestNumber },
-    });
-    if (existing) {
-      await prisma.trajectoryStep.deleteMany({
-        where: { requestId: existing.id },
-      });
-      await prisma.jcNotification.deleteMany({
-        where: { requestId: existing.id },
-      });
-      await prisma.requestStatusEvent.deleteMany({
-        where: { requestId: existing.id },
-      });
-      await prisma.request.update({ where: { id: existing.id }, data });
-      return prisma.request.findUniqueOrThrow({ where: { id: existing.id } });
-    }
-    return prisma.request.create({ data });
-  }
-
-  const request1 = await upsertRequest("GI-240101-001", {
-    requestNumber: "GI-240101-001",
-    type: "SHIPMENT",
-    userId: clientId,
-    originCountryId: chine.id,
-    destinationCountryId: coteIvoire.id,
-    recipientName: "Amadou Diallo",
-    recipientPhone: "2250700000001",
-    deliveryAddress: "Rue des Jardins, Cocody, Abidjan",
-    city: "Abidjan",
-    packageCount: 2,
-    productDescription: "Smartphones et accessoires",
-    transportMode: TransportMode.AVION,
-    status: RequestStatus.EN_COURS,
-    latestStatusMessage:
-      "Votre expedition est en cours de transit vers Abidjan.",
-    statusEvents: {
-      create: [
-        {
-          status: RequestStatus.EN_ATTENTE,
-          title: "Demande recue",
-          message: "Votre demande a ete enregistree.",
-          createdByLabel: "Systeme",
-        },
-        {
-          status: RequestStatus.EN_COURS,
-          title: "Expedition confirmee",
-          message: "Votre expedition est en preparation.",
-          createdByLabel: "Systeme",
-        },
-      ],
-    },
-  });
-
-  await prisma.trajectoryStep.createMany({
-    data: [
-      {
-        requestId: request1.id,
-        countryId: chine.id,
-        locationName: "Shenzhen, Chine",
-        stepType: TrajectoryStepType.ORIGIN,
-        sequence: 0,
-        reachedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        timerDurationHours: 48,
-      },
-      {
-        requestId: request1.id,
-        countryId: null,
-        locationName: "Transit aerien Dubai",
-        stepType: TrajectoryStepType.ESCALE,
-        sequence: 1,
-        reachedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-        timerDurationHours: 12,
-      },
-      {
-        requestId: request1.id,
-        countryId: coteIvoire.id,
-        locationName: "Abidjan, Cote d'Ivoire",
-        stepType: TrajectoryStepType.DESTINATION,
-        sequence: 2,
-        timerDurationHours: 24,
-      },
-    ],
-  });
-
-  await prisma.jcNotification.createMany({
-    data: [
-      {
-        userId: clientId,
-        requestId: request1.id,
-        type: "REQUEST_CREATED",
-        title: "Nouvelle demande",
-        message: "Votre demande GI-240101-001 a ete creee.",
-        deepLink: `/tracking/${request1.id}`,
-      },
-      {
-        userId: clientId,
-        requestId: request1.id,
-        type: "REQUEST_STATUS_UPDATED",
-        title: "Expedition en cours",
-        message: "Votre expedition est en transit.",
-        deepLink: `/tracking/${request1.id}`,
-      },
-    ],
-  });
-
-  const request2 = await upsertRequest("GI-240102-002", {
-    requestNumber: "GI-240102-002",
-    type: "SHIPMENT",
-    userId: clientId,
-    originCountryId: chine.id,
-    destinationCountryId: coteIvoire.id,
-    recipientName: "Amadou Diallo",
-    recipientPhone: "221770000001",
-    deliveryAddress: "A confirmer.",
-    productDescription:
-      "Materiel medical - desinfectants, masques chirurgicaux",
-    transportMode: TransportMode.BATEAU,
-    status: RequestStatus.EN_ATTENTE,
-    latestStatusMessage: "Votre demande est en attente de devis.",
-    statusEvents: {
-      create: [
-        {
-          status: RequestStatus.EN_ATTENTE,
-          title: "Demande recue",
-          message: "Un conseiller va vous contacter sous peu.",
-          createdByLabel: "Systeme",
-        },
-      ],
-    },
-  });
-
-  await prisma.jcNotification.create({
-    data: {
-      userId: clientId,
-      requestId: request2.id,
-      type: "REQUEST_CREATED",
-      title: "Demande de transit",
-      message: "Votre demande GI-240102-002 a ete creee.",
-      deepLink: `/tracking/${request2.id}`,
-    },
-  });
-
-  console.log("[seed] Requests, trajectory, notifications created");
 }
 
 async function seedAdminAccessKey() {
@@ -765,8 +498,8 @@ const SITE_CONTENT = [
     value: JSON.stringify([
       { value: "150+", label: "Pays desservis" },
       { value: "50K+", label: "Expéditions mensuelles" },
-      { value: "99,8 %", label: "Livraisons à l’heure" },
-      { value: "15+", label: "Années d’expertise" },
+      { value: "75,2 %", label: "Livraisons à l’heure" },
+      { value: "7+", label: "Années d’expertise" },
     ]),
   },
   { section: "products", key: "eyebrow", value: "Nos Produits" },
@@ -797,8 +530,8 @@ const SITE_CONTENT = [
     value: JSON.stringify([
       { value: "150+", label: "Pays desservis", icon: "globe" },
       { value: "50K+", label: "Expéditions / mois", icon: "package" },
-      { value: "99,8%", label: "Livraisons à l'heure", icon: "clock" },
-      { value: "15+", label: "Années d'excellence", icon: "award" },
+      { value: "75,2%", label: "Livraisons à l'heure", icon: "clock" },
+      { value: "7+", label: "Années d'excellence", icon: "award" },
     ]),
   },
   {
@@ -845,7 +578,6 @@ const SITE_CONTENT = [
     key: "trackingSteps",
     value: JSON.stringify([
       { label: "Commande confirmée", time: "15 janv. · 10:30", done: true },
-      { label: "Colis ramassé", time: "15 janv. · 14:15", done: true },
       { label: "En transit", time: "16 janv. · 08:00", done: true },
       { label: "Dédouanement", time: "Estimé le 18 janv.", done: false },
       { label: "Livraison", time: "Estimé le 19 janv.", done: false },
@@ -955,7 +687,7 @@ const SITE_CONTENT = [
       "Nous analysons votre itinéraire, vos délais et vos contraintes afin de vous proposer une réponse exploitable.",
   },
   { section: "pricing", key: "addressLabel", value: "Siège social" },
-  { section: "pricing", key: "address", value: "Wyoming, États-Unis" },
+  { section: "pricing", key: "address", value: "Shenzhen, China" },
   { section: "pricing", key: "phoneLabel", value: "Téléphone" },
   { section: "pricing", key: "phone", value: "+86 130 5916 2331 " },
   { section: "pricing", key: "emailLabel", value: "Email" },

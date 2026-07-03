@@ -68,6 +68,8 @@ export async function createAuraContext(
     });
   }
 
+  const storage = await createAuraStorage();
+
   const ctx: AuraContext = {
     db,
     session: resolvedSession.session,
@@ -131,7 +133,7 @@ export async function createAuraContext(
     cookies: {
       set: cookieMutations,
     },
-    storage: createAuraStorage(),
+    storage,
   };
 
   return ctx;

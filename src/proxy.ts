@@ -6,6 +6,7 @@ import {
   isUnsafeMethod,
   verifyCsrfToken,
 } from "@/aura/server/transport/csrf";
+import { jsonReject } from "@/aura/server/transport/route-error";
 import {
   parseCookieHeader,
   sessionCookieName,
@@ -112,21 +113,6 @@ async function ensureCsrfCookie(
     sameSite: "lax",
     path: "/",
   });
-}
-
-function jsonReject(message: string, status = 403) {
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: status === 403 ? "FORBIDDEN" : status === 429 ? "RATE_LIMITED" : "BAD_REQUEST",
-        message,
-        status,
-        requestId: uuidv4(),
-      },
-    },
-    { status },
-  );
 }
 
 // ─── CSP nonce ───────────────────────────────────────────────────────────────
@@ -260,7 +246,7 @@ function enforceProxyRateLimit(
   const ip = clientIp(request);
   const isManifest = pathname.endsWith("/_manifest");
   const key = `${isManifest ? "manifest" : "api"}:${ip}`;
-  const { allowed, resetAt, remaining } = takeRateLimitToken(
+  const { allowed, resetAt } = takeRateLimitToken(
     key,
     isManifest ? RATE_MANIFEST_LIMIT : RATE_API_LIMIT,
     isManifest ? RATE_MANIFEST_WINDOW_MS : RATE_API_WINDOW_MS,

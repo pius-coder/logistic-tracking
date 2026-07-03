@@ -82,6 +82,8 @@ export function JourneyMap({
     return leg ? coordinateAlongLine(leg.geometry, currentLegFraction) : null;
   }, [currentFromIndex, currentLegFraction, legs, showEstimatedVehicle]);
 
+  const hasFittedRef = useRef(false);
+
   const fitAll = useCallback(() => {
     if (!mapRef.current || orderedStops.length === 0) return;
     if (orderedStops.length === 1) {
@@ -109,9 +111,12 @@ export function JourneyMap({
   }, [orderedStops]);
 
   useEffect(() => {
+    if (hasFittedRef.current) return;
+    if (orderedStops.length === 0) return;
+    hasFittedRef.current = true;
     const timeout = window.setTimeout(fitAll, 80);
     return () => window.clearTimeout(timeout);
-  }, [fitAll]);
+  }, [fitAll, orderedStops.length]);
 
   const initial = orderedStops[0] ?? {
     latitude: 5.3599,

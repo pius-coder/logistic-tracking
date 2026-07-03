@@ -22,6 +22,7 @@ export { adminDeleteBlogPost } from "./server/deleteBlogPost";
 export { adminCatalogCountries } from "./server/catalogCountries";
 export { adminUploadFile } from "./server/files";
 export { adminDeleteProduct, adminProducts, adminSaveProduct } from "./server/products";
+export { publicGetWhatsAppNumber } from "./server/publicSettings";
 export {
   adminDeleteProductTestimonial,
   adminProductTestimonials,

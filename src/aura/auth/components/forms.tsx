@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuraForm, useAuraMutation } from "@/aura/client";
 import { authLoginInputSchema, type AuthLoginInput } from "@/aura/shared/auth-schemas";

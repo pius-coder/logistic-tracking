@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Heart, MapPin, Phone, Star, Mail, Clock3, ShieldCheck, Send } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, MapPin } from "lucide-react";
 import type { ProductTestimonialView, ProductView } from "@/features/catalog/types";
 
 function formatXAF(amount: number): string {
@@ -260,7 +260,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               <div className="mt-1 flex flex-col items-center gap-3 min-[810px]:items-start">
                 <span className="flex items-center gap-2.5 font-display text-[13px] text-white/52">
                   <MapPin className="size-4 text-[#c69a43]" strokeWidth={1.7} />
-                  Wyoming, États-Unis
+                  Shenzhen, China
                 </span>
                 <div className="flex flex-col items-center gap-2 min-[810px]:flex-row min-[810px]:gap-5">
                   <a href="tel:+14122273484" className="font-display text-[13px] text-white/50 transition-colors duration-200 hover:text-white">+86 130 5916 2331 </a>

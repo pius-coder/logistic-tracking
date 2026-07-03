@@ -1,6 +1,6 @@
 import "server-only";
 
-import { mkdir, writeFile, readFile, unlink, stat } from "node:fs/promises";
+import { mkdir, writeFile, unlink } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { randomBytes } from "node:crypto";
 import { db } from "../db";
@@ -48,7 +48,7 @@ function parseDataUrl(dataUrl: string): { mimeType: string; extension: string; b
 
 function resolveFilePath(key: string): string {
   // Ensure the path stays within STORAGE_PATH by resolving and checking
-  const base = join(process.cwd(), STORAGE_PATH);
+  const base = join(/* turbopackIgnore: true */ process.cwd(), STORAGE_PATH);
   const target = join(base, key);
   if (!target.startsWith(base + "/") && target !== base) {
     throw new Error("Invalid file key: path traversal detected.");

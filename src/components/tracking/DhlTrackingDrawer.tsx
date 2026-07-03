@@ -7,9 +7,11 @@ import {
   useRef,
   useState,
 } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used in JSX at line 1403
 import Link from "next/link";
 import {
   AlertTriangle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used in JSX at line 1427
   ArrowUpRight,
   CheckCircle2,
   ChevronDown,
@@ -19,7 +21,6 @@ import {
   Info,
   MapPin,
   MapPinned,
-  Navigation,
   Package,
   PauseCircle,
   Plane,
@@ -379,6 +380,7 @@ export function DhlTrackingDrawer({
   status,
   problemType,
   latestMessage,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used in JSX at line 1404
   requestId,
   selectedStepId,
   customerName,

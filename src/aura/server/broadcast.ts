@@ -291,11 +291,13 @@ process.on("SIGINT", () => shutdown("SIGINT"));
 
 // ─── Export Bun ───────────────────────────────────────────────────────────────
 
-export default {
+const serverConfig = {
   port: PORT,
   fetch: app.fetch,
   websocket,
 };
+
+export default serverConfig;
 
 console.log(
   `[aura:broadcast] HTTP  http://localhost:${PORT}/invalidate (signé HMAC)`,

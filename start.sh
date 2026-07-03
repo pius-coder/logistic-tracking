@@ -23,7 +23,11 @@ trap cleanup TERM INT
 # ─── 1. Sync Prisma schema to the database ───────────────────────────────────
 if [ "${PRISMA_DB_PUSH:-1}" != "0" ] && [ -n "${DATABASE_URL:-}" ]; then
   echo "[start.sh] prisma db push"
-  node node_modules/prisma/build/index.js db push --accept-data-loss
+  if [ "${NODE_ENV:-production}" = "production" ]; then
+    node node_modules/prisma/build/index.js db push
+  else
+    node node_modules/prisma/build/index.js db push --accept-data-loss
+  fi
 else
   echo "[start.sh] skipping prisma db push (PRISMA_DB_PUSH=${PRISMA_DB_PUSH:-1}, DATABASE_URL=${DATABASE_URL:+set})"
 fi

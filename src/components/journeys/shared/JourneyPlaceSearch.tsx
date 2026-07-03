@@ -31,16 +31,14 @@ export function JourneyPlaceSearch({
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (value) setQuery(value.label);
-  }, [value]);
-
-  useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (query.trim().length < 2 || value?.label === query) {
-      setDebouncedQuery("");
-      return;
-    }
-    timerRef.current = setTimeout(() => setDebouncedQuery(query.trim()), 280);
+    timerRef.current = setTimeout(() => {
+      if (query.trim().length < 2 || value?.label === query) {
+        setDebouncedQuery("");
+      } else {
+        setDebouncedQuery(query.trim());
+      }
+    }, query.trim().length < 2 || value?.label === query ? 0 : 280);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };

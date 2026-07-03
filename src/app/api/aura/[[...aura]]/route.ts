@@ -1,26 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getClientOperationManifest, getOperation } from "@/aura.registry";
 import { runAuraOperation } from "@/aura/server/runner";
-import { v4 as uuidv4 } from "uuid";
+import { jsonError } from "@/aura/server/transport/route-error";
 
 type AuraRouteContext = {
   params: Promise<{ aura?: string[] }>;
 };
-
-function jsonError(args: { code: string; message: string; status: number }) {
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: args.code,
-        message: args.message,
-        status: args.status,
-        requestId: uuidv4(),
-      },
-    },
-    { status: args.status },
-  );
-}
 
 function applyCookies(
   response: NextResponse,

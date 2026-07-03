@@ -864,7 +864,7 @@ export function Footer() {
                   </span>
 
                   <span className="font-display text-[14px] leading-[1.5] text-white/56">
-                    Wyoming, États-Unis
+                    Shenzhen, China
                   </span>
                 </div>
               </div>
@@ -998,40 +998,17 @@ export function Footer() {
     </footer>
   );
 }
-function CornerDecorationFooter({ side }: { side: "left" | "right" }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "absolute top-0 block size-5 overflow-visible",
-        side === "right" ? "-right-5" : "-left-5"
-      )}
-    >
-      <svg
-        viewBox="0 0 20 20"
-        className={cn(
-          "absolute left-0 top-0 block size-5 shrink-0 [image-rendering:pixelated]",
-          side === "left" && "rotate-90"
-        )}
-      >
-        <path
-          d="M 0 0 L 20 0 C 8.954 0 0 8.954 0 20 Z"
-          fill="rgb(0, 0, 0)"
-        />
-      </svg>
-    </span>
-  );
-}
-
 function SupportButton({
   hasBottomNavigation,
 }: {
   hasBottomNavigation: boolean;
 }) {
-  const supportNumber = (
-    process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP_NUMBER ??
-    "2250700000000"
-  ).replace(/\D/g, "");
+  const { data: waData } = useAuraQuery<{ number: string | null }>(
+    "public.getWhatsAppNumber",
+    { staleTime: 60_000 },
+  );
+  const rawNumber = waData?.number ?? process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP_NUMBER ?? "2250700000000";
+  const supportNumber = rawNumber.replace(/\D/g, "");
 
   const message = encodeURIComponent(
     "Bonjour JC Import Express, j'ai besoin d'aide pour mon envoi."
