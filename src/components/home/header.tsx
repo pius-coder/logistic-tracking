@@ -1,12 +1,7 @@
-export function SiteHeader() {
-  const links = [
-    ["Accueil", "#hero"],
-    ["Services", "#services"],
-    ["À propos", "#about"],
-    ["FAQ", "#faq"],
-    ["Contact", "#contact"],
-  ] as const;
+import { phoneHref } from "@/lib/site-content";
+import type { HeaderContent } from "./types";
 
+export function SiteHeader({ content }: { content: HeaderContent }) {
   return (
     <header className="fixed left-1/2 top-0 z-50 w-[min(350px,calc(100vw-24px))] -translate-x-1/2 min-[810px]:w-[810px] min-[1200px]:w-auto">
       <div className="relative rounded-b-[18px] bg-white px-[10px] py-[5px] text-[#0a192f] min-[1200px]:p-[10px]">
@@ -15,10 +10,10 @@ export function SiteHeader() {
             <span className="relative flex size-[30px] items-center justify-center rounded-[8px] bg-[#0a192f]/10">
               <span className="size-[10px] rounded-[2px] bg-[#0a192f]" />
             </span>
-            <span>JC Import Express</span>
+            <span>{content.brandName}</span>
           </a>
           <nav className="flex items-center gap-5" aria-label="Primary navigation">
-            {links.map(([label, href]) => (
+            {content.navLinks.map(({ label, href }) => (
               <a
                 key={href}
                 href={href}
@@ -29,10 +24,10 @@ export function SiteHeader() {
             ))}
           </nav>
           <a
-            href="tel:+14122273484"
+            href={phoneHref(content.phone)}
             className="rounded-xl bg-[#006fff] px-4 py-1.5 font-display text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
           >
-            +1 (412) 227-3484
+            {content.phone}
           </a>
         </div>
 
@@ -42,7 +37,7 @@ export function SiteHeader() {
               <span className="relative flex size-[30px] items-center justify-center rounded-[8px] bg-[#0a192f]/10">
                 <span className="size-[10px] rounded-[2px] bg-[#0a192f]" />
               </span>
-              <span>JC Import Express</span>
+              <span>{content.brandName}</span>
             </a>
             <span className="relative block size-10 rounded-md">
               <span className="absolute left-1/2 top-[12px] h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#757575] transition-transform group-open:top-[19px] group-open:rotate-45" />
@@ -54,7 +49,7 @@ export function SiteHeader() {
             className="flex flex-col items-start gap-[30px] px-[30px] pb-[30px] pt-5"
             aria-label="Mobile navigation"
           >
-            {links.map(([label, href]) => (
+            {content.navLinks.map(({ label, href }) => (
               <a
                 key={href}
                 href={href}
@@ -64,10 +59,10 @@ export function SiteHeader() {
               </a>
             ))}
             <a
-              href="tel:+14122273484"
+              href={phoneHref(content.phone)}
               className="w-full rounded-2xl bg-[#006fff] px-5 py-4 text-center font-display text-base font-semibold text-white"
             >
-              +1 (412) 227-3484
+              {content.phone}
             </a>
           </nav>
         </details>

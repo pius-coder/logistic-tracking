@@ -12,17 +12,11 @@ export interface GeocodingResult {
 export function useSimpleGeocoder() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [results, setResults] = useState<GeocodingResult[]>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (query.length < 2) {
-      setDebouncedQuery("");
-      setResults([]);
-      return;
-    }
-    timerRef.current = setTimeout(() => setDebouncedQuery(query), 300);
+    timerRef.current = setTimeout(() => setDebouncedQuery(query.length < 2 ? "" : query), query.length < 2 ? 0 : 300);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [query]);
 
@@ -34,12 +28,10 @@ export function useSimpleGeocoder() {
     },
   );
 
-  useEffect(() => {
-    if (data?.results) setResults(data.results);
-  }, [data]);
+  const results = debouncedQuery.length >= 2 ? data?.results ?? [] : [];
 
   const search = useCallback((q: string) => setQuery(q), []);
-  const clear = useCallback(() => { setQuery(""); setDebouncedQuery(""); setResults([]); }, []);
+  const clear = useCallback(() => { setQuery(""); setDebouncedQuery(""); }, []);
 
   return { results, loading: isFetching, search, clear };
 }

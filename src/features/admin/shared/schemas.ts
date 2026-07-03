@@ -1,58 +1,5 @@
 import { z } from "zod";
 
-export const adminRequestsParamsSchema = z.object({
-  page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().positive().max(100).default(20),
-  status: z.enum(["EN_ATTENTE", "EN_COURS", "EN_PAUSE", "PROBLEME", "TERMINE", "ANNULEE"]).optional(),
-  search: z.string().optional(),
-});
-
-export const updateStatusInputSchema = z.object({
-  requestId: z.string().min(1),
-  status: z.enum(["EN_ATTENTE", "EN_COURS", "EN_PAUSE", "PROBLEME", "TERMINE", "ANNULEE"]),
-  problemType: z.enum(["DOUANE", "POLICE", "DOCUMENTATION", "RETARD_LOGISTIQUE", "PAIEMENT", "AUTRE"]).optional(),
-  title: z.string().min(2).max(160),
-  message: z.string().min(3).max(1200),
-});
-
-export const saveTrajectoryInputSchema = z.object({
-  requestId: z.string().min(1),
-  steps: z.array(
-    z.object({
-      countryId: z.string().min(1).optional(),
-      locationName: z.string().min(2).max(160),
-      stepType: z.enum(["ORIGIN", "ESCALE", "DESTINATION"]),
-      legMode: z.enum(["TRUCK", "PLANE", "BOAT"]).default("TRUCK"),
-      sequence: z.number().int().nonnegative(),
-      note: z.string().max(500).optional().or(z.literal("")),
-      timerDurationHours: z.number().int().positive().max(240).default(4),
-      latitude: z.number().optional(),
-      longitude: z.number().optional(),
-    }),
-  ).min(2),
-});
-
-export const updateRequestInputSchema = z.object({
-  requestId: z.string().min(1),
-  recipientName: z.string().min(1).optional(),
-  recipientPhone: z.string().optional(),
-  deliveryAddress: z.string().min(1).optional(),
-  city: z.string().optional().nullable(),
-  region: z.string().optional().nullable(),
-  originCountryId: z.string().optional().nullable(),
-  destinationCountryId: z.string().min(1).optional(),
-  transportMode: z.enum(["AVION", "BATEAU"]).optional(),
-  quantity: z.number().int().positive().optional(),
-  totalCostUsd: z.number().nonnegative().optional(),
-  adminNotes: z.string().optional().nullable(),
-  productNameSnapshot: z.string().optional(),
-  needsRectification: z.boolean().optional(),
-  customProductName: z.string().optional().nullable(),
-  customProductDesc: z.string().optional().nullable(),
-  customWeight: z.number().nonnegative().optional().nullable(),
-  customVolume: z.number().nonnegative().optional().nullable(),
-});
-
 export const definePaymentTermsInputSchema = z.object({
   requestId: z.string().min(1),
   paymentMethodIds: z.array(z.string().min(1)).min(1),
@@ -163,6 +110,40 @@ export const publishAllSiteContentInputSchema = z.object({
   section: z.string().optional(),
 });
 
+export const saveProductInputSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1).max(200),
+  slug: z.string().min(1).max(200),
+  shortDescription: z.string().max(700).optional().or(z.literal("")),
+  fullDescription: z.string().optional().or(z.literal("")),
+  imageUrl: z.string().optional().or(z.literal("")),
+  gallery: z.array(z.string().min(1)).default([]),
+  priceXaf: z.coerce.number().int().nonnegative().default(0),
+  likes: z.coerce.number().int().nonnegative().default(0),
+  features: z.array(z.string().min(1)).default([]),
+  isPublished: z.boolean().default(false),
+  sortOrder: z.coerce.number().int().default(0),
+});
+
+export const deleteProductInputSchema = z.object({
+  id: z.string().min(1),
+});
+
+export const saveProductTestimonialInputSchema = z.object({
+  id: z.string().optional(),
+  productId: z.string().min(1).optional().nullable(),
+  name: z.string().min(1).max(120),
+  advice: z.string().min(1).max(1200),
+  star: z.coerce.number().int().min(1).max(5),
+  showOnLanding: z.boolean().default(false),
+  isPublished: z.boolean().default(true),
+  sortOrder: z.coerce.number().int().default(0),
+});
+
+export const deleteProductTestimonialInputSchema = z.object({
+  id: z.string().min(1),
+});
+
 export const createPaymentMethodInputSchema = z.object({
   name: z.string().min(1).max(100),
   slug: z.string().min(1).max(100),
@@ -202,10 +183,6 @@ export const updateSettingsInputSchema = z.object({
   evolutionInstanceId: z.string().optional().nullable(),
 });
 
-export type AdminRequestsParams = z.infer<typeof adminRequestsParamsSchema>;
-export type UpdateStatusInput = z.infer<typeof updateStatusInputSchema>;
-export type SaveTrajectoryInput = z.infer<typeof saveTrajectoryInputSchema>;
-export type UpdateRequestInput = z.infer<typeof updateRequestInputSchema>;
 export type DefinePaymentTermsInput = z.infer<typeof definePaymentTermsInputSchema>;
 export type ReviewPaymentInput = z.infer<typeof reviewPaymentInputSchema>;
 export type ToggleUserInput = z.infer<typeof toggleUserInputSchema>;
@@ -217,6 +194,10 @@ export type SaveFreightRuleInput = z.infer<typeof saveFreightRuleInputSchema>;
 export type SaveSiteContentInput = z.infer<typeof saveSiteContentInputSchema>;
 export type PublishSiteContentInput = z.infer<typeof publishSiteContentInputSchema>;
 export type PublishAllSiteContentInput = z.infer<typeof publishAllSiteContentInputSchema>;
+export type SaveProductInput = z.infer<typeof saveProductInputSchema>;
+export type DeleteProductInput = z.infer<typeof deleteProductInputSchema>;
+export type SaveProductTestimonialInput = z.infer<typeof saveProductTestimonialInputSchema>;
+export type DeleteProductTestimonialInput = z.infer<typeof deleteProductTestimonialInputSchema>;
 export type CreatePaymentMethodInput = z.infer<typeof createPaymentMethodInputSchema>;
 export type UpdatePaymentMethodInput = z.infer<typeof updatePaymentMethodInputSchema>;
 export type SaveBlogPostInput = z.infer<typeof saveBlogPostInputSchema>;

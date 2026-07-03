@@ -1,6 +1,7 @@
 import { callAuraServer } from "@/aura/server/call";
 import Link from "next/link";
 import { Calendar, User, ArrowUpRight, BookOpen } from "lucide-react";
+import type { BlogPreviewContent } from "./types";
 
 interface BlogListItem {
   id: string;
@@ -15,7 +16,7 @@ interface BlogListItem {
   createdAt: string;
 }
 
-export async function BlogSection() {
+export async function BlogSection({ content }: { content: BlogPreviewContent }) {
   const { posts } = await callAuraServer<{ posts: BlogListItem[] }>({
     operationName: "blog.posts",
     source: "rsc",
@@ -30,13 +31,13 @@ export async function BlogSection() {
       <div className="relative z-[3] flex w-full max-w-[430px] flex-col items-center justify-center gap-16 px-5 min-[810px]:max-w-none min-[810px]:px-10 min-[1200px]:max-w-[1200px]">
         <div className="flex w-full max-w-[390px] flex-col items-center gap-5 text-center min-[810px]:max-w-[600px]">
           <span className="font-display text-sm font-semibold tracking-[-0.02em] text-amber-500">
-            Actualités & Conseils
+            {content.eyebrow}
           </span>
           <h2 className="font-display text-[38px] font-bold leading-[38px] tracking-[-1.9px] text-black min-[810px]:text-5xl min-[810px]:leading-[48px] min-[1200px]:text-[60px] min-[1200px]:leading-[60px]">
-            Dernières <span className="text-[#006fff]">publications</span>
+            {content.title} <span className="text-[#006fff]">{content.accent}</span>
           </h2>
           <p className="font-display text-[16px] leading-[22.4px] tracking-[-0.16px] text-black/60 min-[810px]:text-lg">
-            Suivez nos actualités, guides et conseils pour optimiser vos expéditions internationales.
+            {content.description}
           </p>
         </div>
 
@@ -88,7 +89,7 @@ export async function BlogSection() {
           href="/blog"
           className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#006fff] px-8 py-4 font-display text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
         >
-          Voir tous les articles <ArrowUpRight className="size-4" />
+          {content.cta} <ArrowUpRight className="size-4" />
         </Link>
       </div>
     </section>

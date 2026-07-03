@@ -16,8 +16,10 @@ import {
   ChevronUp,
   Clock,
   GripHorizontal,
+  Info,
   MapPin,
   MapPinned,
+  Navigation,
   Package,
   PauseCircle,
   Plane,
@@ -73,6 +75,20 @@ type DhlTrackingDrawerProps = {
   latestMessage: string | null;
   requestId: string;
   selectedStepId?: string | null;
+  /** Journey-specific reference info for the "Détails" tab */
+  customerName?: string;
+  recipientName?: string;
+  originName?: string;
+  destinationName?: string;
+  transportModeLabel?: string;
+  vehicleName?: string;
+  averageSpeed?: number | null;
+  speedUnit?: string | null;
+  completedDistanceKm?: number;
+  remainingDistanceKm?: number;
+  estimatedArrivalAt?: string | null;
+  completedCount?: number;
+  totalCount?: number;
 };
 
 type VehicleState = {
@@ -365,20 +381,31 @@ export function DhlTrackingDrawer({
   latestMessage,
   requestId,
   selectedStepId,
+  customerName,
+  recipientName,
+  originName,
+  destinationName,
+  transportModeLabel,
+  vehicleName,
+  averageSpeed,
+  speedUnit,
+  completedDistanceKm,
+  remainingDistanceKm,
+  estimatedArrivalAt,
+  completedCount,
+  totalCount,
 }: DhlTrackingDrawerProps) {
   const drawerId = useId();
   const stepsContainerRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<
-    "overview" | "history"
+    "overview" | "details" | "history"
   >("overview");
-  const [nowMs, setNowMs] = useState(0);
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
   useEffect(() => {
     if (!isOpen) return;
-
-    setNowMs(Date.now());
 
     const intervalId = window.setInterval(() => {
       setNowMs(Date.now());
@@ -856,6 +883,32 @@ export function DhlTrackingDrawer({
                   Itinéraire
                 </button>
 
+                {vehicleName ? (
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={
+                      activeTab === "details"
+                    }
+                    onClick={() =>
+                      setActiveTab("details")
+                    }
+                    className={cx(
+                      "inline-flex min-h-9 items-center gap-2 rounded-[11px] px-4 font-display text-[11px] font-semibold tracking-[-0.005em] outline-none transition-[background-color,color,box-shadow] focus-visible:ring-2 focus-visible:ring-[#0a192f]/18",
+                      activeTab === "details"
+                        ? "bg-white text-[#0a192f] shadow-[0_1px_2px_rgba(15,23,42,0.06),inset_0_1px_0_rgba(255,255,255,1)]"
+                        : "text-[#0a192f]/42 hover:text-[#0a192f]/70",
+                    )}
+                  >
+                    <Info
+                      className="size-3.5"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                    Détails
+                  </button>
+                ) : null}
+
                 <button
                   type="button"
                   role="tab"
@@ -1064,6 +1117,168 @@ export function DhlTrackingDrawer({
                       })}
                     </div>
                   )}
+                </div>
+              ) : activeTab === "details" ? (
+                <div
+                  role="tabpanel"
+                  className="mx-auto w-full max-w-[820px]"
+                >
+                  {/* Références et statistiques du voyage */}
+                  <div className="flex flex-col gap-5">
+                    {/* Informations de référence */}
+                    <div
+                      className="overflow-hidden rounded-[20px] border border-black/[0.07] bg-white/62 ring-1 ring-white/70 shadow-[0_1px_2px_rgba(15,23,42,0.035),inset_0_1px_0_rgba(255,255,255,0.88)]"
+                    >
+                      <div className="border-b border-black/[0.055] px-5 py-3.5">
+                        <span className="font-display text-[9px] font-bold uppercase tracking-[0.14em] text-[#0a192f]/32">
+                          Informations de référence
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-px bg-black/[0.045] min-[500px]:grid-cols-3">
+                        {customerName ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Client
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {customerName}
+                            </span>
+                          </div>
+                        ) : null}
+
+                        {recipientName ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Destinataire
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {recipientName}
+                            </span>
+                          </div>
+                        ) : null}
+
+                        {originName ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Départ
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {originName}
+                            </span>
+                          </div>
+                        ) : null}
+
+                        {destinationName ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Destination
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {destinationName}
+                            </span>
+                          </div>
+                        ) : null}
+
+                        {transportModeLabel ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Type de transport
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {transportModeLabel}
+                            </span>
+                          </div>
+                        ) : null}
+
+                        {vehicleName ? (
+                          <div className="bg-white/50 px-5 py-3.5">
+                            <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                              Véhicule
+                            </span>
+                            <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                              {vehicleName}
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    {/* Statistiques de trajet */}
+                    {(completedDistanceKm != null ||
+                      remainingDistanceKm != null ||
+                      averageSpeed != null ||
+                      estimatedArrivalAt != null ||
+                      completedCount != null) ? (
+                      <div
+                        className="overflow-hidden rounded-[20px] border border-black/[0.07] bg-white/62 ring-1 ring-white/70 shadow-[0_1px_2px_rgba(15,23,42,0.035),inset_0_1px_0_rgba(255,255,255,0.88)]"
+                      >
+                        <div className="border-b border-black/[0.055] px-5 py-3.5">
+                          <span className="font-display text-[9px] font-bold uppercase tracking-[0.14em] text-[#0a192f]/32">
+                            Statistiques de trajet
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-px bg-black/[0.045] min-[500px]:grid-cols-3">
+                          {completedDistanceKm != null ? (
+                            <div className="bg-white/50 px-5 py-3.5">
+                              <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                                Distance parcourue
+                              </span>
+                              <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                                {completedDistanceKm.toLocaleString("fr-FR")} km
+                              </span>
+                            </div>
+                          ) : null}
+
+                          {remainingDistanceKm != null ? (
+                            <div className="bg-white/50 px-5 py-3.5">
+                              <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                                Distance restante
+                              </span>
+                              <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                                {remainingDistanceKm.toLocaleString("fr-FR")} km
+                              </span>
+                            </div>
+                          ) : null}
+
+                          {averageSpeed != null ? (
+                            <div className="bg-white/50 px-5 py-3.5">
+                              <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                                Vitesse moyenne
+                              </span>
+                              <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                                {averageSpeed} {speedUnit ?? "km/h"}
+                              </span>
+                            </div>
+                          ) : null}
+
+                          {estimatedArrivalAt ? (
+                            <div className="bg-white/50 px-5 py-3.5">
+                              <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                                ETA finale
+                              </span>
+                              <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                                {formatDateTime(estimatedArrivalAt)}
+                              </span>
+                            </div>
+                          ) : null}
+
+                          {completedCount != null &&
+                          totalCount != null ? (
+                            <div className="bg-white/50 px-5 py-3.5">
+                              <span className="block font-display text-[9px] font-bold uppercase tracking-[0.12em] text-[#0a192f]/32">
+                                Étapes
+                              </span>
+                              <span className="mt-1 block font-display text-[13px] font-semibold tracking-[-0.015em] text-[#0a192f]">
+                                {completedCount} / {totalCount}
+                              </span>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               ) : (
                 <div

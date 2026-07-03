@@ -143,6 +143,7 @@ function buildCsp(nonce: string): string {
   const connectSources = [
     "'self'",
     "https://api.mapbox.com",
+    "https://*.tiles.mapbox.com",
     "https://events.mapbox.com",
   ];
 

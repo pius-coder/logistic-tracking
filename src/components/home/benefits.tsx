@@ -6,39 +6,36 @@ import {
   Globe,
   FileCheck,
 } from "lucide-react";
-import { USE_CASES } from "./landing-data";
+import type { BenefitsContent } from "./types";
 
 const VALUE_ICONS = {
-  "Notre mission": Target,
-  "Notre vision": Eye,
-  "Sécurité avant tout": Shield,
-  "Rapide et agile": Zap,
-  "Expertise mondiale": Globe,
-  "Dédouanement intégré": FileCheck,
+  mission: Target,
+  vision: Eye,
+  safety: Shield,
+  speed: Zap,
+  global: Globe,
+  customs: FileCheck,
 } as const;
 
-export function Benefits() {
+export function Benefits({ content }: { content: BenefitsContent }) {
   return (
     <section className="flex w-full flex-col items-center gap-[80px] px-5 pt-[100px] min-[810px]:gap-20 min-[810px]:px-10 min-[810px]:pt-[140px] min-[1200px]:pt-[180px]">
       <div className="flex w-full max-w-[600px] flex-col items-center gap-5 text-center">
         <span className="font-display text-sm font-semibold tracking-[-0.02em] text-yellow-400">
-          À propos de JC Import Express
+          {content.eyebrow}
         </span>
         <h2 className="font-display text-[38px] font-bold leading-none tracking-[-0.05em] min-[810px]:text-5xl min-[1200px]:text-[60px]">
-          Votre partenaire de confiance en{" "}
-          <span className="font-instrument font-normal italic">solutions logistiques</span>{" "}
-          mondiales.
+          {content.title}{" "}
+          <span className="font-instrument font-normal italic">{content.accent}</span>
         </h2>
         <p className="font-display text-base leading-[1.4] tracking-[-0.01em] text-[#0a192f]/65 min-[810px]:text-lg min-[1200px]:text-xl">
-          Fondée en 2010, JC Import Express est devenue un leader mondial de la
-          logistique. Notre réseau couvre plus de 150 pays, porté par une équipe de
-          5 000+ professionnels dédiés à vos marchandises.
+          {content.description}
         </p>
       </div>
 
       <div className="grid w-full max-w-[1200px] grid-cols-1 gap-5 min-[810px]:grid-cols-2 min-[1200px]:grid-cols-3">
-        {USE_CASES.map((item) => {
-          const Icon = VALUE_ICONS[item.title as keyof typeof VALUE_ICONS];
+        {content.items.map((item) => {
+          const Icon = VALUE_ICONS[item.icon as keyof typeof VALUE_ICONS] ?? Target;
 
           return (
         <div

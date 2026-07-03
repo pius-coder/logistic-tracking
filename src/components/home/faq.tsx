@@ -2,10 +2,10 @@
 
 import { useId, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { FAQS } from "./landing-data";
+import type { FaqContent } from "./types";
 
 type FaqItemProps = {
-  item: (typeof FAQS)[number];
+  item: FaqContent["items"][number];
   isOpen: boolean;
   onToggle: () => void;
 };
@@ -112,7 +112,7 @@ function FaqItem({ item, isOpen, onToggle }: FaqItemProps) {
   );
 }
 
-export function Faq() {
+export function Faq({ content }: { content: FaqContent }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -146,7 +146,7 @@ export function Faq() {
               shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)]
             "
           >
-            FAQ
+            {content.eyebrow}
           </span>
 
           <h2
@@ -158,7 +158,7 @@ export function Faq() {
               min-[1200px]:text-[64px]
             "
           >
-            Questions fréquentes
+            {content.title}
           </h2>
 
           <p
@@ -169,8 +169,7 @@ export function Faq() {
               min-[810px]:text-lg
             "
           >
-            Les réponses essentielles pour comprendre simplement nos services
-            logistiques.
+            {content.description}
           </p>
         </div>
 
@@ -183,7 +182,7 @@ export function Faq() {
             min-[810px]:mt-16 min-[810px]:gap-3.5 min-[810px]:p-3
           "
         >
-          {FAQS.map((item, index) => (
+          {content.items.map((item, index) => (
             <FaqItem
               key={item.question}
               item={item}

@@ -2,11 +2,86 @@ import "server-only";
 
 import { randomBytes } from "node:crypto";
 
+type SerializableJourneyStop = {
+  id: string;
+  placeName: string;
+  placeLabel: string | null;
+  mapboxPlaceId: string | null;
+  latitude: number;
+  longitude: number;
+  stopType: string;
+  sequence: number;
+  estimatedArrivalAt: Date | null;
+  reachedAt: Date | null;
+  note: string | null;
+};
+
+type SerializableJourneyEvent = {
+  id: string;
+  eventType: string;
+  title: string;
+  message: string;
+  visibleToCustomer: boolean;
+  createdAt: Date;
+};
+
+type SerializableJourney = {
+  id: string;
+  requestId: string;
+  publicToken: string;
+  vehicleName: string;
+  transportType: string;
+  status: string;
+  averageSpeed: number | null;
+  speedUnit: string | null;
+  publishedAt: Date | null;
+  startedAt: Date | null;
+  completedAt: Date | null;
+  latestMessage: string | null;
+  problemMessage: string | null;
+  updatedAt: Date;
+  request: {
+    requestNumber: string;
+    recipientName: string;
+    recipientPhone: string;
+    transportMode: "AVION" | "BATEAU";
+    productDescription: string;
+    packageWeightKg: number | null;
+    packageVolumeM3: number | null;
+    packageCount: number;
+    user: {
+      displayName: string | null;
+      businessName: string | null;
+      username: string;
+    };
+    originCountry: { id: string; name: string; iso2: string } | null;
+    destinationCountry: { id: string; name: string; iso2: string } | null;
+  };
+  stops: SerializableJourneyStop[];
+  events: SerializableJourneyEvent[];
+};
+
+type NotificationTransaction = {
+  jcNotification: {
+    create(args: {
+      data: {
+        userId: string;
+        requestId: string;
+        type: "GENERAL" | "TRAJECTORY_UPDATED" | "REQUEST_STATUS_UPDATED";
+        title: string;
+        message: string;
+        deepLink: string;
+        whatsappMessage: string;
+      };
+    }): Promise<unknown>;
+  };
+};
+
 export function createJourneyPublicToken() {
   return randomBytes(24).toString("base64url");
 }
 
-export function serializeJourney(journey: any, includePrivateEvents = false) {
+export function serializeJourney(journey: SerializableJourney, includePrivateEvents = false) {
   return {
     id: journey.id,
     requestId: journey.requestId,
@@ -17,6 +92,26 @@ export function serializeJourney(journey: any, includePrivateEvents = false) {
       journey.request.user.businessName ??
       journey.request.user.username,
     recipientName: journey.request.recipientName,
+    recipientPhone: journey.request.recipientPhone,
+    transportMode: journey.request.transportMode,
+    productDescription: journey.request.productDescription,
+    packageWeightKg: journey.request.packageWeightKg,
+    packageVolumeM3: journey.request.packageVolumeM3,
+    packageCount: journey.request.packageCount,
+    originCountry: journey.request.originCountry
+      ? {
+          id: journey.request.originCountry.id,
+          name: journey.request.originCountry.name,
+          iso2: journey.request.originCountry.iso2,
+        }
+      : null,
+    destinationCountry: journey.request.destinationCountry
+      ? {
+          id: journey.request.destinationCountry.id,
+          name: journey.request.destinationCountry.name,
+          iso2: journey.request.destinationCountry.iso2,
+        }
+      : null,
     vehicleName: journey.vehicleName,
     transportType: journey.transportType,
     status: journey.status,
@@ -56,7 +151,7 @@ export function serializeJourney(journey: any, includePrivateEvents = false) {
 }
 
 export async function createJourneyNotification(
-  tx: any,
+  tx: NotificationTransaction,
   options: {
     request: { id: string; userId: string; requestNumber: string };
     type: "GENERAL" | "TRAJECTORY_UPDATED" | "REQUEST_STATUS_UPDATED";
@@ -82,6 +177,8 @@ export const journeyInclude = {
   request: {
     include: {
       user: true,
+      originCountry: { select: { id: true, name: true, iso2: true } },
+      destinationCountry: { select: { id: true, name: true, iso2: true } },
     },
   },
   stops: {

@@ -106,12 +106,17 @@ export const updateJourneyEtaSchema = z.object({
 
 export const journeyIssueSchema = z.object({
   requestId: z.string().min(1),
+  title: z.string().trim().min(2).max(160).default("Incident signalé"),
+  problemType: z
+    .enum(["DOUANE", "POLICE", "DOCUMENTATION", "RETARD_LOGISTIQUE", "PAIEMENT", "AUTRE"])
+    .default("AUTRE"),
   message: z.string().trim().min(3).max(500),
 });
 
 export const journeyGeocodeSchema = z.object({
-  query: z.string().trim().min(2).max(160),
-  transportType: journeyTransportTypeSchema.optional(),
+  query: z.string().trim().max(160).default(""),
+  transportType: journeyTransportTypeSchema,
+  countryIso2: z.string().trim().length(2).optional().nullable(),
 });
 
 export type SaveJourneyPlanInput = z.infer<typeof saveJourneyPlanSchema>;

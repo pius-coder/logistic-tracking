@@ -70,6 +70,8 @@ export const ModelName = {
   AppSettings: 'AppSettings',
   SiteContent: 'SiteContent',
   BlogPost: 'BlogPost',
+  Product: 'Product',
+  ProductTestimonial: 'ProductTestimonial',
   AdminAccessKey: 'AdminAccessKey'
 } as const
 
@@ -98,6 +100,7 @@ export const AuraUserScalarFieldEnum = {
   sessionVersion: 'sessionVersion',
   username: 'username',
   email: 'email',
+  phone: 'phone',
   displayName: 'displayName',
   businessName: 'businessName',
   isAdmin: 'isAdmin',
@@ -431,6 +434,43 @@ export const BlogPostScalarFieldEnum = {
 } as const
 
 export type BlogPostScalarFieldEnum = (typeof BlogPostScalarFieldEnum)[keyof typeof BlogPostScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  slug: 'slug',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  fullDescription: 'fullDescription',
+  imageUrl: 'imageUrl',
+  gallery: 'gallery',
+  priceXaf: 'priceXaf',
+  likes: 'likes',
+  features: 'features',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
+  publishedAt: 'publishedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductTestimonialScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  productId: 'productId',
+  name: 'name',
+  advice: 'advice',
+  star: 'star',
+  showOnLanding: 'showOnLanding',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder'
+} as const
+
+export type ProductTestimonialScalarFieldEnum = (typeof ProductTestimonialScalarFieldEnum)[keyof typeof ProductTestimonialScalarFieldEnum]
 
 
 export const AdminAccessKeyScalarFieldEnum = {

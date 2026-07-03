@@ -37,6 +37,12 @@ export const adminPublishJourney = defineOperationFn("journey.adminPublish")
           latestMessage: "Le voyage est planifié et prêt à démarrer.",
         },
       });
+      await tx.request.update({
+        where: { id: journey.requestId },
+        data: {
+          latestStatusMessage: "Le trajet est planifié et prêt à démarrer.",
+        },
+      });
 
       await tx.journeyEvent.create({
         data: {

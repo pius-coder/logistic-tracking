@@ -118,9 +118,14 @@ function ErrorCard({ err }: { err: StoredError }) {
   );
 }
 
+function getInitialDebugKey() {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("key") ?? "";
+}
+
 export default function DebugErrorsPage() {
-  const [key, setKey] = useState("");
-  const [submittedKey, setSubmittedKey] = useState<string | null>(null);
+  const [key, setKey] = useState(getInitialDebugKey);
+  const [submittedKey, setSubmittedKey] = useState<string | null>(() => getInitialDebugKey() || null);
   const [errors, setErrors] = useState<StoredError[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -145,14 +150,10 @@ export default function DebugErrorsPage() {
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const k = params.get("key");
-    if (k) {
-      setKey(k);
-      setSubmittedKey(k);
-      fetchErrors(k);
-    }
-  }, [fetchErrors]);
+    if (!submittedKey) return;
+    const timeoutId = window.setTimeout(() => fetchErrors(submittedKey), 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [fetchErrors, submittedKey]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

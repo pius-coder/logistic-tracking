@@ -62,6 +62,20 @@ function computeGreatCircle(
   return result.geometry as GeoJSON.LineString;
 }
 
+function waitForRetry(signal: AbortSignal) {
+  return new Promise<void>((resolve) => {
+    const timeoutId = window.setTimeout(resolve, RETRY_DELAY_MS);
+    signal.addEventListener(
+      "abort",
+      () => {
+        window.clearTimeout(timeoutId);
+        resolve();
+      },
+      { once: true },
+    );
+  });
+}
+
 export function useMultiModalRoute({
   waypoints,
   legModes,
@@ -72,7 +86,6 @@ export function useMultiModalRoute({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastKeyRef = useRef<string>("");
 
   const key = `${refreshKey}|${waypoints
@@ -80,62 +93,65 @@ export function useMultiModalRoute({
     .join(";")}`;
 
   const compute = useCallback(
-    async (signal: AbortSignal, attempt = 0) => {
+    async (signal: AbortSignal) => {
       setLoading(true);
       setError(null);
 
       try {
-        if (waypoints.length < 2) {
-          setLegs([]);
-          return;
-        }
+        for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
+          try {
+            if (waypoints.length < 2) {
+              setLegs([]);
+              return;
+            }
 
-        const result: RouteLeg[] = [];
-        const count = Math.min(waypoints.length - 1, legModes.length);
+            const result: RouteLeg[] = [];
+            const count = Math.min(waypoints.length - 1, legModes.length);
 
-        for (let i = 0; i < count; i++) {
-          const from = waypoints[i];
-          const to = waypoints[i + 1];
-          const mode = legModes[i] || "TRUCK";
+            for (let i = 0; i < count; i++) {
+              const from = waypoints[i];
+              const to = waypoints[i + 1];
+              const mode = legModes[i] || "TRUCK";
 
-          if (signal.aborted) return;
+              if (signal.aborted) return;
 
-          let geometry: GeoJSON.LineString;
+              let geometry: GeoJSON.LineString;
 
-          if (mode === "TRUCK") {
-            geometry = await fetchTruckRoute(from, to, mapboxToken, signal);
-          } else if (mode === "PLANE") {
-            geometry = computeGreatCircle(from, to, 100);
-          } else {
-            geometry = computeGreatCircle(from, to, 80);
+              if (mode === "TRUCK") {
+                geometry = await fetchTruckRoute(from, to, mapboxToken, signal);
+              } else if (mode === "PLANE") {
+                geometry = computeGreatCircle(from, to, 100);
+              } else {
+                geometry = computeGreatCircle(from, to, 80);
+              }
+
+              result.push({ fromIndex: i, geometry, legMode: mode });
+            }
+
+            if (signal.aborted) return;
+            setLegs(result);
+            setError(null);
+            return;
+          } catch (err) {
+            if (signal.aborted) return;
+
+            if (attempt < MAX_RETRIES) {
+              await waitForRetry(signal);
+              continue;
+            }
+
+            const fallback: RouteLeg[] = [];
+            for (let i = 0; i < waypoints.length - 1; i++) {
+              fallback.push({
+                fromIndex: i,
+                geometry: buildStraightLine(waypoints[i], waypoints[i + 1]),
+                legMode: legModes[i] || "TRUCK",
+              });
+            }
+            setLegs(fallback);
+            setError(err instanceof Error ? err.message : "Route error");
           }
-
-          result.push({ fromIndex: i, geometry, legMode: mode });
         }
-
-        if (signal.aborted) return;
-        setLegs(result);
-        setError(null);
-      } catch (err) {
-        if (signal.aborted) return;
-
-        if (attempt < MAX_RETRIES) {
-          retryTimerRef.current = setTimeout(() => {
-            if (!signal.aborted) compute(signal, attempt + 1);
-          }, RETRY_DELAY_MS);
-          return;
-        }
-
-        const fallback: RouteLeg[] = [];
-        for (let i = 0; i < waypoints.length - 1; i++) {
-          fallback.push({
-            fromIndex: i,
-            geometry: buildStraightLine(waypoints[i], waypoints[i + 1]),
-            legMode: legModes[i] || "TRUCK",
-          });
-        }
-        setLegs(fallback);
-        setError(err instanceof Error ? err.message : "Route error");
       } finally {
         if (!signal.aborted) setLoading(false);
       }
@@ -146,17 +162,18 @@ export function useMultiModalRoute({
 
   useEffect(() => {
     if (waypoints.length < 2) {
-      setLegs([]);
-      setError(null);
-      lastKeyRef.current = "";
-      return;
+      const timeoutId = window.setTimeout(() => {
+        setLegs([]);
+        setError(null);
+        lastKeyRef.current = "";
+      }, 0);
+      return () => window.clearTimeout(timeoutId);
     }
 
     if (key === lastKeyRef.current) return;
     lastKeyRef.current = key;
 
     abortRef.current?.abort();
-    if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -165,7 +182,6 @@ export function useMultiModalRoute({
 
     return () => {
       controller.abort();
-      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
     };
   }, [key, compute, waypoints.length]);
 
