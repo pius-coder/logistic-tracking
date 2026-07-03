@@ -34,7 +34,7 @@ const ICONS: Record<string, ElementType> = {
 };
 
 function iconFor(key: string | undefined, fallback: ElementType): ElementType {
-  return key ? ICONS[key] ?? fallback : fallback;
+  return key ? (ICONS[key] ?? fallback) : fallback;
 }
 
 type ServiceCardProps = {
@@ -291,7 +291,11 @@ function StatCard({
   );
 }
 
-function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["trackingSteps"] }) {
+function TrackingSection({
+  steps: allSteps,
+}: {
+  steps: FeaturesContent["trackingSteps"];
+}) {
   const steps = allSteps.filter((s) => s.label !== "Colis ramassé");
   return (
     <div
@@ -345,8 +349,9 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
           </h3>
 
           <p className="mt-5 max-w-[510px] font-display text-[14px] leading-[1.72] tracking-[-0.012em] text-[#334155]/65 min-[810px]:text-[15px]">
-            Consultez la position actuelle de votre colis, les étapes déjà franchies
-            et l&apos;estimation de livraison depuis une interface unique.
+            Consultez la position actuelle de votre colis, les étapes déjà
+            franchies et l&apos;estimation de livraison depuis une interface
+            unique.
           </p>
         </div>
 
@@ -390,7 +395,11 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
           <div className="flex flex-col gap-4 border-b border-black/[0.065] px-5 py-5 min-[520px]:flex-row min-[520px]:items-center min-[520px]:justify-between">
             <div className="flex items-center gap-3.5">
               <div className="flex size-11 shrink-0 items-center justify-center rounded-[15px] border border-black/[0.06] bg-white text-[#0a192f] ring-1 ring-white shadow-[0_1px_2px_rgba(15,23,42,0.05),0_8px_18px_-13px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,1)]">
-                <Package className="size-5" strokeWidth={1.6} aria-hidden="true" />
+                <Package
+                  className="size-5"
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
               </div>
 
               <div className="flex flex-col gap-0.5">
@@ -415,35 +424,32 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
             <div className="flex flex-col">
               {steps.map((step, index) => {
                 const isLast = index === steps.length - 1;
-                const isCurrent =
-                  step.done &&
-                  !steps[index + 1]?.done;
+                const isCurrent = step.done && !steps[index + 1]?.done;
 
                 return (
                   <div
                     key={step.label}
-                    className={`relative flex gap-4 ${!isLast ? "pb-6" : ""
-                      }`}
+                    className={`relative flex gap-4 ${!isLast ? "pb-6" : ""}`}
                   >
                     <div className="relative flex w-5 shrink-0 justify-center">
                       {!isLast ? (
                         <span
                           aria-hidden="true"
-                          className={`absolute left-1/2 top-[17px] h-[calc(100%+7px)] w-px -translate-x-1/2 ${step.done
-                              ? "bg-[#0a192f]/20"
-                              : "bg-black/[0.085]"
-                            }`}
+                          className={`absolute left-1/2 top-[17px] h-[calc(100%+7px)] w-px -translate-x-1/2 ${
+                            step.done ? "bg-[#0a192f]/20" : "bg-black/[0.085]"
+                          }`}
                         />
                       ) : null}
 
                       <span
                         aria-hidden="true"
-                        className={`relative z-10 mt-[3px] flex size-[13px] items-center justify-center rounded-full ${step.done
+                        className={`relative z-10 mt-[3px] flex size-[13px] items-center justify-center rounded-full ${
+                          step.done
                             ? isCurrent
                               ? "bg-[#0a192f] shadow-[0_0_0_4px_rgba(10,25,47,0.09),0_2px_5px_rgba(10,25,47,0.22)]"
                               : "bg-[#0a192f] shadow-[0_0_0_3px_rgba(10,25,47,0.07)]"
                             : "border-2 border-black/[0.12] bg-[#f8f7f3]"
-                          }`}
+                        }`}
                       >
                         {step.done && !isCurrent ? (
                           <span className="size-[3px] rounded-full bg-white/80" />
@@ -454,10 +460,11 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
                     <div className="flex min-w-0 flex-1 items-start justify-between gap-4">
                       <div className="flex min-w-0 flex-col gap-1">
                         <span
-                          className={`font-display text-[13px] leading-[18px] tracking-[-0.012em] ${step.done
+                          className={`font-display text-[13px] leading-[18px] tracking-[-0.012em] ${
+                            step.done
                               ? "font-semibold text-[#0a192f]"
                               : "font-medium text-[#0a192f]/45"
-                            }`}
+                          }`}
                         >
                           {step.label}
                         </span>
@@ -470,10 +477,9 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
                       </div>
 
                       <span
-                        className={`shrink-0 pt-px text-right font-display text-[11px] leading-[15px] ${step.done
-                            ? "text-[#0a192f]/38"
-                            : "text-[#0a192f]/30"
-                          }`}
+                        className={`shrink-0 pt-px text-right font-display text-[11px] leading-[15px] ${
+                          step.done ? "text-[#0a192f]/38" : "text-[#0a192f]/30"
+                        }`}
                       >
                         {step.time}
                       </span>
@@ -483,7 +489,6 @@ function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["tracking
               })}
             </div>
           </div>
-
         </div>
       </div>
       <div
@@ -750,8 +755,6 @@ function ContactCta() {
           min-[810px]:items-start
         "
       >
-
-
         <h3
           className="
             max-w-[620px] font-display
@@ -794,7 +797,7 @@ function ContactCta() {
               strokeWidth={1.7}
               aria-hidden="true"
             />
-            Shenzhen, China
+            Shanghai, China
           </span>
 
           <div
@@ -867,7 +870,6 @@ function ContactCta() {
           "
         >
           Obtenir un devis
-
           <ChevronRight
             className="
               size-4 transition-transform duration-200
@@ -960,9 +962,7 @@ export function Features({
             "
           >
             {content.title}
-            <span className="block text-[#0a192f]/48">
-              {content.accent}
-            </span>
+            <span className="block text-[#0a192f]/48">{content.accent}</span>
           </h2>
 
           <p
@@ -988,7 +988,11 @@ export function Features({
           "
         >
           {content.stats.map((stat) => (
-            <StatCard key={stat.label} {...stat} icon={iconFor(stat.icon, Globe)} />
+            <StatCard
+              key={stat.label}
+              {...stat}
+              icon={iconFor(stat.icon, Globe)}
+            />
           ))}
         </div>
 

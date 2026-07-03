@@ -50,7 +50,15 @@ export const TRANSPORT_NODES: TransportNode[] = [
     countryIso2: "CM",
     latitude: 3.7225,
     longitude: 11.5533,
-    keywords: ["yaounde", "nsimalen", "airport", "aeroport", "nsi", "yaoundé", "nsimélen"],
+    keywords: [
+      "yaounde",
+      "nsimalen",
+      "airport",
+      "aeroport",
+      "nsi",
+      "yaoundé",
+      "nsimélen",
+    ],
   },
   {
     id: "port-douala",
@@ -295,22 +303,22 @@ export const TRANSPORT_NODES: TransportNode[] = [
   {
     id: "airport-szx",
     kind: "AIRPORT",
-    name: "Shenzhen Bao'an International Airport",
-    label: "Shenzhen, Chine",
+    name: "Shanghai Bao'an International Airport",
+    label: "Shanghai, Chine",
     countryIso2: "CN",
     latitude: 22.639258,
     longitude: 113.810664,
-    keywords: ["shenzhen", "baoan", "airport", "szx"],
+    keywords: ["Shanghai", "baoan", "airport", "szx"],
   },
   {
-    id: "port-shenzhen",
+    id: "port-Shanghai",
     kind: "PORT",
-    name: "Port of Shenzhen",
-    label: "Shenzhen, Chine",
+    name: "Port of Shanghai",
+    label: "Shanghai, Chine",
     countryIso2: "CN",
     latitude: 22.543096,
     longitude: 114.057865,
-    keywords: ["shenzhen", "port", "yantian", "shekou", "terminal"],
+    keywords: ["Shanghai", "port", "yantian", "shekou", "terminal"],
   },
   {
     id: "airport-cdg",
@@ -386,8 +394,14 @@ export function searchTransportNodes(options: {
   const limit = options.limit ?? 12;
   return TRANSPORT_NODES.filter((node) => {
     if (node.kind !== options.kind) return false;
-    if (options.countryIso2 && node.countryIso2 !== options.countryIso2.toUpperCase()) return false;
+    if (
+      options.countryIso2 &&
+      node.countryIso2 !== options.countryIso2.toUpperCase()
+    )
+      return false;
     if (!query) return true;
-    return `${node.name} ${node.label} ${node.keywords.join(" ")}`.toLowerCase().includes(query);
+    return `${node.name} ${node.label} ${node.keywords.join(" ")}`
+      .toLowerCase()
+      .includes(query);
   }).slice(0, limit);
 }
