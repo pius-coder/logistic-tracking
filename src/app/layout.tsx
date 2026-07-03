@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { AppLayout } from "@/components/layout/AppLayout";
+
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo/StructuredData";
 import { BASE_URL } from "@/lib/metadata";
 import { cn } from "@/lib/utils";

@@ -1,29 +1,35 @@
 import "server-only";
 
-import { filesystemDriver } from "./filesystem";
 import { s3Driver } from "./s3";
-import type { AuraStorage, AuraStorageDriver } from "./types";
+import { cloudinaryDriver } from "./cloudinary";
+import type { AuraStorageDriver, AuraStorage } from "./types";
 
 const drivers = new Map<string, AuraStorageDriver>();
 
-drivers.set(filesystemDriver.name, filesystemDriver);
 drivers.set(s3Driver.name, s3Driver);
+drivers.set(cloudinaryDriver.name, cloudinaryDriver);
 
 export function registerStorageDriver(driver: AuraStorageDriver): void {
   drivers.set(driver.name, driver);
 }
 
-export function getStorageDriver(name?: string): AuraStorageDriver {
+export async function getStorageDriver(name?: string): Promise<AuraStorageDriver> {
   const driverName = name || process.env.AURA_STORAGE_DRIVER || "filesystem";
-  const driver = drivers.get(driverName);
+  let driver = drivers.get(driverName);
   if (!driver) {
-    throw new Error(`[aura] Storage driver not found: ${driverName}`);
+    if (driverName === "filesystem") {
+      const { filesystemDriver } = await import("./filesystem");
+      registerStorageDriver(filesystemDriver);
+      driver = filesystemDriver;
+    } else {
+      throw new Error(`[aura] Storage driver not found: ${driverName}`);
+    }
   }
   return driver;
 }
 
-export function createAuraStorage(): AuraStorage {
-  const driver = getStorageDriver();
+export async function createAuraStorage(): Promise<AuraStorage> {
+  const driver = await getStorageDriver();
 
   return {
     async upload(args) {

@@ -42,6 +42,7 @@ export const trackingShipmentsParamsSchema = z.object({
 });
 
 const clientInputSchema = z.object({
+  userId: z.string().optional(),
   clientName: z.string().trim().min(2).max(120),
   clientPhone: z.string().trim().min(5).max(40),
   clientEmail: optionalString(160),
@@ -51,13 +52,12 @@ const clientInputSchema = z.object({
 const shipmentDetailsInputSchema = z.object({
   originCountryId: optionalString(80),
   destinationCountryId: z.string().min(1),
-  recipientName: z.string().trim().min(2).max(120),
-  recipientPhone: z.string().trim().min(5).max(40),
-  deliveryAddress: z.string().trim().min(5).max(400),
+  recipientName: optionalString(120),
+  recipientPhone: optionalString(40),
+  deliveryAddress: optionalString(400),
   city: optionalString(120),
   region: optionalString(120),
   packageWeightKg: optionalPositiveNumber,
-  packageVolumeM3: optionalPositiveNumber,
   packageCount: z.coerce.number().int().positive().max(999).default(1),
   productDescription: z.string().trim().min(2).max(1200),
   transportMode: trackingTransportModeSchema,

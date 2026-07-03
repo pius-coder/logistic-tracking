@@ -256,7 +256,6 @@ export const RequestScalarFieldEnum = {
   city: 'city',
   region: 'region',
   packageWeightKg: 'packageWeightKg',
-  packageVolumeM3: 'packageVolumeM3',
   packageCount: 'packageCount',
   productDescription: 'productDescription',
   transportMode: 'transportMode',

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAuraQuery, useAuraMutation } from "@/aura/client/hooks";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 import { Bell, ArrowUpRight, Package, CheckCircle2, Truck, AlertTriangle } from "lucide-react";
 

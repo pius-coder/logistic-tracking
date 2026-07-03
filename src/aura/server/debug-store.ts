@@ -18,7 +18,8 @@ const buffer: StoredError[] = [];
 
 let counter = 0;
 
-function hashDigest(err: unknown): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function hashDigest(_err: unknown): string {
   counter++;
   return `aura_${counter}_${Date.now().toString(36)}`;
 }

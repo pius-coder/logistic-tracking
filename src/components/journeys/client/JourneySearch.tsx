@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Loader2, PackageSearch } from "lucide-react";
 import { useAuraQuery } from "@/aura/client";
 
-export function JourneySearch() {
+export function JourneySearch({ initialTracking }: { initialTracking?: string }) {
   const router = useRouter();
-  const [input, setInput] = useState("");
-  const [submitted, setSubmitted] = useState("");
+  const [input, setInput] = useState(initialTracking ?? "");
+  const [submitted, setSubmitted] = useState(initialTracking?.toUpperCase() ?? "");
 
   const { data, isFetching, isFetched } = useAuraQuery<{
     publicToken: string;

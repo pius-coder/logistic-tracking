@@ -18,10 +18,7 @@ import {
   AuraClientError,
 } from "./transport";
 import { useAuraBroadcast } from "./provider";
-import {
-  setManifestEntities,
-  getOperationEntities,
-} from "./manifest-cache";
+import { getOperationEntities } from "./manifest-cache";
 import { auraQueryKey, type AuraQueryKey } from "@/aura/shared/query-key";
 
 export { auraQueryKey };

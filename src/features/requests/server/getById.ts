@@ -61,7 +61,6 @@ export const requestsGetById = defineOperationFn("requests.getById")
       customProductName: null,
       customProductDesc: null,
       customWeight: request.packageWeightKg,
-      customVolume: request.packageVolumeM3,
       user: {
         id: request.user.id,
         displayName: request.user.displayName,

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { ElementType } from "react";
 import {
   Award,
@@ -290,7 +291,8 @@ function StatCard({
   );
 }
 
-function TrackingSection({ steps }: { steps: FeaturesContent["trackingSteps"] }) {
+function TrackingSection({ steps: allSteps }: { steps: FeaturesContent["trackingSteps"] }) {
+  const steps = allSteps.filter((s) => s.label !== "Colis ramassé");
   return (
     <div
       className="
@@ -482,16 +484,6 @@ function TrackingSection({ steps }: { steps: FeaturesContent["trackingSteps"] })
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="flex items-center justify-between gap-4 border-t border-black/[0.06] bg-white/45 px-5 py-4">
-            <span className="font-display text-[11px] font-medium text-[#0a192f]/38">
-              Dernière synchronisation
-            </span>
-
-            <span className="font-display text-[11px] font-semibold text-[#0a192f]/55">
-              Aujourd&apos;hui · 14:42
-            </span>
-          </div>
         </div>
       </div>
       <div
@@ -511,11 +503,12 @@ function TrackingSection({ steps }: { steps: FeaturesContent["trackingSteps"] })
           min-[810px]:w-1/2
         "
       >
-        <img
+        <Image
           src="/images/tracking-map.jpg"
           alt="Carte de suivi logistique en temps réel"
+          fill
           className="
-            block size-full object-cover
+            object-cover
             saturate-[0.72] contrast-[0.96]
           "
         />
@@ -801,7 +794,7 @@ function ContactCta() {
               strokeWidth={1.7}
               aria-hidden="true"
             />
-            Wyoming, États-Unis
+            Shenzhen, China
           </span>
 
           <div

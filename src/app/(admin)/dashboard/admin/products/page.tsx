@@ -15,6 +15,7 @@ import type {
   SaveProductInput,
   SaveProductTestimonialInput,
 } from "@/features/admin/shared/schemas";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 
 interface AdminProduct {
@@ -197,10 +198,12 @@ export default function AdminProductsPage() {
                 <Label>Description complète</Label>
                 <Textarea value={productForm.fullDescription ?? ""} onChange={(event) => setProductForm((current) => ({ ...current, fullDescription: event.target.value }))} rows={6} />
               </div>
-              <div className="space-y-2">
-                <Label>Image principale</Label>
-                <Input value={productForm.imageUrl ?? ""} onChange={(event) => setProductForm((current) => ({ ...current, imageUrl: event.target.value }))} placeholder="/images/warehouse.jpg" />
-              </div>
+              <ImageUpload
+                value={productForm.imageUrl ?? ""}
+                onChange={(url) => setProductForm((current) => ({ ...current, imageUrl: url }))}
+                label="Image principale"
+                placeholder="Cliquez pour sélectionner une image"
+              />
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Galerie (une URL par ligne)</Label>

@@ -1,21 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { runAuraCron } from "@/aura/server/cron";
-import { v4 as uuidv4 } from "uuid";
-
-function jsonError(args: { code: string; message: string; status: number }) {
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: args.code,
-        message: args.message,
-        status: args.status,
-        requestId: uuidv4(),
-      },
-    },
-    { status: args.status },
-  );
-}
+import { jsonError } from "@/aura/server/transport/route-error";
 
 function verifyInternalSecret(request: NextRequest): boolean {
   const secret = process.env.AURA_INTERNAL_SECRET;

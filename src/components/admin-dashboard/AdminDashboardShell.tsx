@@ -41,7 +41,6 @@ interface DashboardShipment {
   transportMode: "AVION" | "BATEAU";
   productDescription: string;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   user: { label: string };
   destinationCountry: { name: string } | null;
   journey: { status: string; vehicleName: string } | null;
@@ -228,8 +227,7 @@ function ShipmentRow({
         </p>
         {!compact ? (
           <p className="mt-0.5 truncate text-xs text-muted-foreground">
-            {shipment.productDescription || "Colis"} · {shipment.packageWeightKg ?? "-"} kg ·{" "}
-            {shipment.packageVolumeM3 ?? "-"} m³
+            {shipment.productDescription || "Colis"} · {shipment.packageWeightKg ?? "-"} kg
           </p>
         ) : null}
       </div>

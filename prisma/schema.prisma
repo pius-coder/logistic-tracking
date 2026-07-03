@@ -255,7 +255,6 @@ model Request {
   city                      String?
   region                    String?
   packageWeightKg           Float?
-  packageVolumeM3           Float?
   packageCount              Int                 @default(1)
   productDescription        String              @default("")
   transportMode             TransportMode

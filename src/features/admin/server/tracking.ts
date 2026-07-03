@@ -125,7 +125,6 @@ type ShipmentRecord = {
   city: string | null;
   region: string | null;
   packageWeightKg: number | null;
-  packageVolumeM3: number | null;
   packageCount: number;
   productDescription: string;
   customerNotes: string | null;
@@ -211,7 +210,6 @@ function serializeShipment(request: ShipmentRecord) {
     city: request.city,
     region: request.region,
     packageWeightKg: request.packageWeightKg,
-    packageVolumeM3: request.packageVolumeM3,
     packageCount: request.packageCount,
     productDescription: request.productDescription,
     customerNotes: request.customerNotes,
@@ -406,32 +404,49 @@ export const adminCreateShipment = defineOperationFn("admin.createShipment")
     const originCountryId = cleanNullableString(input.originCountryId);
     const clientCountryId = originCountryId ?? input.destinationCountryId;
 
-    if (clientEmail) {
-      const existingEmailUser = await ctx.db.auraUser.findUnique({
-        where: { email: clientEmail },
-        select: { id: true },
+    let userId: string;
+    let createdUser: { username?: string; temporaryPassword?: string; displayName: string | null; phone: string | null; email: string | null } | null = null;
+
+    if (input.userId) {
+      const existingUser = await ctx.db.auraUser.findUnique({
+        where: { id: input.userId },
+        select: { id: true, displayName: true, phone: true, email: true, username: true },
       });
-      if (existingEmailUser) {
-        throw new AuraError("BAD_REQUEST", "Un client utilise déjà cet email.");
+      if (!existingUser) {
+        throw new AuraError("NOT_FOUND", "Client introuvable.");
       }
-    }
+      userId = existingUser.id;
+      createdUser = {
+        displayName: existingUser.displayName,
+        phone: existingUser.phone,
+        email: existingUser.email,
+      };
+    } else {
+      if (clientEmail) {
+        const existingEmailUser = await ctx.db.auraUser.findUnique({
+          where: { email: clientEmail },
+          select: { id: true },
+        });
+        if (existingEmailUser) {
+          throw new AuraError("BAD_REQUEST", "Un client utilise déjà cet email.");
+        }
+      }
 
-    const usernameBase = makeUsernameBase(input.clientName, input.clientPhone);
-    let username = usernameBase;
-    for (let attempt = 0; attempt < 25; attempt += 1) {
-      const existingUsername = await ctx.db.auraUser.findUnique({
-        where: { username },
-        select: { id: true },
-      });
-      if (!existingUsername) break;
-      username = `${usernameBase.slice(0, 43)}-${attempt + 2}`;
-    }
+      const usernameBase = makeUsernameBase(input.clientName, input.clientPhone);
+      let username = usernameBase;
+      for (let attempt = 0; attempt < 25; attempt += 1) {
+        const existingUsername = await ctx.db.auraUser.findUnique({
+          where: { username },
+          select: { id: true },
+        });
+        if (!existingUsername) break;
+        username = `${usernameBase.slice(0, 43)}-${attempt + 2}`;
+      }
 
-    const temporaryPassword = makeTemporaryPassword();
-    const passwordHash = await hashPassword(temporaryPassword);
+      const temporaryPassword = makeTemporaryPassword();
+      const passwordHash = await hashPassword(temporaryPassword);
 
-    const result = await ctx.db.$transaction(async (tx) => {
-      const user = await tx.auraUser.create({
+      const newUser = await ctx.db.auraUser.create({
         data: {
           username,
           displayName: input.clientName,
@@ -455,63 +470,69 @@ export const adminCreateShipment = defineOperationFn("admin.createShipment")
         },
       });
 
-      const request = await tx.request.create({
-        data: {
-          requestNumber: makeRequestNumber(),
-          type: "SHIPMENT",
-          userId: user.id,
-          originCountryId,
-          destinationCountryId: input.destinationCountryId,
-          recipientName: input.recipientName,
-          recipientPhone: input.recipientPhone,
-          deliveryAddress: input.deliveryAddress,
-          city: cleanNullableString(input.city),
-          region: cleanNullableString(input.region),
-          packageWeightKg: input.packageWeightKg ?? null,
-          packageVolumeM3: input.packageVolumeM3 ?? null,
-          packageCount: input.packageCount,
-          productDescription: input.productDescription,
-          transportMode: input.transportMode,
-          customerNotes: cleanNullableString(input.customerNotes),
-          adminNotes: cleanNullableString(input.adminNotes),
-          status: "EN_ATTENTE",
-          latestStatusMessage: "Colis créé. Le trajet doit être préparé par l'administrateur.",
-          statusEvents: {
-            create: {
-              status: "EN_ATTENTE",
-              title: "Colis créé",
-              message: "Le colis a été enregistré et attend la configuration du trajet.",
-              createdByLabel: "Administrateur",
-            },
-          },
-          jcNotifications: {
-            create: {
-              userId: user.id,
-              type: "REQUEST_CREATED",
-              title: "Colis enregistré",
-              message: "Votre colis a été créé. Le trajet sera disponible après planification.",
-              deepLink: "/voyage",
-            },
-          },
-        },
-        select: {
-          id: true,
-          requestNumber: true,
-        },
-      });
+      userId = newUser.id;
+      createdUser = {
+        username: newUser.username,
+        temporaryPassword,
+        displayName: newUser.displayName,
+        phone: newUser.phone,
+        email: newUser.email,
+      };
+    }
 
-      return { user, request };
+    const request = await ctx.db.request.create({
+      data: {
+        requestNumber: makeRequestNumber(),
+        type: "SHIPMENT",
+        userId,
+        originCountryId,
+        destinationCountryId: input.destinationCountryId,
+        recipientName: input.recipientName ?? "",
+        recipientPhone: input.recipientPhone ?? "",
+        deliveryAddress: input.deliveryAddress ?? "",
+        city: cleanNullableString(input.city),
+        region: cleanNullableString(input.region),
+        packageWeightKg: input.packageWeightKg ?? null,
+        packageCount: input.packageCount,
+        productDescription: input.productDescription,
+        transportMode: input.transportMode,
+        customerNotes: cleanNullableString(input.customerNotes),
+        adminNotes: cleanNullableString(input.adminNotes),
+        status: "EN_ATTENTE",
+        latestStatusMessage: "Colis créé. Le trajet doit être préparé par l'administrateur.",
+        statusEvents: {
+          create: {
+            status: "EN_ATTENTE",
+            title: "Colis créé",
+            message: "Le colis a été enregistré et attend la configuration du trajet.",
+            createdByLabel: "Administrateur",
+          },
+        },
+        jcNotifications: {
+          create: {
+            userId,
+            type: "REQUEST_CREATED",
+            title: "Colis enregistré",
+            message: "Votre colis a été créé. Le trajet sera disponible après planification.",
+            deepLink: "/voyage",
+          },
+        },
+      },
+      select: {
+        id: true,
+        requestNumber: true,
+      },
     });
 
     return {
-      id: result.request.id,
-      requestNumber: result.request.requestNumber,
+      id: request.id,
+      requestNumber: request.requestNumber,
       client: {
-        username: result.user.username,
-        temporaryPassword,
-        displayName: result.user.displayName,
-        phone: result.user.phone,
-        email: result.user.email,
+        username: createdUser?.username ?? null,
+        temporaryPassword: createdUser?.temporaryPassword ?? null,
+        displayName: createdUser?.displayName ?? null,
+        phone: createdUser?.phone ?? null,
+        email: createdUser?.email ?? null,
       },
     };
   });
@@ -541,13 +562,12 @@ export const adminUpdateShipment = defineOperationFn("admin.updateShipment")
     const data: RequestUncheckedUpdateInput = {};
     if (input.originCountryId !== undefined) data.originCountryId = cleanNullableString(input.originCountryId);
     if (input.destinationCountryId !== undefined) data.destinationCountryId = input.destinationCountryId;
-    if (input.recipientName !== undefined) data.recipientName = input.recipientName;
-    if (input.recipientPhone !== undefined) data.recipientPhone = input.recipientPhone;
-    if (input.deliveryAddress !== undefined) data.deliveryAddress = input.deliveryAddress;
+    if (input.recipientName !== undefined) data.recipientName = cleanNullableString(input.recipientName) ?? "";
+    if (input.recipientPhone !== undefined) data.recipientPhone = cleanNullableString(input.recipientPhone) ?? "";
+    if (input.deliveryAddress !== undefined) data.deliveryAddress = cleanNullableString(input.deliveryAddress) ?? "";
     if (input.city !== undefined) data.city = cleanNullableString(input.city);
     if (input.region !== undefined) data.region = cleanNullableString(input.region);
     if (input.packageWeightKg !== undefined) data.packageWeightKg = input.packageWeightKg ?? null;
-    if (input.packageVolumeM3 !== undefined) data.packageVolumeM3 = input.packageVolumeM3 ?? null;
     if (input.packageCount !== undefined) data.packageCount = input.packageCount;
     if (input.productDescription !== undefined) data.productDescription = input.productDescription;
     if (input.transportMode !== undefined) data.transportMode = input.transportMode;

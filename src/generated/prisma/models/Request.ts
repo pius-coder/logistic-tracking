@@ -28,13 +28,11 @@ export type AggregateRequest = {
 
 export type RequestAvgAggregateOutputType = {
   packageWeightKg: number | null
-  packageVolumeM3: number | null
   packageCount: number | null
 }
 
 export type RequestSumAggregateOutputType = {
   packageWeightKg: number | null
-  packageVolumeM3: number | null
   packageCount: number | null
 }
 
@@ -53,7 +51,6 @@ export type RequestMinAggregateOutputType = {
   city: string | null
   region: string | null
   packageWeightKg: number | null
-  packageVolumeM3: number | null
   packageCount: number | null
   productDescription: string | null
   transportMode: $Enums.TransportMode | null
@@ -81,7 +78,6 @@ export type RequestMaxAggregateOutputType = {
   city: string | null
   region: string | null
   packageWeightKg: number | null
-  packageVolumeM3: number | null
   packageCount: number | null
   productDescription: string | null
   transportMode: $Enums.TransportMode | null
@@ -109,7 +105,6 @@ export type RequestCountAggregateOutputType = {
   city: number
   region: number
   packageWeightKg: number
-  packageVolumeM3: number
   packageCount: number
   productDescription: number
   transportMode: number
@@ -126,13 +121,11 @@ export type RequestCountAggregateOutputType = {
 
 export type RequestAvgAggregateInputType = {
   packageWeightKg?: true
-  packageVolumeM3?: true
   packageCount?: true
 }
 
 export type RequestSumAggregateInputType = {
   packageWeightKg?: true
-  packageVolumeM3?: true
   packageCount?: true
 }
 
@@ -151,7 +144,6 @@ export type RequestMinAggregateInputType = {
   city?: true
   region?: true
   packageWeightKg?: true
-  packageVolumeM3?: true
   packageCount?: true
   productDescription?: true
   transportMode?: true
@@ -179,7 +171,6 @@ export type RequestMaxAggregateInputType = {
   city?: true
   region?: true
   packageWeightKg?: true
-  packageVolumeM3?: true
   packageCount?: true
   productDescription?: true
   transportMode?: true
@@ -207,7 +198,6 @@ export type RequestCountAggregateInputType = {
   city?: true
   region?: true
   packageWeightKg?: true
-  packageVolumeM3?: true
   packageCount?: true
   productDescription?: true
   transportMode?: true
@@ -322,7 +312,6 @@ export type RequestGroupByOutputType = {
   city: string | null
   region: string | null
   packageWeightKg: number | null
-  packageVolumeM3: number | null
   packageCount: number
   productDescription: string
   transportMode: $Enums.TransportMode
@@ -373,7 +362,6 @@ export type RequestWhereInput = {
   city?: Prisma.StringNullableFilter<"Request"> | string | null
   region?: Prisma.StringNullableFilter<"Request"> | string | null
   packageWeightKg?: Prisma.FloatNullableFilter<"Request"> | number | null
-  packageVolumeM3?: Prisma.FloatNullableFilter<"Request"> | number | null
   packageCount?: Prisma.IntFilter<"Request"> | number
   productDescription?: Prisma.StringFilter<"Request"> | string
   transportMode?: Prisma.EnumTransportModeFilter<"Request"> | $Enums.TransportMode
@@ -408,7 +396,6 @@ export type RequestOrderByWithRelationInput = {
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   packageWeightKg?: Prisma.SortOrderInput | Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrderInput | Prisma.SortOrder
   packageCount?: Prisma.SortOrder
   productDescription?: Prisma.SortOrder
   transportMode?: Prisma.SortOrder
@@ -446,7 +433,6 @@ export type RequestWhereUniqueInput = Prisma.AtLeast<{
   city?: Prisma.StringNullableFilter<"Request"> | string | null
   region?: Prisma.StringNullableFilter<"Request"> | string | null
   packageWeightKg?: Prisma.FloatNullableFilter<"Request"> | number | null
-  packageVolumeM3?: Prisma.FloatNullableFilter<"Request"> | number | null
   packageCount?: Prisma.IntFilter<"Request"> | number
   productDescription?: Prisma.StringFilter<"Request"> | string
   transportMode?: Prisma.EnumTransportModeFilter<"Request"> | $Enums.TransportMode
@@ -481,7 +467,6 @@ export type RequestOrderByWithAggregationInput = {
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   packageWeightKg?: Prisma.SortOrderInput | Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrderInput | Prisma.SortOrder
   packageCount?: Prisma.SortOrder
   productDescription?: Prisma.SortOrder
   transportMode?: Prisma.SortOrder
@@ -517,7 +502,6 @@ export type RequestScalarWhereWithAggregatesInput = {
   city?: Prisma.StringNullableWithAggregatesFilter<"Request"> | string | null
   region?: Prisma.StringNullableWithAggregatesFilter<"Request"> | string | null
   packageWeightKg?: Prisma.FloatNullableWithAggregatesFilter<"Request"> | number | null
-  packageVolumeM3?: Prisma.FloatNullableWithAggregatesFilter<"Request"> | number | null
   packageCount?: Prisma.IntWithAggregatesFilter<"Request"> | number
   productDescription?: Prisma.StringWithAggregatesFilter<"Request"> | string
   transportMode?: Prisma.EnumTransportModeWithAggregatesFilter<"Request"> | $Enums.TransportMode
@@ -542,7 +526,6 @@ export type RequestCreateInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -577,7 +560,6 @@ export type RequestUncheckedCreateInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -606,7 +588,6 @@ export type RequestUpdateInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -641,7 +622,6 @@ export type RequestUncheckedUpdateInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -673,7 +653,6 @@ export type RequestCreateManyInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -698,7 +677,6 @@ export type RequestUpdateManyMutationInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -726,7 +704,6 @@ export type RequestUncheckedUpdateManyInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -764,7 +741,6 @@ export type RequestCountOrderByAggregateInput = {
   city?: Prisma.SortOrder
   region?: Prisma.SortOrder
   packageWeightKg?: Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
   productDescription?: Prisma.SortOrder
   transportMode?: Prisma.SortOrder
@@ -779,7 +755,6 @@ export type RequestCountOrderByAggregateInput = {
 
 export type RequestAvgOrderByAggregateInput = {
   packageWeightKg?: Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
 }
 
@@ -798,7 +773,6 @@ export type RequestMaxOrderByAggregateInput = {
   city?: Prisma.SortOrder
   region?: Prisma.SortOrder
   packageWeightKg?: Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
   productDescription?: Prisma.SortOrder
   transportMode?: Prisma.SortOrder
@@ -826,7 +800,6 @@ export type RequestMinOrderByAggregateInput = {
   city?: Prisma.SortOrder
   region?: Prisma.SortOrder
   packageWeightKg?: Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
   productDescription?: Prisma.SortOrder
   transportMode?: Prisma.SortOrder
@@ -841,7 +814,6 @@ export type RequestMinOrderByAggregateInput = {
 
 export type RequestSumOrderByAggregateInput = {
   packageWeightKg?: Prisma.SortOrder
-  packageVolumeM3?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
 }
 
@@ -1071,7 +1043,6 @@ export type RequestCreateWithoutUserInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1104,7 +1075,6 @@ export type RequestUncheckedCreateWithoutUserInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1165,7 +1135,6 @@ export type RequestScalarWhereInput = {
   city?: Prisma.StringNullableFilter<"Request"> | string | null
   region?: Prisma.StringNullableFilter<"Request"> | string | null
   packageWeightKg?: Prisma.FloatNullableFilter<"Request"> | number | null
-  packageVolumeM3?: Prisma.FloatNullableFilter<"Request"> | number | null
   packageCount?: Prisma.IntFilter<"Request"> | number
   productDescription?: Prisma.StringFilter<"Request"> | string
   transportMode?: Prisma.EnumTransportModeFilter<"Request"> | $Enums.TransportMode
@@ -1190,7 +1159,6 @@ export type RequestCreateWithoutDestinationCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1223,7 +1191,6 @@ export type RequestUncheckedCreateWithoutDestinationCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1262,7 +1229,6 @@ export type RequestCreateWithoutOriginCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1295,7 +1261,6 @@ export type RequestUncheckedCreateWithoutOriginCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1366,7 +1331,6 @@ export type RequestCreateWithoutTrajectoryStepsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1400,7 +1364,6 @@ export type RequestUncheckedCreateWithoutTrajectoryStepsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1444,7 +1407,6 @@ export type RequestUpdateWithoutTrajectoryStepsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1478,7 +1440,6 @@ export type RequestUncheckedUpdateWithoutTrajectoryStepsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1506,7 +1467,6 @@ export type RequestCreateWithoutStatusEventsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1540,7 +1500,6 @@ export type RequestUncheckedCreateWithoutStatusEventsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1584,7 +1543,6 @@ export type RequestUpdateWithoutStatusEventsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1618,7 +1576,6 @@ export type RequestUncheckedUpdateWithoutStatusEventsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1646,7 +1603,6 @@ export type RequestCreateWithoutJcNotificationsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1680,7 +1636,6 @@ export type RequestUncheckedCreateWithoutJcNotificationsInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1724,7 +1679,6 @@ export type RequestUpdateWithoutJcNotificationsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1758,7 +1712,6 @@ export type RequestUncheckedUpdateWithoutJcNotificationsInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1786,7 +1739,6 @@ export type RequestCreateWithoutJourneyInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1820,7 +1772,6 @@ export type RequestUncheckedCreateWithoutJourneyInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1864,7 +1815,6 @@ export type RequestUpdateWithoutJourneyInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1898,7 +1848,6 @@ export type RequestUncheckedUpdateWithoutJourneyInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1928,7 +1877,6 @@ export type RequestCreateManyUserInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -1953,7 +1901,6 @@ export type RequestUpdateWithoutUserInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -1986,7 +1933,6 @@ export type RequestUncheckedUpdateWithoutUserInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2017,7 +1963,6 @@ export type RequestUncheckedUpdateManyWithoutUserInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2044,7 +1989,6 @@ export type RequestCreateManyDestinationCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -2071,7 +2015,6 @@ export type RequestCreateManyOriginCountryInput = {
   city?: string | null
   region?: string | null
   packageWeightKg?: number | null
-  packageVolumeM3?: number | null
   packageCount?: number
   productDescription?: string
   transportMode: $Enums.TransportMode
@@ -2096,7 +2039,6 @@ export type RequestUpdateWithoutDestinationCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2129,7 +2071,6 @@ export type RequestUncheckedUpdateWithoutDestinationCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2160,7 +2101,6 @@ export type RequestUncheckedUpdateManyWithoutDestinationCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2185,7 +2125,6 @@ export type RequestUpdateWithoutOriginCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2218,7 +2157,6 @@ export type RequestUncheckedUpdateWithoutOriginCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2249,7 +2187,6 @@ export type RequestUncheckedUpdateManyWithoutOriginCountryInput = {
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packageWeightKg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  packageVolumeM3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   productDescription?: Prisma.StringFieldUpdateOperationsInput | string
   transportMode?: Prisma.EnumTransportModeFieldUpdateOperationsInput | $Enums.TransportMode
@@ -2326,7 +2263,6 @@ export type RequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   city?: boolean
   region?: boolean
   packageWeightKg?: boolean
-  packageVolumeM3?: boolean
   packageCount?: boolean
   productDescription?: boolean
   transportMode?: boolean
@@ -2362,7 +2298,6 @@ export type RequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   city?: boolean
   region?: boolean
   packageWeightKg?: boolean
-  packageVolumeM3?: boolean
   packageCount?: boolean
   productDescription?: boolean
   transportMode?: boolean
@@ -2393,7 +2328,6 @@ export type RequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   city?: boolean
   region?: boolean
   packageWeightKg?: boolean
-  packageVolumeM3?: boolean
   packageCount?: boolean
   productDescription?: boolean
   transportMode?: boolean
@@ -2424,7 +2358,6 @@ export type RequestSelectScalar = {
   city?: boolean
   region?: boolean
   packageWeightKg?: boolean
-  packageVolumeM3?: boolean
   packageCount?: boolean
   productDescription?: boolean
   transportMode?: boolean
@@ -2437,7 +2370,7 @@ export type RequestSelectScalar = {
   needsRectification?: boolean
 }
 
-export type RequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "requestNumber" | "type" | "userId" | "originCountryId" | "destinationCountryId" | "recipientName" | "recipientPhone" | "deliveryAddress" | "city" | "region" | "packageWeightKg" | "packageVolumeM3" | "packageCount" | "productDescription" | "transportMode" | "customerNotes" | "adminNotes" | "status" | "problemType" | "whatsappDiscussionLink" | "latestStatusMessage" | "needsRectification", ExtArgs["result"]["request"]>
+export type RequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "requestNumber" | "type" | "userId" | "originCountryId" | "destinationCountryId" | "recipientName" | "recipientPhone" | "deliveryAddress" | "city" | "region" | "packageWeightKg" | "packageCount" | "productDescription" | "transportMode" | "customerNotes" | "adminNotes" | "status" | "problemType" | "whatsappDiscussionLink" | "latestStatusMessage" | "needsRectification", ExtArgs["result"]["request"]>
 export type RequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.AuraUserDefaultArgs<ExtArgs>
   originCountry?: boolean | Prisma.Request$originCountryArgs<ExtArgs>
@@ -2485,7 +2418,6 @@ export type $RequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     city: string | null
     region: string | null
     packageWeightKg: number | null
-    packageVolumeM3: number | null
     packageCount: number
     productDescription: string
     transportMode: $Enums.TransportMode
@@ -2940,7 +2872,6 @@ export interface RequestFieldRefs {
   readonly city: Prisma.FieldRef<"Request", 'String'>
   readonly region: Prisma.FieldRef<"Request", 'String'>
   readonly packageWeightKg: Prisma.FieldRef<"Request", 'Float'>
-  readonly packageVolumeM3: Prisma.FieldRef<"Request", 'Float'>
   readonly packageCount: Prisma.FieldRef<"Request", 'Int'>
   readonly productDescription: Prisma.FieldRef<"Request", 'String'>
   readonly transportMode: Prisma.FieldRef<"Request", 'TransportMode'>
